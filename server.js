@@ -17,7 +17,7 @@ var options = {
       version: '1.0.0',
       description: 'Demonstrating how to describe a RESTful API with Swagger',
     },
-    host: 'kenan-api.herokuapp.com/',
+    host: 'kenan-api.herokuapp.com',
     basePath: '/',
   },
   // path to the API docs
