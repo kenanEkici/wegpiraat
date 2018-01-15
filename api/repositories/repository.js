@@ -1,5 +1,5 @@
 'use strict';
 
-exports.getData = function() {
-    return JSON.parse('{ "text" : "text" }');
+exports.checkStatus = function() {
+    return JSON.parse('{ "status" : "up" }');
 }

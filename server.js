@@ -4,6 +4,32 @@ var app = express();
 var port = process.env.PORT || 3000;
 const MongoClient = require('mongodb').MongoClient
 var bodyParser = require('body-parser');
+var swaggerJSDoc = require('swagger-jsdoc');
+
+//set public accessable files
+app.use(express.static('public'))
+
+// options for the swagger docs
+var options = {
+  swaggerDefinition: {
+    info: {
+      title: 'Node Swagger API',
+      version: '1.0.0',
+      description: 'Demonstrating how to describe a RESTful API with Swagger',
+    },
+    host: 'localhost:3000',
+    basePath: '/',
+  },
+  // path to the API docs
+  apis: ['./api/routes/*.js'],
+};
+
+// set swagger-jsdoc and route
+var swaggerSpec = swaggerJSDoc(options);
+app.get('/swagger.json', function(req,res){
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
 
 //set html renderer
 app.set('views', __dirname + '/views');
