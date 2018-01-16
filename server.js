@@ -6,6 +6,12 @@ const MongoClient = require('mongodb').MongoClient
 var bodyParser = require('body-parser');
 var swaggerJSDoc = require('swagger-jsdoc');
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 //set public accessable files
 app.use(express.static('public'))
 
@@ -13,9 +19,9 @@ app.use(express.static('public'))
 var options = {
   swaggerDefinition: {
     info: {
-      title: 'Node Swagger API',
+      title: 'Kenan\'s wonderful API of surprises',
       version: '1.0.0',
-      description: 'Demonstrating how to describe a RESTful API with Swagger',
+      description: 'Hi, you have found my REST API! You must feel so damn good about yourself huh.',
     },
     host: 'kenan-api.herokuapp.com',
     basePath: '/',
