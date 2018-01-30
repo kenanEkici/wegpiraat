@@ -5,6 +5,14 @@ var port = process.env.PORT || 3000;
 const MongoClient = require('mongodb').MongoClient
 var bodyParser = require('body-parser');
 var swaggerJSDoc = require('swagger-jsdoc');
+var oauthserver = require('node-oauth2-server');
+var oAuthModels = require('./api/models');
+
+app.oauth = oauthserver({
+  model: oAuthModels.oauth,
+    grants: ['password', 'refresh_token'],
+    debug: true
+});
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -46,16 +54,13 @@ MongoClient.connect('', (err, database) => {
   console.log("connected to mongodb");
 })
 
-//set routes
-var routes = require('./api/routes/routes');
-routes(app);
-
 //set parser
 app.use(bodyParser.urlencoded({ extended : true}));
 app.use(bodyParser.json());
-app.use(function(req, res) {
-    res.status(404).send({url: req.originalUrl + ' not found'})
-});
+
+//set routes
+var routes = require('./api/routes/routes');
+routes(app);
 
 //start server
 app.listen(port);
