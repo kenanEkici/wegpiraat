@@ -1,0 +1,27 @@
+{
+  "name": "nodeapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "crypto": "^1.0.1",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.1",
+    "mongoose": "^4.13.9",
+    "node-oauth2-server": "^2.4.0",
+    "oauth2orize": "^1.11.0",
+    "swagger-express": "^1.0.5",
+    "swagger-jsdoc": "^1.9.7",
+    "uid2": "0.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.11"
+  }
+}
