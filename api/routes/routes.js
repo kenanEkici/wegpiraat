@@ -41,9 +41,7 @@ module.exports = function(app) {
      *       200:
      *         description: Return test json to check if API is working
      */
-    app.get('/api', function (req,res) {
-        hcontroller.checkStatus(req,res);
-    });
+    app.get('/api', hcontroller.checkStatus);
 
     /**
      * @swagger
@@ -57,29 +55,17 @@ module.exports = function(app) {
      *       200:
      *         description: Return test json to check if API is working
      */
-    app.get('/api/wegpiraat', function (req,res) {
-        hcontroller.checkStatus(req,res);
-    });   
+    app.get('/api/wegpiraat', hcontroller.checkStatus);
 
-    app.get('/api/heroes', function (req,res) {
-        hcontroller.getAllHeroes(req,res);
-    }); 
+    app.get('/api/heroes', hcontroller.getAllHeroes);
 
-    app.get('/api/heroes/:id', function (req,res) {
-        hcontroller.getHeroByName(req,res);
-    }); 
+    app.get('/api/heroes/:id', hcontroller.getHeroByName);
 
-    app.post('/api/heroes', function (req,res) {
-        hcontroller.createHero(req,res);
-    });   
+    app.post('/api/heroes', hcontroller.createHero);
     
-    app.delete('/api/heroes/:id', function (req, res) {
-        hcontroller.deleteHeroByName(req,res);
-    })
+    app.delete('/api/heroes/:id', hcontroller.deleteHeroByName);
 
-    app.put('/api/heroes/:id', function(req,res){
-        hcontroller.updateHeroByName(req,res);
-    })      
+    app.put('/api/heroes/:id', hcontroller.updateHeroByName);
     
     app.all('/login', app.oauth.grant());
     

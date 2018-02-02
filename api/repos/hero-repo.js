@@ -13,8 +13,11 @@ exports.getAllHeroes = function(callback) {
 
 exports.getHeroById = function(id, callback) {
     hero.find({_id:mongoose.mongo.ObjectId(id)},function(err, data) {
-        callback(data);
-    });
+        if (err) {
+            callback(err, ""); return;
+        }
+        callback("", data);
+    });    
 }
 
 exports.createHero = function(body, callback) {
@@ -25,9 +28,11 @@ exports.createHero = function(body, callback) {
         name:body.name
     });
 
-    newHero.save(function(err) {
-        if (err) callback(err);  
-        callback("hero created");
+    newHero.save(function(err,data) {
+        if (err) {
+            callback(err, ""); return;
+        }
+        callback("", "hero created");
     });
 }
 

@@ -14,14 +14,22 @@ exports.getAllHeroes = function(req,res) {
 }
 
 exports.getHeroByName = function(req,res) {
-    hrep.getHeroById(req.params.id, function(data) {
-        res.send(data);
-    })
+    hrep.getHeroById(req.params.id, function(err, data) {
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            res.send(data);
+        }        
+    });
 }
 
 exports.createHero = function(req,res) {
-    hrep.createHero(req.body, function(data) {
-        res.send(data);
+    hrep.createHero(req.body, function(err, data) {
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            res.send(data);
+        }        
     });
 }
 
