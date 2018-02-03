@@ -1,5 +1,12 @@
 'use strict'
 
+module.exports = {
+  validateAccount: validateAccount,
+  getUserByEmail: getUserByEmail,
+  getUserById: getUserById,
+  createUser: createUser
+};
+
 var mongoose = require('mongoose');
 var business = require('../business/business');
 
@@ -30,15 +37,16 @@ function getUserByEmail(email, cb) {
   });
 }
 
+function getUserById(id, cb) {
+  User.findOne({_id:mongoose.mongo.ObjectId(id)}, (err, user) => {
+    if (err || !user) return cb(err);
+    cb(null, user);
+  });
+}
+
 function validateAccount(email, password, cb) {
   getUserByEmail(email, function(err, user ){
     if (err || !user) return cb(err);  
       cb(null, business.validatePassword(password, user.hashed_password) ? user._id : null);
   });
 }
-
-module.exports = {
-  validateAccount: validateAccount,
-  getUserByEmail: getUserByEmail,
-  createUser: createUser
-};

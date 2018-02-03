@@ -1,4 +1,4 @@
-//declaring dependencies
+//dependencies
 var express = require('express');
 var app = express();
 var port = process.env.PORT || 3000;
@@ -8,17 +8,17 @@ var oauthserver = require('node-oauth2-server');
 var oAuthModels = require('./api/models/auth/oauth');
 var mongoose = require('mongoose');
 
-//set oauth server
+//oauth server
 app.oauth = oauthserver({
   model: oAuthModels,
-    grants: ['password', 'refresh_token'],
-    debug: true
+    grants: ['password', 'authorization_code', 'refresh_token'],
+    debug: false
 });
 
-//set public accessable files
+//public files
 app.use(express.static('public'))
 
-// options for the swagger docs
+//swagger docs
 var options = {
   swaggerDefinition: {
     info: {
@@ -33,7 +33,7 @@ var options = {
   apis: ['./api/routes/*.js'],
 };
 
-// set swagger-jsdoc and route
+// swaggerdoc route
 var swaggerSpec = swaggerJSDoc(options);
 app.get('/swagger.json', function(req,res){
   res.setHeader('Content-Type', 'application/json');
@@ -49,11 +49,11 @@ mongoose.connect('mongodb://localhost/wegpiraten', function(err) {
   console.log("Connected with wegpiraat database");
 });
 
-//set parser
+//bodyparser
 app.use(bodyParser.urlencoded({ extended : true}));
 app.use(bodyParser.json());
 
-//set routes
+//routes
 var routes = require('./api/routes/routes');
 routes(app);
 
@@ -63,3 +63,6 @@ console.log("API started on port " + port );
 
 //uncomment to seed
 //var seed = require('./api/seed');
+
+//error handler for oauth2 
+app.use(app.oauth.errorHandler());

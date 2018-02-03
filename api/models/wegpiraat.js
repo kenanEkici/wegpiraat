@@ -1,3 +1,13 @@
+'use strict'
+
+module.exports = {
+    getAllWegpiraten: getAllWegpiraten,
+    getWegpiraatById: getWegpiraatById,
+    createWegpiraat: createWegpiraat,
+    updateWegpiraat: updateWegpiraat,
+    deleteWegpiraatById: deleteWegpiraatById
+};
+
 var mongoose = require('mongoose');
 
 var wegpiraatSchema = mongoose.Schema({
@@ -6,9 +16,9 @@ var wegpiraatSchema = mongoose.Schema({
     picture : String,
     createdAt : Date,
 
-    owner:  { type : mongoose.Schema.ObjectId },
-    likedBy :  [{ type : mongoose.Schema.ObjectId }],
-    comments:  [{ type : mongoose.Schema.ObjectId }]
+    owner:  { type : String }, //email
+    likedBy :  [{ type : String }], //email
+    comments:  [{ type : mongoose.Schema.ObjectId }] //commentId
 });
 
 var Wegpiraat = mongoose.model('Wegpiraten', wegpiraatSchema);
@@ -27,16 +37,17 @@ function getWegpiraatById(id, callback) {
     });
 }
 
-function createWegpiraat(body, userId, callback) {
+function createWegpiraat(body, user, callback) {
+    
     var newWegpiraat = new Wegpiraat({
         title: body.title,
         description: body.description,
         picture: body.picture,
         createdAt: body.createdAt,
-        owner: userId
+        owner: user.email
     });
 
-    newWegpiraat.save((err,data) =>{
+    newWegpiraat.save((err,data) => {
         if (err) return callback(err, null);
         callback(null, data);
     });
@@ -68,12 +79,3 @@ function updateWegpiraat(id, body, callback) {
         }
     });
 }
-
-module.exports = {
-    getAllWegpiraten: getAllWegpiraten,
-    getWegpiraatById: getWegpiraatById,
-    createWegpiraat: createWegpiraat,
-    updateWegpiraat: updateWegpiraat,
-    deleteWegpiraatById: deleteWegpiraatById
-};
-
