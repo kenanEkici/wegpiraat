@@ -1,8 +1,13 @@
-var models = require('./../models');
-var User = models.User;
-
 function requiresUser(req, res, next) {
     res.app.oauth.authorise()(req, res, next);
 }
 
-module.exports.requiresUser = requiresUser;
+function cors(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+}
+
+module.exports = {
+    requiresUser: requiresUser
+};
