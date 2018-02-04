@@ -31,7 +31,7 @@ module.exports = function(app) {
     app.get('/api/wegpiraten', app.oauth.authorise(), wpController.getAllWegpiraten);
 
     //add wegpiraat
-    app.post('/api/wegpiraten', app.oauth.authorise(), wpController.createWegpiraat);
+    app.post('/api/wegpiraten', app.oauth.authorise(), wpController.addWegpiraat);
 
     //details
     app.get('/api/wegpiraten/:id', app.oauth.authorise(), wpController.getWegpiraatById);
@@ -41,6 +41,9 @@ module.exports = function(app) {
 
     //delete wegpiraat
     app.delete('/api/wegpiraten:id', app.oauth.authorise(), wpController.deleteWegpiraatById);
+
+    //add comment
+    app.post('/api/wegpiraten/:id/comment', app.oauth.authorise(), wpController.addCommentToPost);
 
     // Not found
     app.use(function(req, res) {

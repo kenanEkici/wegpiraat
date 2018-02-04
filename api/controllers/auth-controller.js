@@ -1,9 +1,5 @@
 'use strict'
 
-module.exports = {
-    register: register
-};
-
 var business = require('../business/business');
 var userRepo = require('../models/user');
 
@@ -15,3 +11,7 @@ function register(req,res) {
             res.send(data);        
     });
 }
+
+module.exports = {
+    register: register
+};

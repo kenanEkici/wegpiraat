@@ -2,6 +2,7 @@
 
 var bcrypt = require('bcrypt');
 var crypto = require('crypto');
+var ObjectId = require('mongoose');
 
 function hash(password) {
     var salt = bcrypt.genSaltSync(10);
@@ -18,9 +19,14 @@ function validatePassword(password, hashed) {
     return bcrypt.compareSync(password, hashed);
 }
 
+function checkObjectId(id) {
+    return ObjectId.Types.ObjectId.isValid(id);
+}
+
 module.exports = {
     hashPassword: hashPassword,
-    validatePassword: validatePassword
+    validatePassword: validatePassword,
+    checkObjectId: checkObjectId
 };
   
   

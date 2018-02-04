@@ -45,7 +45,7 @@ app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 
 //start mongoose database
-mongoose.connect('mongodb://localhost/wegpiraten', function(err) {
+mongoose.connect('mongodb://localhost/wegpiraat', function(err) {
   console.log("Connected with wegpiraat database");
 });
 

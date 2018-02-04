@@ -1,66 +1,79 @@
 'use strict'
 
-module.exports = {
-    getAllWegpiraten: getAllWegpiraten,
-    getWegpiraatById: getWegpiraatById,
-    createWegpiraat: createWegpiraat,
-    updateWegpiraat: updateWegpiraat,
-    deleteWegpiraatById: deleteWegpiraatById
-};
-
 var mongoose = require('mongoose');
+var business = require('../business/business');
 
-var wegpiraatSchema = mongoose.Schema({
-    title : String,
-    description : String,
-    picture : String,
-    createdAt : Date,
+var commentSchema = mongoose.Schema(
+    {
+        commentData: { type:String, minlength:1, maxlength:250 },
+        postedBy: { type: String }, //username
+        postedAt: { type: Date }
+    }
+);
 
-    owner:  { type : String }, //email
-    likedBy :  [{ type : String }], //email
-    comments:  [{ type : mongoose.Schema.ObjectId }] //commentId
-});
+var likeSchema = mongoose.Schema(
+    {    
+        likedBy: { type: String } //username
+    }
+);
+
+var wegpiraatSchema = mongoose.Schema(
+    {
+        title : String,
+        description : String,
+        picture : String,
+        createdAt : Date,
+
+        owner: { type : String }, //username
+        likes : [{ type : likeSchema }], 
+        comments: [{ type: commentSchema }]
+    }
+);
 
 var Wegpiraat = mongoose.model('Wegpiraten', wegpiraatSchema);
 
-function getAllWegpiraten(callback) {
+function getAllWegpiraten(cb) {
     Wegpiraat.find({}, (err, data) => {
-        if (err) return callback(err, null);      
-        callback(null, data);
+        if (err) return cb(err, null);      
+        cb(null, data);
     });
 }
 
-function getWegpiraatById(id, callback) {
-    Wegpiraat.find({_id:mongoose.mongo.ObjectId(id)}, (err, data) => {
-        if (err) return callback(err, null);      
-        callback(null, data);
-    });
+function getWegpiraatById(id, cb) {
+    if (business.checkObjectId(id)) {
+        Wegpiraat.findOne({_id:mongoose.mongo.ObjectId(id)}, (err, data) => {
+            if (err) return cb(err, null);      
+            cb(null, data);
+        });
+    } else {
+        cb("Wegpiraat {{id}} not found", null);
+    }    
 }
 
-function createWegpiraat(body, user, callback) {
+function createWegpiraat(body, user, cb) {
     
     var newWegpiraat = new Wegpiraat({
         title: body.title,
         description: body.description,
         picture: body.picture,
         createdAt: body.createdAt,
-        owner: user.email
+        owner: user.username
     });
 
     newWegpiraat.save((err,data) => {
-        if (err) return callback(err, null);
-        callback(null, data);
+        if (err) return cb(err, null);
+        cb(null, data);
     });
 }
 
-function deleteWegpiraatById(id, callback) {
+function deleteWegpiraatById(id, cb) {
     Wegpiraat.remove({_id:mongoose.mongo.ObjectId(id)}, err => {
-        if (err) return callback(err);
-        callback("Wegpiraat {id} deleted");
+        if (err) return cb(err);
+        cb("Wegpiraat {id} deleted");
     });
 }
 
-function updateWegpiraat(id, body, callback) {  
+function updateWegpiraat(id, body, cb) {  
     getWegpiraatById(id, todo => {
         if (todo != []) {
             
@@ -71,11 +84,39 @@ function updateWegpiraat(id, body, callback) {
             todo.picture = body.picture;
 
             todo.save((err,data) => {
-                if (err) return callback(err);
-                callback(data);
+                if (err) return cb(err);
+                cb(data);
             });
         } else {
-            callback("Wegpiraat {id} not found");
+            cb("Wegpiraat {id} not found");
         }
     });
 }
+
+function addComment(postId, body, user, cb) {    
+    getWegpiraatById(postId, (err, data) => {
+        var comment = {
+            postedBy: user.username,
+            postedAt: body.date,
+            commentData: body.commentData
+        };
+        if (!err && data) {
+            data.comments.push(comment);
+            data.save((err,data) => {
+                if (err) return cb(err, null);
+                cb(null, data);
+            });
+        } else {
+            cb(err, null);
+        }
+    });         
+}
+
+module.exports = {
+    getAllWegpiraten: getAllWegpiraten,
+    getWegpiraatById: getWegpiraatById,
+    createWegpiraat: createWegpiraat,
+    updateWegpiraat: updateWegpiraat,
+    deleteWegpiraatById: deleteWegpiraatById,
+    addComment: addComment
+};

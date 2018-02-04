@@ -1,14 +1,5 @@
 'use strict';
 
-module.exports = {
-    checkStatus: checkStatus,
-    createWegpiraat: createWegpiraat,
-    getAllWegpiraten: getAllWegpiraten,
-    getWegpiraatById: getWegpiraatById,
-    updateWegpiraatById: updateWegpiraatById,
-    deleteWegpiraatById: deleteWegpiraatById
-};
-
 var business = require('../business/business');
 var wpRepo = require('../models/wegpiraat');
 var authRepository = require('../models/user');
@@ -28,11 +19,16 @@ function getWegpiraatById(req,res) {
     });
 }
 
-function createWegpiraat(req,res) {
-    authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => {
-        wpRepo.createWegpiraat(req.body, user, (err, data) => {
-            if (err) res.status(400).send(err);
-            else res.send(data);
+function addWegpiraat(req,res) {
+    authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => { 
+        wpRepo.createWegpiraat(req.body, user, (err, data) => { //returns the piraat obj
+            if (err) { res.status(400).send(err); }
+            else { 
+                authRepository.addWegpiraat(data._id, user, (err, data) => { //adds the piraatId
+                    if (err) { res.status(400).send(err); }
+                    else res.send(data); //returns the piraatId
+                });
+            }
         });
     });    
 }
@@ -50,3 +46,27 @@ function updateWegpiraatById(req,res) {
         else res.send(data);
     });
 }
+
+function addCommentToPost(req,res) {
+    authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => {
+        wpRepo.addComment(req.params.id, req.body, user, (err,data)=>{ //returns the postId
+            if (err) { res.status(400).send(err); }
+            else { 
+                authRepository.addComment(data, user, (err,data)=>{ //adds the returned postId 
+                    if (err) res.status(400).send(err);
+                    else res.send(data);
+                });
+            }
+        });
+    });
+}
+
+module.exports = {
+    checkStatus: checkStatus,
+    addWegpiraat: addWegpiraat,
+    getAllWegpiraten: getAllWegpiraten,
+    getWegpiraatById: getWegpiraatById,
+    updateWegpiraatById: updateWegpiraatById,
+    deleteWegpiraatById: deleteWegpiraatById,
+    addCommentToPost: addCommentToPost
+};
