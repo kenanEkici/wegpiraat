@@ -30,20 +30,26 @@ module.exports = function(app) {
     //masters
     app.get('/api/wegpiraten', app.oauth.authorise(), wpController.getAllWegpiraten);
 
-    //add wegpiraat
-    app.post('/api/wegpiraten', app.oauth.authorise(), wpController.addWegpiraat);
-
     //details
-    app.get('/api/wegpiraten/:id', app.oauth.authorise(), wpController.getWegpiraatById);
+    app.get('/api/wegpiraten/:postId', app.oauth.authorise(), wpController.getWegpiraatById);
+
+    //add wegpiraat
+    app.post('/api/wegpiraten', app.oauth.authorise(), wpController.addWegpiraat);    
 
     //update wegpiraat
-    app.put('/api/wegpiraten/:id', app.oauth.authorise(), wpController.updateWegpiraatById);
+    app.put('/api/wegpiraten/:postId', app.oauth.authorise(), wpController.updateWegpiraatById);
 
     //delete wegpiraat
-    app.delete('/api/wegpiraten:id', app.oauth.authorise(), wpController.deleteWegpiraatById);
+    app.delete('/api/wegpiraten/:postId', app.oauth.authorise(), wpController.deleteWegpiraatById);
 
     //add comment
-    app.post('/api/wegpiraten/:id/comment', app.oauth.authorise(), wpController.addCommentToPost);
+    app.post('/api/wegpiraten/:postId/comment', app.oauth.authorise(), wpController.addCommentToPost);
+
+    //delete comment
+    app.delete('/api/wegpiraten/:postId/:commentId', app.oauth.authorise(), wpController.deleteCommentFromPost);
+
+    //like post
+    app.post('/api/wegpiraten/:postId/like', app.oauth.authorise(), wpController.addOrRemoveLikeToPost);
 
     // Not found
     app.use(function(req, res) {

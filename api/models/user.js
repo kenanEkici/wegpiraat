@@ -16,7 +16,7 @@ var userSchema = mongoose.Schema({
 
   posts:  [{ type : mongoose.Schema.ObjectId }], //postId
   likes:  [{ type : mongoose.Schema.ObjectId }], //postId
-  comments: [{ type : mongoose.Schema.ObjectId }] //postId
+  comments: [{ postId: mongoose.Schema.ObjectId, commentId: mongoose.Schema.ObjectId}] //postId and commentId
 });
 
 var User = mongoose.model('Users', userSchema);
@@ -56,13 +56,43 @@ function addWegpiraat(postId, user, cb) {
   });
 }
 
-function addComment(postId, user, cb) {
+function deleteWegpiraatById(postId, user, cb) {
+  getUserById(user._id, (err, user) => { 
+    if (!err && user) {      
+      user.posts.splice(user.posts.indexOf(postId), 1);
+      user.save((err) => {
+        if (err) cb(err, null);
+        cb(null, "Wegpiraat " + postId + " deleted")
+      });      
+    } else { cb(err, null); }
+  });
+}
+
+function addComment(postId, commentId, user, cb) {
   getUserById(user._id, (err, user) => {    
     if (!err && user) {
-      user.comments.push(postId);
+      user.comments.push({postId:postId, commentId:commentId});
       user.save(cb);      
     } else { cb(err, null); }
   });
+}
+
+function deleteComment(postId, commentId, user, cb) {
+    getUserById(user._id, (err, user) => { 
+      if (!err && user) {    
+
+        var comments = user.comments;
+        for (let i = 0; i < comments.length; ++i) 
+          if (comments[i].commentId.toString() === commentId) {
+            user.comments.splice(comments[i].commentId.toString().indexOf(), 1);
+          };   
+          
+        user.save((err) => {
+          if (err) return cb(err, null);
+          cb(null, "Comment " + commentId + " deleted")
+        });      
+      } else { cb(err, null); }
+    });
 }
 
 module.exports = {
@@ -70,6 +100,8 @@ module.exports = {
   getUserByEmail: getUserByEmail,
   getUserById: getUserById,
   createUser: createUser,
-  addWegpiraat, addWegpiraat,
-  addComment: addComment
+  addWegpiraat: addWegpiraat,
+  deleteWegpiraatById: deleteWegpiraatById,
+  addComment: addComment,
+  deleteComment: deleteComment
 };

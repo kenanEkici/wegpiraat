@@ -1,0 +1,7 @@
+@token = Bearer 2a5b200ad68c4ffa0d6883c1d7f78e52bb7ef350
+@commentId = 5a7a3d3a57df6c16b83eaa8b
+@wegpiraatId = 5a7a367fe1993d2b6ce40db0
+
+DELETE http://localhost:3000/api/wegpiraten/{{wegpiraatId}}/{{commentId}} HTTP/1.1
+Content-Type: application/json
+Authorization: {{token}}

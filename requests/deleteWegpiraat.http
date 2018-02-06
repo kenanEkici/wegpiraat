@@ -1,0 +1,6 @@
+@token =Bearer 557d80a993fdcd3859fe28ad4d77e9322f84a6a2
+@wegpiraatId =5a7a234d4462f82aac468c85
+
+DELETE http://localhost:3000/api/wegpiraten/{{wegpiraatId}} HTTP/1.1
+Content-Type: application/json
+Authorization: {{token}}

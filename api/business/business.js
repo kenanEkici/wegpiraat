@@ -23,10 +23,26 @@ function checkObjectId(id) {
     return ObjectId.Types.ObjectId.isValid(id);
 }
 
+function postBelongsToUser(postId, user) {    
+    var posts = user.posts;
+    for (var i = 0; i < posts.length; ++i) 
+        if (posts[i].toString() === postId) return true;  
+    return false;
+}
+
+function commentBelongsToUser(commentId, user) {
+    var comments = user.comments;
+    for (var i = 0; i < comments.length; ++i) 
+        if (comments[i].commentId.toString() === commentId) return true;  
+    return false;
+}
+
 module.exports = {
     hashPassword: hashPassword,
     validatePassword: validatePassword,
-    checkObjectId: checkObjectId
+    checkObjectId: checkObjectId,
+    postBelongsToUser: postBelongsToUser,
+    commentBelongsToUser: commentBelongsToUser
 };
   
   

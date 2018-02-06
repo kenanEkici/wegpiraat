@@ -67,9 +67,9 @@ function createWegpiraat(body, user, cb) {
 }
 
 function deleteWegpiraatById(id, cb) {
-    Wegpiraat.remove({_id:mongoose.mongo.ObjectId(id)}, err => {
-        if (err) return cb(err);
-        cb("Wegpiraat {id} deleted");
+    Wegpiraat.remove({_id:mongoose.mongo.ObjectId(id)}, (err) => {
+        if (err) return cb(err, null);
+        cb(null, id);
     });
 }
 
@@ -93,23 +93,39 @@ function updateWegpiraat(id, body, cb) {
     });
 }
 
-function addComment(postId, body, user, cb) {    
-    getWegpiraatById(postId, (err, data) => {
+function addCommentToPost(postId, body, user, cb) {
+    getWegpiraatById(postId, (err, post) => {
+        if (err) return cb(err, null);
         var comment = {
             postedBy: user.username,
             postedAt: body.date,
             commentData: body.commentData
         };
-        if (!err && data) {
-            data.comments.push(comment);
-            data.save((err,data) => {
+
+        if (!err && post) {
+            post.comments.push(comment);
+            var pushedComment = post.comments[post.comments.length-1];
+            post.save((err) => {
                 if (err) return cb(err, null);
-                cb(null, data);
+                cb(null, pushedComment);
             });
         } else {
-            cb(err, null);
+            cb("Post " + postId + " not found", null);
         }
     });         
+}
+
+function deleteCommentFromPost(postId, commentId, cb) {
+    getWegpiraatById(postId, (err, post) => {
+        if (err) return cb(err, null);
+        if (!err && post) {
+            post.comments.id(commentId).remove();
+            post.save();
+            cb(null, commentId);
+        } else {
+            cb("Post " + postId + " not found", null);
+        }
+    });
 }
 
 module.exports = {
@@ -118,5 +134,6 @@ module.exports = {
     createWegpiraat: createWegpiraat,
     updateWegpiraat: updateWegpiraat,
     deleteWegpiraatById: deleteWegpiraatById,
-    addComment: addComment
+    addCommentToPost: addCommentToPost,
+    deleteCommentFromPost: deleteCommentFromPost
 };

@@ -1,4 +1,4 @@
-@token = Bearer bff80c0e7ca9e672cdbc68d7e184a18881043502
+@token = Bearer 8de85e2cfee34831f9708791f93a40ad4800d370
 
 POST http://localhost:3000/api/wegpiraten HTTP/1.1
 Content-Type: application/json
@@ -7,5 +7,5 @@ Authorization: {{token}}
 {
 	"title": "kekekek",
 	"description": "kekkeke",
-	"pictaure": "kekekek"
+	"picture": "kekekek"
 }

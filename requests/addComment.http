@@ -1,5 +1,5 @@
-@token = Bearer e3b943f0ca5213e8ef24235754298d417c7ec116
-@wegpiraatId = 5a774006452f7548a82daf5f
+@token = Bearer 8de85e2cfee34831f9708791f93a40ad4800d370
+@wegpiraatId = 5a7a367fe1993d2b6ce40db0
 
 POST http://localhost:3000/api/wegpiraten/{{wegpiraatId}}/comment HTTP/1.1
 Content-Type: application/json
