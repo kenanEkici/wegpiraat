@@ -73,22 +73,19 @@ function deleteWegpiraatById(id, cb) {
     });
 }
 
-function updateWegpiraat(id, body, cb) {  
-    getWegpiraatById(id, todo => {
-        if (todo != []) {
-            
-            todo = todo[0];
-
+function updateWegpiraatById(id, body, cb) {
+    getWegpiraatById(id, (err, todo) => {
+        if (todo) {
             todo.title = body.title;
             todo.description = body.description;
             todo.picture = body.picture;
 
             todo.save((err,data) => {
-                if (err) return cb(err);
-                cb(data);
+                if (err) return cb(err, null);
+                cb(null, data);
             });
         } else {
-            cb("Wegpiraat {id} not found");
+            cb(err, null);
         }
     });
 }
@@ -102,7 +99,7 @@ function addCommentToPost(postId, body, user, cb) {
             commentData: body.commentData
         };
 
-        if (!err && post) {
+        if (post) {
             post.comments.push(comment);
             var pushedComment = post.comments[post.comments.length-1];
             post.save((err) => {
@@ -118,10 +115,48 @@ function addCommentToPost(postId, body, user, cb) {
 function deleteCommentFromPost(postId, commentId, cb) {
     getWegpiraatById(postId, (err, post) => {
         if (err) return cb(err, null);
-        if (!err && post) {
+        if (post) {
             post.comments.id(commentId).remove();
-            post.save();
-            cb(null, commentId);
+            post.save((err) => {
+                if (err) return cb(err, null);
+                cb(null, commentId);
+            });
+            
+        } else {
+            cb("Post " + postId + " not found", null);
+        }
+    });
+}
+
+function addLikeToPost(postId, user, cb) {
+    getWegpiraatById(postId, (err, post) => {
+        if (err) return cb(err, null);
+        var like = { likedBy: user.username };
+        if (post) {
+            post.likes.push(like);
+            var like = post.likes[post.likes.length-1];
+            post.save((err) => {
+                if (err) return cb(err, null);
+                cb(null, post._id);
+            });
+        } else {
+            cb("Post " + postId + " not found", null);
+        }
+    });        
+}
+
+function deleteLikeFromPost(postId, user, cb) {
+    getWegpiraatById(postId, (err, post) => {
+        if (err) return cb(err, null);
+        if (post) {
+            var likes = post.likes;
+            for (let i = 0; i < likes.length; ++i) 
+                if (likes[i].likedBy.toString() === user.username)
+                    post.likes.splice(likes[i].toString().indexOf(), 1);             
+            post.save((err) => {
+                if (err) return cb(err, null);
+                cb(null, postId);
+            });
         } else {
             cb("Post " + postId + " not found", null);
         }
@@ -132,8 +167,10 @@ module.exports = {
     getAllWegpiraten: getAllWegpiraten,
     getWegpiraatById: getWegpiraatById,
     createWegpiraat: createWegpiraat,
-    updateWegpiraat: updateWegpiraat,
+    updateWegpiraatById: updateWegpiraatById,
     deleteWegpiraatById: deleteWegpiraatById,
     addCommentToPost: addCommentToPost,
-    deleteCommentFromPost: deleteCommentFromPost
+    deleteCommentFromPost: deleteCommentFromPost, 
+    addLikeToPost: addLikeToPost,
+    deleteLikeFromPost: deleteLikeFromPost
 };

@@ -8,12 +8,12 @@ function checkStatus(req,res) {
     res.json({status : "up" });
 }
 
-//Get all posts
+//Get all posts (TODO: with filter/sort and/or pagination)
 function getAllWegpiraten(req,res) {
     wpRepo.getAllWegpiraten(data => res.send(data));
 }
 
-//Get a post by a given id ==> if wegpiraat not found, delete from own list of reference
+//Get a post by a given id ==> TODO if wegpiraat not found, delete from own list of reference 
 function getWegpiraatById(req,res) {    
     wpRepo.getWegpiraatById(req.params.postId, (err, data) => {
         if (err) res.status(400).send(err);
@@ -46,9 +46,9 @@ function deleteWegpiraatById(req,res) {
             wpRepo.deleteWegpiraatById(req.params.postId, (err, postId) => { //delete post
                 if (err) { res.status(400).send(err); }
                 else {
-                    authRepository.deleteWegpiraatById(postId, user, (err, data) => { //delete reference
+                    authRepository.deleteWegpiraatById(postId, user, (err, confirmation) => { //delete reference
                         if (err) { res.status(400).send(err); }
-                        else res.send(data); //returns the confirmation
+                        else res.send(confirmation); //returns the confirmation
                     });
                 }
             });
@@ -58,10 +58,16 @@ function deleteWegpiraatById(req,res) {
 
 //Update a post by a given id and correct auth
 function updateWegpiraatById(req,res) {
-    wpRepo.updateWegpiraat(req.params.id, req.body, data => {
-        if (err) res.status(400).send(err);
-        else res.send(data);
-    });
+    authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => { 
+        if (err) { res.status(400).send(err); }
+        if (!business.postBelongsToUser(req.params.postId, user)) { res.sendStatus(403); } //unauthorized 
+        else {  //authorized
+            wpRepo.updateWegpiraatById(req.params.postId, req.body, (err, post) => { //updated post
+                if (err) { res.status(400).send(err); }
+                else { res.send(post); }
+            });
+        }        
+    }); 
 }
 
 //Add a comment to a post => if success => add a reference to the user
@@ -89,9 +95,9 @@ function deleteCommentFromPost(req,res) {
             wpRepo.deleteCommentFromPost(req.params.postId, req.params.commentId, (err, commentId) => { //returns the commentId
                 if (err) { res.status(400).send(err); }
                 else {
-                    authRepository.deleteComment(req.params.postId, commentId, user, (err, data) => { //removes the returned commentId 
+                    authRepository.deleteComment(req.params.postId, commentId, user, (err, confirmation) => { //removes the returned commentId 
                         if (err) res.status(400).send(err);
-                        else res.send(data); //returns the confirmation
+                        else res.send(confirmation); //returns the confirmation
                     });
                 }
             });
@@ -99,10 +105,36 @@ function deleteCommentFromPost(req,res) {
     });
 }
 
+//Get a comment from a post
+function getCommentOfPost(req,res) {
+
+}
+
 //Add a like to a post or remove if already liked => if success => add/delete reference to user 
-function addOrRemoveLikeToPost(req, res) {
+function likeOrUnlikePost(req, res) {
     authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => {
-        //todo
+        if (err) res.status(400).send(err);
+        if (business.isPostLiked(req.params.postId, user)) {
+            wpRepo.deleteLikeFromPost(req.params.postId, user, (err, postId) => {
+                if (err) { res.status(400).send(err); }
+                else {
+                    authRepository.deleteLike(postId, user, (err, confirmed) => {
+                        if (err) res.status(400).send(err);
+                        else res.send(confirmed);
+                    });
+                }
+            });
+        } else {
+            wpRepo.addLikeToPost(req.params.postId, user, (err, postId) => {
+                if (err) { res.status(400).send(err); }
+                else {
+                    authRepository.addLike(postId, user, (err, confirmed) => {
+                        if (err) res.status(400).send(err);
+                        else res.send(confirmed);
+                    });
+                }
+            });
+        }
     });
 }
 
@@ -115,5 +147,6 @@ module.exports = {
     deleteWegpiraatById: deleteWegpiraatById,
     addCommentToPost: addCommentToPost,
     deleteCommentFromPost: deleteCommentFromPost,
-    addOrRemoveLikeToPost: addOrRemoveLikeToPost
+    likeOrUnlikePost: likeOrUnlikePost,
+    getCommentOfPost: getCommentOfPost
 };

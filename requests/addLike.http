@@ -1,0 +1,5 @@
+@token = Bearer 37b7c30376a57b4b11357c40663e929c855cc96f
+@wegpiraatId = 5a7b763454b55f22c4f6a4ea
+POST http://localhost:3000/api/wegpiraten/{{wegpiraatId}}/like HTTP/1.1
+Content-Type: application/json
+Authorization: {{token}}

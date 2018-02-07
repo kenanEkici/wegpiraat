@@ -51,7 +51,10 @@ function addWegpiraat(postId, user, cb) {
   getUserById(user._id, (err, user) => { 
     if (!err && user) {
       user.posts.push(postId);
-      user.save(cb);      
+      user.save((err) => {
+        if (err) return cb(err, null);
+        cb(null, postId);
+      });      
     } else { cb(err, null); }
   });
 }
@@ -72,27 +75,54 @@ function addComment(postId, commentId, user, cb) {
   getUserById(user._id, (err, user) => {    
     if (!err && user) {
       user.comments.push({postId:postId, commentId:commentId});
-      user.save(cb);      
+      user.save((err) => {
+        if (err) return cb(err, null);
+        cb(null, "Commented on " + postId);
+      });      
     } else { cb(err, null); }
   });
 }
 
 function deleteComment(postId, commentId, user, cb) {
     getUserById(user._id, (err, user) => { 
-      if (!err && user) {    
-
+      if (!err && user) {
         var comments = user.comments;
         for (let i = 0; i < comments.length; ++i) 
-          if (comments[i].commentId.toString() === commentId) {
-            user.comments.splice(comments[i].commentId.toString().indexOf(), 1);
-          };   
-          
+          if (comments[i].commentId.toString() === commentId)
+            user.comments.splice(comments[i].commentId.toString().indexOf(), 1);          
         user.save((err) => {
           if (err) return cb(err, null);
           cb(null, "Comment " + commentId + " deleted")
         });      
       } else { cb(err, null); }
     });
+}
+
+function addLike(postId, user, cb) {
+    getUserById(user._id, (err, user) => {    
+      if (!err && user) {
+        user.likes.push(postId);
+        user.save((err) => {
+          if (err) return cb(err, null);
+          cb(null, "Liked " + postId);
+        });      
+      } else { cb(err, null); }
+    });
+}
+
+function deleteLike(postId, user, cb) {
+  getUserById(user._id, (err, user) => { 
+    if (!err && user) {
+      var likes = user.likes;
+      for (let i = 0; i < likes.length; ++i) 
+        if (likes[i].toString() === postId)
+          user.likes.splice(likes[i].toString().indexOf(), 1);   
+      user.save((err) => {
+        if (err) return cb(err, null);
+        cb(null, "Unliked " + postId);
+      });
+    } else { cb(err, null); }
+  });
 }
 
 module.exports = {
@@ -103,5 +133,7 @@ module.exports = {
   addWegpiraat: addWegpiraat,
   deleteWegpiraatById: deleteWegpiraatById,
   addComment: addComment,
-  deleteComment: deleteComment
+  deleteComment: deleteComment,
+  addLike: addLike,
+  deleteLike: deleteLike
 };

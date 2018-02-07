@@ -39,7 +39,7 @@ module.exports = function(app) {
     //update wegpiraat
     app.put('/api/wegpiraten/:postId', app.oauth.authorise(), wpController.updateWegpiraatById);
 
-    //delete wegpiraat
+    //delete wegpiraat 
     app.delete('/api/wegpiraten/:postId', app.oauth.authorise(), wpController.deleteWegpiraatById);
 
     //add comment
@@ -48,8 +48,11 @@ module.exports = function(app) {
     //delete comment
     app.delete('/api/wegpiraten/:postId/:commentId', app.oauth.authorise(), wpController.deleteCommentFromPost);
 
+    //get single comment -- TODO
+    app.get('/api/wegpiraten/:postId/comments/:commentId', app.oauth.authorise(), wpController.getCommentOfPost);
+
     //like post
-    app.post('/api/wegpiraten/:postId/like', app.oauth.authorise(), wpController.addOrRemoveLikeToPost);
+    app.post('/api/wegpiraten/:postId/like', app.oauth.authorise(), wpController.likeOrUnlikePost);
 
     // Not found
     app.use(function(req, res) {

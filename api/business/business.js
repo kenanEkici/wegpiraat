@@ -25,7 +25,7 @@ function checkObjectId(id) {
 
 function postBelongsToUser(postId, user) {    
     var posts = user.posts;
-    for (var i = 0; i < posts.length; ++i) 
+    for (var i = 0; i < posts.length; ++i)      
         if (posts[i].toString() === postId) return true;  
     return false;
 }
@@ -37,12 +37,20 @@ function commentBelongsToUser(commentId, user) {
     return false;
 }
 
+function isPostLiked(postId, user) {
+    var likes = user.likes;
+    for (let i = 0; i < likes.length; ++i) 
+        if (likes[i].toString() === postId) return true;
+    return false;
+}
+
 module.exports = {
     hashPassword: hashPassword,
     validatePassword: validatePassword,
     checkObjectId: checkObjectId,
     postBelongsToUser: postBelongsToUser,
-    commentBelongsToUser: commentBelongsToUser
+    commentBelongsToUser: commentBelongsToUser,
+    isPostLiked: isPostLiked
 };
   
   
