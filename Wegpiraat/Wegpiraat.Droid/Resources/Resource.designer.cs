@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("TabbedNavigation.Droid.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("Wegpiraat.Droid.Resource", IsApplication=true)]
 
-namespace TabbedNavigation.Droid
+namespace Wegpiraat.Droid
 {
 	
 	
@@ -26,7 +26,7 @@ namespace TabbedNavigation.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::TabbedNavigation.Droid.Resource.Attribute.actionBarSize;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::Wegpiraat.Droid.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation
