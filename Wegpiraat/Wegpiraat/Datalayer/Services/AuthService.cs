@@ -28,22 +28,29 @@ namespace Wegpiraat.Datalayer.Services
 
             try
             {
+                var nvc = new List<KeyValuePair<string, string>>();
+                nvc.Add(new KeyValuePair<string, string>("grant_type", ApiConstants.GRANT_TYPE));
+                nvc.Add(new KeyValuePair<string, string>("client_id", ApiConstants.CLIENT_ID));
+                nvc.Add(new KeyValuePair<string, string>("client_secret", ApiConstants.CLIENT_SECRET));
+                nvc.Add(new KeyValuePair<string, string>("username", userTryingToLogin.Username));
+                nvc.Add(new KeyValuePair<string, string>("password", userTryingToLogin.Password));
                 //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes(username+ ":" +password)));
-                resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "/login", new StringContent(JsonConvert.SerializeObject(userTryingToLogin), Encoding.UTF8, "application/json"));
+                string kek = ApiConstants.BASE_API_URI + "login";
+                resp = await _httpClient.PostAsync(kek, new FormUrlEncodedContent(nvc));
                 tokens = JsonConvert.DeserializeObject<Tokens>(await resp.Content.ReadAsStringAsync());
 
                 if (resp != null && resp.IsSuccessStatusCode)
                 {
                     //store user with it's tokens in the database
-                    return new User { Tokens = tokens, Username = userTryingToLogin.Username, Password = userTryingToLogin.Password };
+                    return await Task.FromResult(new User { Tokens = tokens, Username = userTryingToLogin.Username, Password = userTryingToLogin.Password });
                 }
 
-                return null;
+                return await Task.FromResult<User>(null);
             }
             catch (HttpRequestException ex)
             {
-                Debug.WriteLine("server error fam");
-                return null;
+                Debug.WriteLine(ex);
+                return await Task.FromResult<User>(null);
             }
         }
 

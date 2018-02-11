@@ -26,6 +26,7 @@ namespace Wegpiraat.Data.Datalayer.Domain
         }
 
         private string _password;
+        [JsonProperty(PropertyName = "password")]
         public string Password
         {
             get { return _password; }
@@ -59,7 +60,7 @@ namespace Wegpiraat.Data.Datalayer.Domain
                 OnPropertyChanged(nameof(LastName));
             }
         }
-
+        
         protected virtual void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

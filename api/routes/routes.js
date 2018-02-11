@@ -21,7 +21,7 @@ module.exports = function(app) {
 
     app.post('/api/register', authController.register);
 
-    app.post('/api/login', app.oauth.grant()); 
+    app.post('/api/login', app.oauth.grant());
     
     app.post('/api/auth', app.oauth.authCodeGrant());
   
@@ -56,6 +56,7 @@ module.exports = function(app) {
 
     // Not found
     app.use(function(req, res) {
+        console.log("accessed");
         res.status(404).send({url: req.originalUrl + ' not found'})
     });
 }

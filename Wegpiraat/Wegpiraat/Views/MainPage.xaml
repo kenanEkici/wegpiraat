@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
      xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" prism:ViewModelLocator.AutowireViewModel="True"
-     x:Class="Wegpiraat.Views.MainPage" Title="Wegpiraat">
-    <TableView Intent="Form">
-        <TableRoot>
-            <TableSection Title="Login">
-                <ViewCell>
-                    <Button Text="Login" Command="{Binding NavigateCommand}" CommandParameter="NavigatingAwareTabbedPage" />
-                </ViewCell>
-            </TableSection>
-        </TableRoot>
-    </TableView>
+     x:Class="Wegpiraat.Views.MainPage" Title="Login to Wegpiraat">
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Label Text="{Binding LoginError}"          
+               HorizontalOptions="Center" 
+               HorizontalTextAlignment="Center"
+               TextColor="Red">            
+        </Label>
+        <Entry Text="{Binding Username}" 
+               HorizontalOptions="Center" 
+               WidthRequest="300">            
+        </Entry>
+        <Entry Text="{Binding Password}" 
+               HorizontalOptions="Center" 
+               IsPassword="True"  
+               WidthRequest="300">
+        </Entry>
+        <Button Command="{Binding NavigateCommand}" 
+                HorizontalOptions="Center" 
+                Text="Login" 
+                CommandParameter="NavigatingAwareTabbedPage"/>
+    </StackLayout>
 </ContentPage>
