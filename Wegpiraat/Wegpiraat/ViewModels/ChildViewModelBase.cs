@@ -11,11 +11,7 @@ namespace Wegpiraat.ViewModels
         IEventAggregator _ea { get; }
         public ChildViewModelBase( IEventAggregator eventAggregator )
         {
-            _ea = eventAggregator;
-
-            _ea.GetEvent<InitializeTabbedChildrenEvent>().Subscribe(OnInitializationEventFired);
-
-            IsActiveChanged += (sender, e) => System.Diagnostics.Debug.WriteLine($"{Title} IsActive: {IsActive}");
+            _ea = eventAggregator;           
         }
 
         public event EventHandler IsActiveChanged;
@@ -31,27 +27,7 @@ namespace Wegpiraat.ViewModels
         public bool IsActive
         {
             get { return _isActive; }
-            set { SetProperty(ref _isActive, value, () => System.Diagnostics.Debug.WriteLine($"{Title} IsActive Changed: {value}")); }
-        }
-
-        void OnInitializationEventFired(NavigationParameters parameters)
-        {
-            System.Diagnostics.Debug.WriteLine($"{Title} Detected an initialization event");
-            var message = parameters.GetValue<string>("message");
-            Message = $"{Title} Initialized by Event: {message}";
-        }
-
-        public override void OnNavigatingTo(NavigationParameters parameters)
-        {
-            System.Diagnostics.Debug.WriteLine($"{Title} is executing OnNavigatingTo");
-            var message = parameters.GetValue<string>("message");
-            Message = $"{Title} Initialized by OnNavigatingTo: {message}";
-        }
-
-        public override void Destroy()
-        {
-            System.Diagnostics.Debug.WriteLine($"{Title} is being Destroyed!");
-            _ea.GetEvent<InitializeTabbedChildrenEvent>().Unsubscribe(OnInitializationEventFired);
+            set { SetProperty(ref _isActive, value); }
         }
     }
 }

@@ -10,7 +10,7 @@ using Wegpiraat.Datalayer.Services;
 
 namespace Wegpiraat.ViewModels
 {
-    public class MainPageViewModel : BindableBase
+    public class LoginPageViewModel : BindableBase
     {
         INavigationService _navigationService { get; }
         IAuthService _authService { get; }
@@ -45,7 +45,7 @@ namespace Wegpiraat.ViewModels
             set { SetProperty(ref _spinner, value); }
         }
 
-        public MainPageViewModel(INavigationService navigationService)
+        public LoginPageViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
             _authService = new AuthService();

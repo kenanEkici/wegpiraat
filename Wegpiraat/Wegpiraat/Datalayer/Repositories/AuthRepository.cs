@@ -17,6 +17,8 @@ namespace Wegpiraat.Datalayer.Repositories
         public AuthRepository()
         {
             _connection = DependencyService.Get<ISQLiteHelper>().GetConnection();
+            //_connection.DropTable<User>();
+            //_connection.DropTable<Tokens>();
             if (!_connection.GetTableInfo("User").Any()) _connection.CreateTable<User>();
             if (!_connection.GetTableInfo("Tokens").Any()) _connection.CreateTable<Tokens>();
         }
@@ -32,6 +34,7 @@ namespace Wegpiraat.Datalayer.Repositories
         public bool AddUserTokens(Tokens tokens)
         {
             _connection.DeleteAll(typeof(Tokens));
+            tokens.ExpireDate = DateTime.Now;
             if (_connection.Insert(tokens) == 1)
                 return true;
             return false;

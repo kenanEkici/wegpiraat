@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
      xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" prism:ViewModelLocator.AutowireViewModel="True"
-     x:Class="Wegpiraat.Views.MainPage" Title="Login to Wegpiraat">
+     x:Class="Wegpiraat.Views.LoginPage" Title="Login to Wegpiraat">
     <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <Label Text="{Binding LoginError}"          
                HorizontalOptions="Center" 
@@ -20,6 +20,6 @@
         <Button Command="{Binding NavigateCommand}" 
                 HorizontalOptions="Center" 
                 Text="Login" 
-                CommandParameter="NavigatingAwareTabbedPage"/>
+                CommandParameter="/NavigationPage/MenuPage"/>
     </StackLayout>
 </ContentPage>

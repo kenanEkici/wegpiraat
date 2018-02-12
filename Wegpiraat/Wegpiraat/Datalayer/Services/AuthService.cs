@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,6 +25,17 @@ namespace Wegpiraat.Datalayer.Services
             _authRepository = new AuthRepository();
         }
 
+        public async Task<bool> UserIsAuthorized()
+        {
+            var user = AuthorizedUserExistsInDatabase();
+            if (user != null)
+            {
+                if (AccessTokenHasExpired()) return await RefreshAccessToken(user);
+                else return true;
+            }
+            return false;
+        }
+
         //if login successful to server, save retrieved information in database
         //else retrieve error
         public async Task<User> Login(string username, string password)
@@ -45,9 +57,14 @@ namespace Wegpiraat.Datalayer.Services
         //check if access_token has not expired? 
         //if not continue with application else try to refresh token
         //if database empty or unsuccessful, request login
-        public async Task<User> AuthorizedUserExistsInDatabase()
-        {           
-            throw new NotImplementedException();
+        public User AuthorizedUserExistsInDatabase()
+        {
+            var user = _authRepository.GetSingleUser();
+            if (user != null)
+            {
+                return user;
+            }
+            return null;
         }
 
         //request access token and refresh token with given credentials
@@ -91,24 +108,24 @@ namespace Wegpiraat.Datalayer.Services
         //check if access token in database has expired
         //return true if expired
         //return false if not
-        public async Task<bool> AccessTokenHasExpired(User user)
-        {            
-            throw new NotImplementedException();
+        public bool AccessTokenHasExpired()
+        {
+            return _authRepository.GetSingleTokensOfUser().ExpireDate < DateTime.Now;
         }
 
         //request a new access token with refresh token
         //replace access token with new in database 
         public async Task<bool> RefreshAccessToken(User user)
         {
-            HttpResponseMessage resp;
-            Tokens tokens;
+            HttpResponseMessage resp = null;
+            Tokens tokens = _authRepository.GetSingleTokensOfUser();
 
             try
             {
                 var nvc = new List<KeyValuePair<string, string>>
                 {
                     new KeyValuePair<string, string>("grant_type", ApiConstants.REFRESH_GRANT_TYPE),
-                    new KeyValuePair<string, string>("refresh_token", user.Tokens.RefreshToken),
+                    new KeyValuePair<string, string>("refresh_token", tokens.RefreshToken),
                     new KeyValuePair<string, string>("client_id", ApiConstants.CLIENT_ID),
                     new KeyValuePair<string, string>("client_secret", ApiConstants.CLIENT_SECRET)
                 };
@@ -118,12 +135,10 @@ namespace Wegpiraat.Datalayer.Services
 
                 if (resp != null && resp.IsSuccessStatusCode)
                 {
-                    //replace access token and refresh token in database
-                    return await Task.FromResult<bool>(true);
+                    _authRepository.UpdateTokens(tokens);
+                    return await Task.FromResult(true);
                 }
-
-                //response is faulty
-                return await Task.FromResult<bool>(false);
+                return await Task.FromResult(false);
             }
             catch (HttpRequestException ex)
             {

@@ -2,11 +2,11 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:Wegpiraat.Views"
-            Title="{Binding Title}"
-            x:Class="Wegpiraat.Views.NavigatingAwareTabbedPage">
+            Title="Wegpiraat"
+            x:Class="Wegpiraat.Views.MenuPage">
     <TabbedPage.Children>
-        <local:ViewA />
-        <local:ViewB />
-        <local:ViewC />
+        <local:FeedPage />
+        <local:SearchPage />
+        <local:ProfilePage />
     </TabbedPage.Children>
 </TabbedPage>

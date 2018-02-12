@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace Wegpiraat.ViewModels
 {
-    public class NavigatingAwareTabbedPageViewModel : BaseViewModel
+    public class MenuPageViewModel : BaseViewModel
     {
-        public NavigatingAwareTabbedPageViewModel()
+        public MenuPageViewModel()
         {
             Title = "Navigating Aware";
         }

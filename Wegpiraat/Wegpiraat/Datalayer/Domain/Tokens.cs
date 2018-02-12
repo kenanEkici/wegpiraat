@@ -34,6 +34,16 @@ namespace Wegpiraat.Data.Datalayer.Domain
             }
         }
 
+        private DateTime _expireDate;
+        public DateTime ExpireDate
+        {
+            get => _expireDate;
+            set
+            {
+                _expireDate = value.AddSeconds(_expiresAt);
+            }
+        }
+
         private string _refreshToken;
         [JsonProperty(PropertyName = "refresh_token")]
         public string RefreshToken

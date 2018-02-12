@@ -4,6 +4,6 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              Title="{Binding Title}"
-             x:Class="Wegpiraat.Views.ViewA">
-    <Label Text="{Binding Message}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+             x:Class="Wegpiraat.Views.FeedPage">
+    
 </ContentPage>

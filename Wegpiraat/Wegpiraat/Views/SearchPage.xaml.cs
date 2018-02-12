@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace Wegpiraat.Views
 {
-    public partial class ViewA : ContentPage
+    public partial class SearchPage : ContentPage
     {
-        public ViewA()
+        public SearchPage()
         {
             InitializeComponent();
         }

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Prism.Navigation;
 using Xamarin.Forms;
 
 namespace Wegpiraat.Views
 {
-    public partial class ViewB : ContentPage
+    public partial class MenuPage : TabbedPage
     {
-        public ViewB()
+        public MenuPage()
         {
             InitializeComponent();
-        }
+        }        
     }
 }
