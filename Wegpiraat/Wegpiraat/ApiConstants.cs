@@ -14,6 +14,7 @@ namespace Wegpiraat
         //Oauth2
         public static string CLIENT_ID = "wegpiraat";
         public static string CLIENT_SECRET = "123";
-        public static string GRANT_TYPE = "password";
+        public static string PASSWORD_GRANT_TYPE = "password";
+        public static string REFRESH_GRANT_TYPE = "refresh_token";
     }
 }

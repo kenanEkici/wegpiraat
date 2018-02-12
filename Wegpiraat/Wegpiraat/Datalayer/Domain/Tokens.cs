@@ -1,12 +1,17 @@
 ﻿using Newtonsoft.Json;
+using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Wegpiraat.Data.Datalayer.Domain
 {
+    [Table("Tokens")]
     public class Tokens
     {
+        [PrimaryKey, AutoIncrement, Column("_id")]
+        public int Id { get; set; }
+
         private string _accessToken;
         [JsonProperty(PropertyName = "access_token")]
         public string AccessToken

@@ -1,18 +1,20 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+using SQLite.Net.Attributes;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Wegpiraat.Data.Datalayer.Domain 
 {
+    [Table("Users")]
     public class User : INotifyPropertyChanged
     {
+
         public event PropertyChangedEventHandler PropertyChanged;
+        [Ignore]
         public Tokens Tokens { get; set; }
 
+        [PrimaryKey, AutoIncrement, Column("_id")]
+        public int Id { get; set; }
+        
         private string _username;
         [JsonProperty(PropertyName = "username")]
         public string Username

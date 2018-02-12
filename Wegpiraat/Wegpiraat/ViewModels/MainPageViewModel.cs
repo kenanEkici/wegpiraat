@@ -54,7 +54,7 @@ namespace Wegpiraat.ViewModels
         private async Task OnNavigateCommandExecuted(string path)
         {
             //show spinner
-            var user = await _authService.Login(new User { Username = Username, Password = Password });
+            var user = await _authService.Login(Username, Password);
             //hide spinner
 
             if (user != null)
