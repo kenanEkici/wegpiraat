@@ -11,40 +11,65 @@ var userSchema = mongoose.Schema({
 
   hashed_password: { type: String, required: true },
   password_reset_token: { type: String, unique: true, sparse: true },
-  reset_token_expires: Date,  
+  reset_token_expires: { type: Date },  
 
   posts:  [{ type : mongoose.Schema.ObjectId }], //postId
   likes:  [{ type : mongoose.Schema.ObjectId }], //postId
   comments: [{ postId: mongoose.Schema.ObjectId, commentId: mongoose.Schema.ObjectId}] //postId and commentId
 });
 
-function createUser(body, cb) {
-  //cb();
+userSchema.statics.createUser = function(body) {
+  return new User(body);
 }
 
-function getUserByEmail(email, cb) {
+userSchema.statics.getUserByEmail = function(email, cb) {
   User.findOne({ email: email }, (err, user) => {
-      if (err || !user) return cb(err);
+      if (err || !user) return cb(err, null);
       cb(null, user);
   });
 }
 
-function getUserById(id, cb) {
+userSchema.statics.getUserById = function(id, cb) {
   User.findOne({_id:mongoose.mongo.ObjectId(id)}, (err, user) => {
-    if (err || !user) return cb(err);
+    if (err || !user) return cb(err, null);
     cb(null, user);
   });
 }
 
-function validateAccount(email, password, cb) {
-  getUserByEmail(email, function(err, user ){
-    if (err || !user) return cb(err);  
+userSchema.statics.validateAccount = function(email, password, cb) {
+  User.getUserByEmail(email, (err, user ) => {
+    if (err || !user) return cb(err, null);  
     cb(null, business.validatePassword(password, user.hashed_password) ? user._id : null);
   });
 }
 
-function addWegpiraat(postId, user, cb) {
-  getUserById(user._id, (err, user) => { 
+userSchema.statics.resetPassword = function(email, newPassword, cb) {
+  User.getUserByEmail(email, (err, user) => {
+    if (err || !user) return cb(err, null);
+    user.password_reset_token = null;
+    user.reset_token_expires = null;
+    user.hashed_password = newPassword;
+    user.save((err, data) => {
+      if (err) return cb(err, null);
+      cb(null, data);
+    });
+  });
+}
+
+userSchema.statics.forgotPassword = function(email, token, expires, cb) {
+  User.getUserByEmail(email, (err, user) => {
+    if (err || !user) return cb(err, null);  
+    user.password_reset_token = token;
+    user.reset_token_expires = expires;
+    user.save((err, data) => {
+      if (err) return cb(err, null);
+      cb(null, data);
+    });
+  });
+}
+
+userSchema.statics.addWegpiraat = function(postId, user, cb) {
+  User.getUserById(user._id, (err, user) => { 
     if (!err && user) {
       user.posts.push(postId);
       user.save((err) => {
@@ -55,8 +80,8 @@ function addWegpiraat(postId, user, cb) {
   });
 }
 
-function deleteWegpiraatById(postId, user, cb) {
-  getUserById(user._id, (err, user) => { 
+userSchema.statics.deleteWegpiraatById = function(postId, user, cb) {
+  User.getUserById(user._id, (err, user) => { 
     if (!err && user) {      
       user.posts.splice(user.posts.indexOf(postId), 1);
       user.save((err) => {
@@ -67,8 +92,8 @@ function deleteWegpiraatById(postId, user, cb) {
   });
 }
 
-function addComment(postId, commentId, user, cb) {
-  getUserById(user._id, (err, user) => {    
+userSchema.statics.addComment = function(postId, commentId, user, cb) {
+  User.getUserById(user._id, (err, user) => {    
     if (!err && user) {
       user.comments.push({postId:postId, commentId:commentId});
       user.save((err) => {
@@ -79,8 +104,8 @@ function addComment(postId, commentId, user, cb) {
   });
 }
 
-function deleteComment(postId, commentId, user, cb) {
-    getUserById(user._id, (err, user) => { 
+userSchema.statics.deleteComment = function(postId, commentId, user, cb) {
+    User.getUserById(user._id, (err, user) => { 
       if (!err && user) {
         var comments = user.comments;
         for (let i = 0; i < comments.length; ++i) 
@@ -94,8 +119,8 @@ function deleteComment(postId, commentId, user, cb) {
     });
 }
 
-function addLike(postId, user, cb) {
-    getUserById(user._id, (err, user) => {    
+userSchema.statics.addLike = function(postId, user, cb) {
+    User.getUserById(user._id, (err, user) => {    
       if (!err && user) {
         user.likes.push(postId);
         user.save((err) => {
@@ -106,8 +131,8 @@ function addLike(postId, user, cb) {
     });
 }
 
-function deleteLike(postId, user, cb) {
-  getUserById(user._id, (err, user) => { 
+userSchema.statics.deleteLike = function(postId, user, cb) {
+  User.getUserById(user._id, (err, user) => { 
     if (!err && user) {
       var likes = user.likes;
       for (let i = 0; i < likes.length; ++i) 
@@ -121,18 +146,5 @@ function deleteLike(postId, user, cb) {
   });
 }
 
-module.exports = {
-  validateAccount: validateAccount,
-  getUserByEmail: getUserByEmail,
-  getUserById: getUserById,
-  createUser: createUser,
-  addWegpiraat: addWegpiraat,
-  deleteWegpiraatById: deleteWegpiraatById,
-  addComment: addComment,
-  deleteComment: deleteComment,
-  addLike: addLike,
-  deleteLike: deleteLike
-};
-
 var User = mongoose.model('Users', userSchema);
-module.exports = mongoose.model('Users', userSchema);
+module.exports = User;

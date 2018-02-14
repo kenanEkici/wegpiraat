@@ -23,7 +23,11 @@ module.exports = function(app, nev) {
 
     app.get('/api/verify/:url', (req, res) => authController.confirmUser(req, res, nev));
 
-    app.post('/api/verify/resend', (req, res) => authController.resendVerification(req, res, nev));
+    app.post('/api/verify/resend', (req, res) => authController.resendVerification(req, res, nev));    
+
+    app.post('/api/password/forgot', authController.forgotPassword); 
+
+    app.post('/api/password/forgot/confirm', authController.confirmReset); 
 
     app.post('/api/login', app.oauth.grant());
     
@@ -31,6 +35,8 @@ module.exports = function(app, nev) {
   
     //protected routes 
 
+    app.post('/api/password/reset', app.oauth.authorise(), authController.resetPassword);
+    
     //masters
     app.get('/api/wegpiraten', app.oauth.authorise(), wpController.getAllWegpiraten);
 
@@ -60,7 +66,6 @@ module.exports = function(app, nev) {
 
     // Not found
     app.use(function(req, res) {
-        console.log("accessed");
         res.status(404).send({url: req.originalUrl + ' not found'})
     });
 }
