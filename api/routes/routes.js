@@ -3,7 +3,7 @@
 var wpController = require('../controllers/wegpiraat-controllers');
 var authController = require('../controllers/auth-controller')
 
-module.exports = function(app) {    
+module.exports = function(app, nev) {    
     
     //CORS
     app.options('*', function(req,res,next) {
@@ -15,11 +15,15 @@ module.exports = function(app) {
     
     //unprotected routes
 
-    app.get('/', (req,res) => res.render("index.html"));
+    app.get('/', (req, res) => res.render("index.html"));
     
     app.get('/api', wpController.checkStatus);
 
-    app.post('/api/register', authController.register);
+    app.post('/api/register', (req, res) => authController.register(req, res, nev));
+
+    app.get('/api/verify/:url', (req, res) => authController.confirmUser(req, res, nev));
+
+    app.post('/api/verify/resend', (req, res) => authController.resendVerification(req, res, nev));
 
     app.post('/api/login', app.oauth.grant());
     

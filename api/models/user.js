@@ -4,8 +4,7 @@ var mongoose = require('mongoose');
 var business = require('../business/business');
 
 var userSchema = mongoose.Schema({
-  validatedEmail: { type: String, required: true, unique: true },
-  email: String,
+  email: { type: String, required: true, unique: true },
   username: {type: String, index: { unique: true } },
   firstname: String,
   lastname: String,
@@ -19,15 +18,12 @@ var userSchema = mongoose.Schema({
   comments: [{ postId: mongoose.Schema.ObjectId, commentId: mongoose.Schema.ObjectId}] //postId and commentId
 });
 
-var User = mongoose.model('Users', userSchema);
-module.exports = User;
-
 function createUser(body, cb) {
-  new User(body).save(cb);
+  //cb();
 }
 
 function getUserByEmail(email, cb) {
-  User.findOne({ validatedEmail: email }, (err, user) => {
+  User.findOne({ email: email }, (err, user) => {
       if (err || !user) return cb(err);
       cb(null, user);
   });
@@ -137,3 +133,6 @@ module.exports = {
   addLike: addLike,
   deleteLike: deleteLike
 };
+
+var User = mongoose.model('Users', userSchema);
+module.exports = mongoose.model('Users', userSchema);
