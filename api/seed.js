@@ -1,7 +1,4 @@
 var models = require('./models/auth/oauth_client');
+var exp = require('../api/constants');
 
-models.create({
-    clientId: 'wegpiraat',
-    clientSecret: '123',
-    redirectUri: '/oauth/redirect'
-});
+models.create(exp.clientSeed);

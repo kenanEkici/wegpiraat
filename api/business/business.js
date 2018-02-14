@@ -55,16 +55,20 @@ function isPostLiked(postId, user) {
     return false;
 }
 
-function sendResetPasswordMail(email, cb) {
+function generatePasswordResetToken(cb) {
     crypto.randomBytes(8, (err, buf) =>{
-        var token = buf.toString('hex');
-        let transporter = nodemailer.createTransport(exp.mailer);
-        let mailOptions = exp.resetPasswordMail(email, token);          
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) return cb(error,null);
-            else cb(null, token);
-        });
+        if (err) cb(err, null);
+        else cb(null, buf.toString('hex'));        
     });    
+}
+
+function sendResetPasswordMail(email, token, cb) {
+    let transporter = nodemailer.createTransport(exp.mailer);
+    let mailOptions = exp.resetPasswordMail(email, token);          
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) return cb(error,null);
+        else cb(null, token);
+    });
 }
 
 function tokenIsInvalid(userToken, givenToken) {
@@ -90,6 +94,7 @@ module.exports = {
     isPostLiked: isPostLiked,
     doubleCheckPassword: doubleCheckPassword,
     sendResetPasswordMail: sendResetPasswordMail,
+    generatePasswordResetToken: generatePasswordResetToken,
     tokenIsInvalid: tokenIsInvalid,
     tokenHasExpired: tokenHasExpired,
     getTokenExpireDate: getTokenExpireDate

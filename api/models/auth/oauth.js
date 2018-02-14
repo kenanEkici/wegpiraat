@@ -1,10 +1,9 @@
-var AuthCode = require('./oauth_authcode');
-var AccessToken = require('./oauth_accesstoken');
-var RefreshToken = require('./oauth_refreshtoken');
-var Client = require('./oauth_client');
+var AuthCode = require('./authcode');
+var AccessToken = require('./accesstoken');
+var RefreshToken = require('./refreshtoken');
+var Client = require('./client');
 var User = require('../user');
 
-//replace with repo functions
 module.exports.getAuthCode = AuthCode.getAuthCode;
 module.exports.saveAuthCode = AuthCode.saveAuthCode;
 module.exports.getAccessToken = AccessToken.getAccessToken;

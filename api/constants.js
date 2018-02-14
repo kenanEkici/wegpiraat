@@ -8,6 +8,12 @@ exports.mailer = {
     }
 }
 
+exports.verExpirationTime = 86400; //24H
+
+exports.tempuserCollection = 'tempusers';
+
+exports.verUrl = 'http://localhost:3000/api/verify/${URL}';
+
 exports.oauth = {
     model: require('./models/auth/oauth'),
       grants: ['password', 'refresh_token'],
@@ -51,4 +57,10 @@ exports.swagger = {
     },
     // path to the API docs
     apis: ['./api/routes/*.js'],
+}
+
+exports.clientSeed = {
+    clientId: 'wegpiraat',
+    clientSecret: '123',
+    redirectUri: '/oauth/redirect'
 }

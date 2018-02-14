@@ -5,7 +5,7 @@ var business = require('../business/business');
 
 var userSchema = mongoose.Schema({
   email: { type: String, required: true, unique: true },
-  username: {type: String, index: { unique: true } },
+  username: {type: String, required: true, index: { unique: true } },
   firstname: String,
   lastname: String,
 

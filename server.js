@@ -1,4 +1,4 @@
-//dependencies
+//deps
 var express = require('express');
 var app = express();
 var port = process.env.PORT || 3000;
@@ -20,15 +20,16 @@ app.oauth = oauthserver(exp.oauth);
 
 //email server
 nev.configure({
-  verificationURL: 'http://localhost:3000/api/verify/${URL}',
+  verificationURL: exp.verUrl,
+  expirationTime: exp.verExpirationTime,
   persistentUserModel: User,
-  tempUserCollection: 'tempusers',
+  tempUserCollection: exp.tempuserCollection,
   transportOptions: exp.mailer,
   verifyMailOptions: exp.verifyMail,
   shouldSendConfirmation: false,
   confirmMailOptions: exp.confirmMail    
-}, function(error, options){
-  console.log(error);
+}, function(err, opts){
+    if (err) console.log(err);
 });
 
 nev.generateTempUserModel(User, function(err, tempUserModel) {
