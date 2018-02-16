@@ -15,7 +15,11 @@ namespace Wegpiraat.ViewModels
         INavigationService _navigationService { get; }
         IAuthService _authService { get; }
 
-        public DelegateCommand<string> NavigateCommand => new DelegateCommand<string>(async (path) => await OnNavigateCommandExecuted(path));
+        public DelegateCommand<string> LoginCommand => new DelegateCommand<string>(async (path) => await OnLoginCommandExecuted(path));
+        
+        public DelegateCommand<string> RegisterCommand => new DelegateCommand<string>(async (path) => await OnRegisterCommandExecuted(path));
+
+        public DelegateCommand<string> ForgotPasswordCommand => new DelegateCommand<string>(async (path) => await OnForgotPasswordCommandExecuted(path));
 
         private string _username = "example@outlook.com";
         public string Username
@@ -51,7 +55,7 @@ namespace Wegpiraat.ViewModels
             _authService = new AuthService();
         }        
 
-        private async Task OnNavigateCommandExecuted(string path)
+        private async Task OnLoginCommandExecuted(string path)
         {
             //show spinner
             var user = await _authService.Login(Username, Password);
@@ -67,7 +71,11 @@ namespace Wegpiraat.ViewModels
                 await Task.Delay(3000);
                 EmptyLoginError();
             }
-        }       
+        }
+
+        private Task OnForgotPasswordCommandExecuted(string path) => throw new NotImplementedException();
+
+        private async Task OnRegisterCommandExecuted(string path) => await _navigationService.NavigateAsync(path);
 
         private void ThrowLoginError() => LoginError = "Username or password is incorrect, please try again.";        
 

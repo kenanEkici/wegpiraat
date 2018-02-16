@@ -34,7 +34,7 @@ namespace Wegpiraat.Datalayer.Repositories
         public bool AddUserTokens(Tokens tokens)
         {
             _connection.DeleteAll(typeof(Tokens));
-            tokens.ExpireDate = DateTime.Now;
+            tokens.ExpireDate = DateTime.Now.AddSeconds(2*tokens.ExpiresAt);
             if (_connection.Insert(tokens) == 1)
                 return true;
             return false;
@@ -56,17 +56,6 @@ namespace Wegpiraat.Datalayer.Repositories
             user.FirstName = todo.FirstName;
             user.LastName = todo.LastName;
             if (_connection.Update(user) == 1)
-                return true;
-            return false;
-        }
-
-        public bool UpdateTokens(Tokens todo)
-        {
-            var tokens = GetSingleTokensOfUser();
-            tokens.AccessToken = todo.AccessToken;
-            tokens.RefreshToken = todo.RefreshToken;
-            tokens.ExpiresAt = todo.ExpiresAt;
-            if (_connection.Update(tokens) == 1)
                 return true;
             return false;
         }

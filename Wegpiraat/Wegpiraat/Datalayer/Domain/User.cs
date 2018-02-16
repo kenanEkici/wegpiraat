@@ -14,7 +14,19 @@ namespace Wegpiraat.Data.Datalayer.Domain
 
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
-        
+
+        private string _email;
+        [JsonProperty(PropertyName = "email")]
+        public string Email
+        {
+            get => _email;
+            set
+            {
+                _email = value;
+                OnPropertyChanged(nameof(Email));
+            }
+        }
+
         private string _username;
         [JsonProperty(PropertyName = "username")]
         public string Username

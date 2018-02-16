@@ -4,6 +4,7 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              Title="{Binding Title}"
-             x:Class="Wegpiraat.Views.FeedPage">
+             x:Class="Wegpiraat.Views.FeedPage"
+             BackgroundColor="White">
     
 </ContentPage>

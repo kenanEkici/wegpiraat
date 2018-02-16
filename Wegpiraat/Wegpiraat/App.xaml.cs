@@ -39,6 +39,8 @@ namespace Wegpiraat
             Container.RegisterTypeForNavigation<FeedPage>();
             Container.RegisterTypeForNavigation<SearchPage>();
             Container.RegisterTypeForNavigation<ProfilePage>();
+            Container.RegisterTypeForNavigation<RegisterPage>();
+            Container.RegisterTypeForNavigation<ValidationSentPage>();
         }
     }
 }

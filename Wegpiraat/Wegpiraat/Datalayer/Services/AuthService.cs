@@ -25,6 +25,7 @@ namespace Wegpiraat.Datalayer.Services
             _authRepository = new AuthRepository();
         }
 
+        //a big todo is checkout why sqlite is doing weird with datetimes see repo
         public async Task<bool> UserIsAuthorized()
         {
             var user = AuthorizedUserExistsInDatabase();
@@ -111,7 +112,7 @@ namespace Wegpiraat.Datalayer.Services
         public bool AccessTokenHasExpired()
         {
             return _authRepository.GetSingleTokensOfUser().ExpireDate < DateTime.Now;
-        }
+        }   
 
         //request a new access token with refresh token
         //replace access token with new in database 
@@ -135,7 +136,7 @@ namespace Wegpiraat.Datalayer.Services
 
                 if (resp != null && resp.IsSuccessStatusCode)
                 {
-                    _authRepository.UpdateTokens(tokens);
+                    _authRepository.AddUserTokens(tokens);
                     return await Task.FromResult(true);
                 }
                 return await Task.FromResult(false);
@@ -151,10 +152,27 @@ namespace Wegpiraat.Datalayer.Services
 
         //a more complicated process
         //todo with email verification and such
-        public Task<User> Register(User registeringUser)
-        {            
-            throw new NotImplementedException();
-        }
+        public async Task<string> Register(User registeringUser)
+        {
+            HttpResponseMessage resp;
+            try
+            {
+                resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "register", new StringContent(JsonConvert.SerializeObject(registeringUser), Encoding.UTF8, "application/json"));
+                
+                if (resp != null && resp.IsSuccessStatusCode)
+                {
+                    return await Task.FromResult(registeringUser.Email);
+                }
+
+                //response is faulty, request login
+                return await Task.FromResult<string>(null);
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(ex);
+                return await Task.FromResult<string>(null);
+            }
+        }    
 
         //send a email to client and all that beautiful stuff
         //a big todo

@@ -40,7 +40,7 @@ namespace Wegpiraat.Data.Datalayer.Domain
             get => _expireDate;
             set
             {
-                _expireDate = value.AddSeconds(_expiresAt);
+                _expireDate = value;
             }
         }
 

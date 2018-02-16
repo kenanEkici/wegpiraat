@@ -5,7 +5,7 @@ namespace Wegpiraat.Datalayer.Services
 {
     public interface IAuthService
     {
-        Task<User> Register(User registeringUser);
+        Task<string> Register(User registeringUser);
         Task<User> Login(string username, string password);
         Task<bool> UserIsAuthorized();
         Task<User> RequestUserInformation(User user);

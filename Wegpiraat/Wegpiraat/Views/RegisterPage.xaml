@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Wegpiraat.Views.RegisterPage">
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <Label>Email</Label>            <Entry Text="{Binding Email}"></Entry>
+            <Label>Username</Label>         <Entry Text="{Binding Username}"></Entry>
+            <Label>Password</Label>         <Entry Text="{Binding Password}"></Entry>
+            <Label>Confirm password</Label> <Entry Text="{Binding ConfirmPassword}"></Entry>
+            <Label>First name</Label>       <Entry Text="{Binding FirstName}"></Entry>
+            <Label>Last name</Label>        <Entry Text="{Binding LastName}"></Entry>
+            <Button Text="Register" 
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="/ValidationSentPage/">                
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
