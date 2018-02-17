@@ -3,6 +3,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -118,9 +119,7 @@ namespace Wegpiraat.Datalayer.Services
         //replace access token with new in database 
         public async Task<bool> RefreshAccessToken(User user)
         {
-            HttpResponseMessage resp = null;
             Tokens tokens = _authRepository.GetSingleTokensOfUser();
-
             try
             {
                 var nvc = new List<KeyValuePair<string, string>>
@@ -131,11 +130,11 @@ namespace Wegpiraat.Datalayer.Services
                     new KeyValuePair<string, string>("client_secret", ApiConstants.CLIENT_SECRET)
                 };
 
-                resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "login", new FormUrlEncodedContent(nvc));
-                tokens = JsonConvert.DeserializeObject<Tokens>(await resp.Content.ReadAsStringAsync());
-
+                var resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "login", new FormUrlEncodedContent(nvc));
+                
                 if (resp != null && resp.IsSuccessStatusCode)
                 {
+                    tokens = JsonConvert.DeserializeObject<Tokens>(await resp.Content.ReadAsStringAsync());
                     _authRepository.AddUserTokens(tokens);
                     return await Task.FromResult(true);
                 }
@@ -176,7 +175,7 @@ namespace Wegpiraat.Datalayer.Services
 
         //send a email to client and all that beautiful stuff
         //a big todo
-        public Task<bool> RequestEmailValidation(User user)
+        public Task<bool> ResendEmailValidation(User user)
         {
             throw new NotImplementedException();
         }
@@ -190,9 +189,23 @@ namespace Wegpiraat.Datalayer.Services
 
         //get user information after authentication
         //todo
-        public Task<User> RequestUserInformation(User user)
+        public async Task<User> RequestUserInformation()
         {
-            throw new NotImplementedException();
+            var aToken = _authRepository.GetSingleTokensOfUser();
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", aToken.AccessToken);
+                var resp = await _httpClient.GetAsync(ApiConstants.BASE_API_URI + "userinfo");
+
+                if (resp != null && resp.IsSuccessStatusCode)
+                    return JsonConvert.DeserializeObject<User>(await resp.Content.ReadAsStringAsync());
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
         }
     }
 }

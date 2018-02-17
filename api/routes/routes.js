@@ -37,6 +37,8 @@ module.exports = function(app, nev) {
 
     app.post('/api/password/reset', app.oauth.authorise(), authController.resetPassword);
     
+    app.get('/api/userinfo', app.oauth.authorise(), authController.getUserInformation);
+
     //masters
     app.get('/api/wegpiraten', app.oauth.authorise(), wpController.getAllWegpiraten);
 

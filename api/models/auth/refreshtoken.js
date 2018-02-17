@@ -13,6 +13,7 @@ mongoose.model('oauth_refreshtokens', OAuthRefreshTokensSchema);
 var OAuthRefreshTokensModel = mongoose.model('oauth_refreshtokens');
 
 module.exports.saveRefreshToken = function(token, clientId, expires, userId, callback) {
+  
   if (userId.id) {
     userId = userId.id;
   }
@@ -23,7 +24,7 @@ module.exports.saveRefreshToken = function(token, clientId, expires, userId, cal
     userId: userId,
     expires: expires
   });
-
+  
   refreshToken.save(callback);
 };
 

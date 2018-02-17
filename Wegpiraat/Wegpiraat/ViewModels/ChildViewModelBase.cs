@@ -6,28 +6,12 @@ using System;
 
 namespace Wegpiraat.ViewModels
 {
-    public class ChildViewModelBase : BaseViewModel, IActiveAware, INavigatingAware, IDestructible
+    public class ChildViewModelBase : BaseViewModel, IDestructible
     {
         IEventAggregator _ea { get; }
-        public ChildViewModelBase( IEventAggregator eventAggregator )
+        public ChildViewModelBase(IEventAggregator eventAggregator)
         {
-            _ea = eventAggregator;           
-        }
-
-        public event EventHandler IsActiveChanged;
-
-        private string _message;
-        public string Message
-        {
-            get { return _message; }
-            set { SetProperty(ref _message, value); }
-        }
-
-        private bool _isActive;
-        public bool IsActive
-        {
-            get { return _isActive; }
-            set { SetProperty(ref _isActive, value); }
+            _ea = eventAggregator;            
         }
     }
 }

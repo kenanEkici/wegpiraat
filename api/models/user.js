@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var business = require('../business/business');
 
 var userSchema = mongoose.Schema({
+  _id: {type: String, required: true },
   email: { type: String, required: true, unique: true },
   username: {type: String, required: true, index: { unique: true } },
   firstname: String,
@@ -19,6 +20,7 @@ var userSchema = mongoose.Schema({
 });
 
 userSchema.statics.createUser = function(body) {
+  body._id = business.hashEmail(body.email);
   return new User(body);
 }
 

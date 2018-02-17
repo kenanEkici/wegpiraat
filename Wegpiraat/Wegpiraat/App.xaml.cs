@@ -12,7 +12,7 @@ namespace Wegpiraat
 
         protected override void OnInitialized()
         {
-            InitializeComponent();
+            InitializeComponent();            
             _authService = new AuthService();
         }
 

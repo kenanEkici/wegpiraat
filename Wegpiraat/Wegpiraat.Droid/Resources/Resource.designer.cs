@@ -3075,6 +3075,9 @@ namespace Wegpiraat.Droid
 			// aapt resource value: 0x7f0a015a
 			public const int Animation_Design_BottomSheetDialog = 2131362138;
 			
+			// aapt resource value: 0x7f0a0172
+			public const int AppTheme = 2131362162;
+			
 			// aapt resource value: 0x7f0a00a5
 			public const int Base_AlertDialog_AppCompat = 2131361957;
 			
@@ -4169,6 +4172,9 @@ namespace Wegpiraat.Droid
 			
 			// aapt resource value: 0x7f0a0016
 			public const int Widget_MediaRouter_MediaRouteButton = 2131361814;
+			
+			// aapt resource value: 0x7f0a0173
+			public const int splashscreen = 2131362163;
 			
 			static Style()
 			{

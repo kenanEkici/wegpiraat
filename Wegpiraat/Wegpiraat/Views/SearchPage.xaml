@@ -5,5 +5,4 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              Title="{Binding Title}"
              x:Class="Wegpiraat.Views.SearchPage">
-    <Label Text="{Binding Message}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
 </ContentPage>

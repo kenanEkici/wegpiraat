@@ -11,16 +11,26 @@ using Android.OS;
 
 namespace Wegpiraat.Droid
 {
-    [Activity(Label = "Wegpiraat", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Wegpiraat", Icon = "@drawable/icon", Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
-            base.OnCreate(bundle);
+            try
+            {
+                base.OnCreate(bundle);
+                global::Xamarin.Forms.Forms.Init(this, bundle);
+                LoadApplication(new App(new AndroidInitializer()));
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
 
-            global::Xamarin.Forms.Forms.Init(this, bundle);
-
-            LoadApplication(new App(new AndroidInitializer()));
+        protected override void OnApplyThemeResource(global::Android.Content.Res.Resources.Theme theme, int resid, bool first)
+        {
+            base.OnApplyThemeResource(theme, Resource.Style.AppTheme, first);
         }
     }
 

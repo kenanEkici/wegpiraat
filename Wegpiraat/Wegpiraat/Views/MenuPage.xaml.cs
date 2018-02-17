@@ -10,6 +10,6 @@ namespace Wegpiraat.Views
         public MenuPage()
         {
             InitializeComponent();
-        }        
+        }
     }
 }

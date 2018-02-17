@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SQLite.Net.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Wegpiraat.Data.Datalayer.Domain 
@@ -7,8 +8,8 @@ namespace Wegpiraat.Data.Datalayer.Domain
     [Table("Users")]
     public class User : INotifyPropertyChanged
     {
-
         public event PropertyChangedEventHandler PropertyChanged;
+
         [Ignore]
         public Tokens Tokens { get; set; }
 
@@ -74,7 +75,46 @@ namespace Wegpiraat.Data.Datalayer.Domain
                 OnPropertyChanged(nameof(LastName));
             }
         }
-        
+
+        private List<string> _likes;
+        [JsonProperty(PropertyName = "likes")]
+        [Ignore]
+        public List<string> Likes
+        {
+            get { return _likes; }
+            set
+            {
+                _likes = value;
+                OnPropertyChanged(nameof(Likes));
+            }
+        }
+
+        private List<string> _posts;
+        [JsonProperty(PropertyName = "posts")]
+        [Ignore]
+        public List<string> Posts
+        {
+            get { return _posts; }
+            set
+            {
+                _posts = value;
+                OnPropertyChanged(nameof(Posts));
+            }
+        }
+
+        private List<string> _comments;
+        [JsonProperty(PropertyName = "comments")]
+        [Ignore]
+        public List<string> Comments
+        {
+            get { return _comments; }
+            set
+            {
+                _comments = value;
+                OnPropertyChanged(nameof(Comments));
+            }
+        }
+
         protected virtual void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

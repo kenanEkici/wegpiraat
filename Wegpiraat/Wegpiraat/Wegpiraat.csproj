@@ -29,6 +29,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApiConstants.cs" />
+    <Compile Include="Datalayer\Domain\Comment.cs" />
+    <Compile Include="Datalayer\Domain\Like.cs" />
+    <Compile Include="Datalayer\Domain\Post.cs" />
     <Compile Include="Datalayer\Domain\Tokens.cs" />
     <Compile Include="Datalayer\Domain\User.cs" />
     <Compile Include="Datalayer\Domain\Wegpiraat.cs" />

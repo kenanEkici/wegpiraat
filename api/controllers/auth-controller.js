@@ -112,11 +112,19 @@ function resetPassword(req, res) {
     });
 }
 
+function getUserInformation(req, res) {
+    userRepo.getUserById(req.oauth.bearerToken.userId, (err, user) => { 
+        if (!user || err) res.status(400).send(err);
+        else res.send(business.userDao(user));
+    });
+}
+
 module.exports = {
     register: register,
     confirmUser: confirmUser,
     resendVerification: resendVerification,
     resetPassword: resetPassword,
     forgotPassword: forgotPassword,
-    confirmReset: confirmReset
+    confirmReset: confirmReset,
+    getUserInformation: getUserInformation
 };

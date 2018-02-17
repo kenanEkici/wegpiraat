@@ -5,6 +5,5 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              Title="{Binding Title}"
              x:Class="Wegpiraat.Views.FeedPage"
-             BackgroundColor="White">
-    
+             BackgroundColor="White">    
 </ContentPage>

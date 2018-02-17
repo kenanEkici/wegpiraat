@@ -11,6 +11,10 @@ function hash(password) {
     return bcrypt.hashSync(password, salt);
 }
 
+function hashEmail(email) {
+    return crypto.randomBytes(12).toString('hex');
+}
+
 function hashPassword(body) {
     body.hashed_password = hash(body.password);
     delete body.password; 
@@ -85,6 +89,15 @@ function getTokenExpireDate() {
     return new Date(new Date().getTime() + 20 * (60 * 1000))
 }
 
+function userDao(user) {
+    if (user !== null) {
+        user._id = null;
+        user.hashed_password = null;
+        return user;
+    }
+}
+
+
 module.exports = {
     hashPassword: hashPassword,
     validatePassword: validatePassword,
@@ -97,7 +110,9 @@ module.exports = {
     generatePasswordResetToken: generatePasswordResetToken,
     tokenIsInvalid: tokenIsInvalid,
     tokenHasExpired: tokenHasExpired,
-    getTokenExpireDate: getTokenExpireDate
+    getTokenExpireDate: getTokenExpireDate,
+    userDao: userDao,
+    hashEmail: hashEmail
 };
   
   

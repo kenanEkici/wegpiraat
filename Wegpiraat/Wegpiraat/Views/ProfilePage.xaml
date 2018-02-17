@@ -5,5 +5,12 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              Title="{Binding Title}"
              x:Class="Wegpiraat.Views.ProfilePage">
-    <Label Text="{Binding Message}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding User.Email}"></Label>
+            <Label Text="{Binding User.Username}"></Label>
+            <Label Text="{Binding User.FirstName}"></Label>
+            <Label Text="{Binding User.LastName}"></Label>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>
