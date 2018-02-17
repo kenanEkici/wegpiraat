@@ -73,7 +73,7 @@ namespace Wegpiraat.ViewModels
             }
         }
 
-        private Task OnForgotPasswordCommandExecuted(string path) => throw new NotImplementedException();
+        private async Task OnForgotPasswordCommandExecuted(string path) => await _navigationService.NavigateAsync(path);
 
         private async Task OnRegisterCommandExecuted(string path) => await _navigationService.NavigateAsync(path);
 

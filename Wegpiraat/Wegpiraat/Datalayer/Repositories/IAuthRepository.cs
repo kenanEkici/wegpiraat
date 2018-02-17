@@ -14,5 +14,6 @@ namespace Wegpiraat.Datalayer.Repositories
         bool AddUserTokens(Tokens tokens);
         Tokens GetSingleTokensOfUser();
         bool UpdateUserInformation(User user);
+        bool ClearDatabase();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
@@ -30,11 +31,11 @@ namespace Wegpiraat.Datalayer.Services
         public async Task<bool> UserIsAuthorized()
         {
             var user = AuthorizedUserExistsInDatabase();
-            if (user != null)
-            {
-                if (AccessTokenHasExpired()) return await RefreshAccessToken(user);
-                else return true;
-            }
+            if (user != null)            
+                if (AccessTokenHasExpired())
+                    return await RefreshAccessToken(user);
+                else
+                    return true;            
             return false;
         }
 
@@ -48,7 +49,6 @@ namespace Wegpiraat.Datalayer.Services
             {
                 _authRepository.AddNewUser(user);
                 _authRepository.AddUserTokens(tokens);
-                //_userRepository.UpdateUserInformation(RequestUserInformation(user));
                 user.Tokens = _authRepository.GetSingleTokensOfUser();
                 return await Task.FromResult(user);
             }
@@ -182,9 +182,29 @@ namespace Wegpiraat.Datalayer.Services
 
         //some dumbfuck forgot his password
         //a big todo
-        public Task<bool> RequestPasswordReset(User user)
+        public async Task<string> RequestPasswordReset(User user)
         {
-            throw new NotImplementedException();
+            var resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "password/forgot", new StringContent(JObject.FromObject(new { email = user.Email}).ToString(), Encoding.UTF8, "application/json"));
+            if (resp != null && resp.IsSuccessStatusCode)
+                return user.Email;
+            return null;
+        }
+
+        //some dumbfuck forgot his password
+        //a big todo
+        public async Task<bool> ResetPassword(User user)
+        {
+            try
+            {
+                var resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "password/forgot/confirm", new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json"));
+                if (resp != null && resp.IsSuccessStatusCode)
+                    return true;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         //get user information after authentication
@@ -206,6 +226,35 @@ namespace Wegpiraat.Datalayer.Services
                 Debug.WriteLine(ex);
                 return null;
             }
+        }
+
+        //Check for internet/api connection
+        public async Task<bool> HasApiConnection()
+        {
+            var timeout = Task.Delay(6000); // 2 seconds timeout
+            var request = _httpClient.GetAsync("https://www.google.com");            
+
+            await Task.WhenAny(timeout, request); // wait for either timeout or the request
+
+            if (timeout.IsCompleted) // if the timeout ended first, then handle it
+            {
+                return false;
+            }
+
+            try
+            {
+                return request.Result.IsSuccessStatusCode;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
+        }
+
+        public void Logout()
+        {
+            _authRepository.ClearDatabase();
         }
     }
 }

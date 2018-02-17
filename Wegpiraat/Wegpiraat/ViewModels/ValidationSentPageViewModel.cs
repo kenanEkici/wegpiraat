@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Commands;
+using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,15 @@ namespace Wegpiraat.ViewModels
 {
     public class ValidationSentPageViewModel : BindableBase, INavigationAware
     {
+        public DelegateCommand<string> LoginCommand => new DelegateCommand<string>(async (path) => await OnLoginCommandExecuted(path));
+
+        private INavigationService _navigationService;
+
+        public ValidationSentPageViewModel(INavigationService navService)
+        {
+            _navigationService = navService;
+        }
+
         private string _validationMessage;
         public string ValidationMessage
         {
@@ -27,8 +37,13 @@ namespace Wegpiraat.ViewModels
 
         public void OnNavigatingTo(NavigationParameters parameters)
         {
-            var param = parameters.GetValue<string>("validationEmail");
-            ValidationMessage = "Validation sent to " + param;
+            var param = parameters.GetValue<string>("validationMessage");
+            ValidationMessage = param;
+        }
+
+        private async Task OnLoginCommandExecuted(string path)
+        {
+            await _navigationService.NavigateAsync(path);
         }
     }
 }

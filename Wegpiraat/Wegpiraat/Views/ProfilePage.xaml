@@ -11,6 +11,9 @@
             <Label Text="{Binding User.Username}"></Label>
             <Label Text="{Binding User.FirstName}"></Label>
             <Label Text="{Binding User.LastName}"></Label>
+            <Button Command="{Binding LogoutCommand}"
+                    CommandParameter="/LoginPage/">                
+            </Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

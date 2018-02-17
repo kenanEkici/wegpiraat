@@ -11,7 +11,7 @@
             <Label>First name</Label>       <Entry Text="{Binding FirstName}"></Entry>
             <Label>Last name</Label>        <Entry Text="{Binding LastName}"></Entry>
             <Button Text="Register" 
-                    Command="{Binding NavigateCommand}"
+                    Command="{Binding RegisterCommand}"
                     CommandParameter="/ValidationSentPage/">                
             </Button>
         </StackLayout>

@@ -14,6 +14,9 @@ namespace Wegpiraat.Datalayer.Services
         bool AccessTokenHasExpired();
         Task<bool> RefreshAccessToken(User user);
         Task<bool> ResendEmailValidation(User user);
-        Task<bool> RequestPasswordReset(User user);
+        Task<bool> ResetPassword(User user);
+        Task<string> RequestPasswordReset(User user);
+        Task<bool> HasApiConnection();
+        void Logout();
     }
 }

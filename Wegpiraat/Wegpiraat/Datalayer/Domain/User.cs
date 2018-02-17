@@ -50,7 +50,31 @@ namespace Wegpiraat.Data.Datalayer.Domain
                 _password = value;
                 OnPropertyChanged(nameof(Password));
             }
-        }       
+        }
+
+        private string _confirmPassword;
+        [JsonProperty(PropertyName = "confirm")]
+        public string ConfirmPassword
+        {
+            get { return _confirmPassword; }
+            set
+            {
+                _confirmPassword = value;
+                OnPropertyChanged(nameof(ConfirmPassword));
+            }
+        }
+
+        private string _token;
+        [JsonProperty(PropertyName = "token")]
+        public string Token
+        {
+            get { return _token; }
+            set
+            {
+                _token = value;
+                OnPropertyChanged(nameof(Token));
+            }
+        }
 
         private string _firstName;
         [JsonProperty(PropertyName = "firstname")]

@@ -5,6 +5,10 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding ValidationMessage}" />
+            <Button Text="Go back to login" 
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="/LoginPage/">
+            </Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

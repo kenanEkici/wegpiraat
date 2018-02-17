@@ -16,7 +16,7 @@ namespace Wegpiraat.ViewModels
         INavigationService _navigationService { get; }
         IAuthService _authService { get; }
 
-        public DelegateCommand<string> NavigateCommand => new DelegateCommand<string>(async (path) => await OnNavigateCommandExecuted(path));
+        public DelegateCommand<string> RegisterCommand => new DelegateCommand<string>(async (path) => await OnRegisterCommandExecuted(path));
 
         public RegisterPageViewModel(INavigationService navService)
         {
@@ -80,7 +80,7 @@ namespace Wegpiraat.ViewModels
             set { SetProperty(ref _spinner, value); }
         }
 
-        private async Task OnNavigateCommandExecuted(string path)
+        private async Task OnRegisterCommandExecuted(string path)
         {
             var validationEmail = await TryRegister();            
 
@@ -91,7 +91,7 @@ namespace Wegpiraat.ViewModels
             else
             {
                 var param = new NavigationParameters();
-                param.Add("validationEmail", validationEmail);
+                param.Add("validationMessage", "Validation email has been sent to " + validationEmail);
                 await _navigationService.NavigateAsync(path, param);
             }
         }

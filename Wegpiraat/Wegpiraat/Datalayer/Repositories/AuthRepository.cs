@@ -7,6 +7,7 @@ using Wegpiraat.Data.Datalayer.Domain;
 using SQLite.Net;
 using System.IO;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace Wegpiraat.Datalayer.Repositories
 {
@@ -58,6 +59,21 @@ namespace Wegpiraat.Datalayer.Repositories
             if (_connection.Update(user) == 1)
                 return true;
             return false;
+        }
+
+        public bool ClearDatabase()
+        {
+            try
+            {
+                _connection.DropTable<User>();
+                _connection.DropTable<Tokens>();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return false;
+            }
         }
     }
 }

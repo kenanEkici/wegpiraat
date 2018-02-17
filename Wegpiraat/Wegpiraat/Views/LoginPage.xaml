@@ -4,27 +4,32 @@
      x:Class="Wegpiraat.Views.LoginPage" Title="Login to Wegpiraat">
     <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
         <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
-            <Label Text="{Binding LoginError}"          
-               HorizontalOptions="Center" 
-               HorizontalTextAlignment="Center"
-               TextColor="Red">
+            <Label 
+                Text="{Binding LoginError}"          
+                HorizontalOptions="Center" 
+                HorizontalTextAlignment="Center"
+                TextColor="Red">
             </Label>
-            <Entry Text="{Binding Username}" 
-               HorizontalOptions="Center" 
-               WidthRequest="300">
+            <Entry 
+                Text="{Binding Username}" 
+                HorizontalOptions="Center" 
+                WidthRequest="300">
             </Entry>
-            <Entry Text="{Binding Password}" 
-               HorizontalOptions="Center" 
-               IsPassword="True"  
-               WidthRequest="300">
+            <Entry 
+                Text="{Binding Password}" 
+                HorizontalOptions="Center" 
+                IsPassword="True"  
+                WidthRequest="300">
             </Entry>
-            <Button Command="{Binding LoginCommand}" 
+            <Button 
+                Command="{Binding LoginCommand}" 
                 HorizontalOptions="Center" 
                 Text="Login" 
                 CommandParameter="/NavigationPage/MenuPage"/>
         </StackLayout>
         <StackLayout BackgroundColor="Gray" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand">
-            <Button Command="{Binding RegisterCommand}" 
+            <Button 
+                Command="{Binding RegisterCommand}" 
                 HorizontalOptions="Center" 
                 Text="Register" 
                 CommandParameter="RegisterPage"/>
