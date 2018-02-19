@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Wegpiraat.Data.Datalayer.Domain
+namespace Wegpiraat.Datalayer.Domain
 {
     [Table("Tokens")]
     public class Tokens

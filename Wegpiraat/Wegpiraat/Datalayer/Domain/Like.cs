@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,9 @@ namespace Wegpiraat.Datalayer.Domain
 {
     public class Like
     {
-        private string _id;
-
-        public string Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
+        public string Id { get; set; }
+        
+        [JsonProperty("likedBy")]
+        public string LikedBy { get; set; }
     }
 }

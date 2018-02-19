@@ -4,6 +4,12 @@
             xmlns:local="clr-namespace:Wegpiraat.Views"
             Title="Wegpiraat"
             x:Class="Wegpiraat.Views.MenuPage">
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Command="{Binding UploadCommand}"
+                     CommandParameter="UploadWegpiraatPage"
+                     Icon="add.png">
+        </ToolbarItem>
+    </TabbedPage.ToolbarItems>
     <TabbedPage.Children>
         <local:FeedPage />
         <local:SearchPage />

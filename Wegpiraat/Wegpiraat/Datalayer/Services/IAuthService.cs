@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Wegpiraat.Data.Datalayer.Domain;
+using Wegpiraat.Datalayer.Domain;
 
 namespace Wegpiraat.Datalayer.Services
 {

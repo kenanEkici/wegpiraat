@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wegpiraat.Data.Datalayer.Domain;
 using SQLite.Net;
 using System.IO;
 using Xamarin.Forms;
 using System.Diagnostics;
+using Wegpiraat.Datalayer.Domain;
 
 namespace Wegpiraat.Datalayer.Repositories
 {

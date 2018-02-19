@@ -29,12 +29,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApiConstants.cs" />
+    <Compile Include="Converters\DateConverter.cs" />
+    <Compile Include="Converters\ExtensionHelper.cs" />
+    <Compile Include="Converters\ItemTappedEventArgsConverter.cs" />
     <Compile Include="Datalayer\Domain\Comment.cs" />
     <Compile Include="Datalayer\Domain\Like.cs" />
     <Compile Include="Datalayer\Domain\Post.cs" />
     <Compile Include="Datalayer\Domain\Tokens.cs" />
     <Compile Include="Datalayer\Domain\User.cs" />
-    <Compile Include="Datalayer\Domain\Wegpiraat.cs" />
+    <Compile Include="Datalayer\Domain\Wegpiraten.cs" />
     <Compile Include="Datalayer\Repositories\ISQLiteHelper.cs" />
     <Compile Include="Datalayer\Repositories\IAuthRepository.cs" />
     <Compile Include="Datalayer\Repositories\AuthRepository.cs" />
@@ -49,7 +52,9 @@
     <Compile Include="ViewModels\ConfirmPasswordResetPageViewModel.cs" />
     <Compile Include="ViewModels\ForgotPasswordPageViewModel.cs" />
     <Compile Include="ViewModels\RegisterPageViewModel.cs" />
+    <Compile Include="ViewModels\UploadWegpiraatPageViewModel.cs" />
     <Compile Include="ViewModels\ValidationSentPageViewModel.cs" />
+    <Compile Include="ViewModels\WegpiraatDetailPageViewModel.cs" />
     <Compile Include="Views\ConfirmPasswordResetPage.xaml.cs">
       <DependentUpon>ConfirmPasswordResetPage.xaml</DependentUpon>
     </Compile>
@@ -82,8 +87,14 @@
     <Compile Include="ViewModels\ProfilePageViewModel.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
+    <Compile Include="Views\UploadWegpiraatPage.xaml.cs">
+      <DependentUpon>UploadWegpiraatPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ValidationSentPage.xaml.cs">
       <DependentUpon>ValidationSentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WegpiraatDetailPage.xaml.cs">
+      <DependentUpon>WegpiraatDetailPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +178,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ConfirmPasswordResetPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\UploadWegpiraatPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\WegpiraatDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

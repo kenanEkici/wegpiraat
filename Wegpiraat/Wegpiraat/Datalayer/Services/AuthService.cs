@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Wegpiraat.Data.Datalayer.Domain;
+using Wegpiraat.Datalayer.Domain;
 using Wegpiraat.Datalayer.Repositories;
 
 namespace Wegpiraat.Datalayer.Services
@@ -152,11 +152,10 @@ namespace Wegpiraat.Datalayer.Services
         //a more complicated process
         //todo with email verification and such
         public async Task<string> Register(User registeringUser)
-        {
-            HttpResponseMessage resp;
+        {            
             try
             {
-                resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "register", new StringContent(JsonConvert.SerializeObject(registeringUser), Encoding.UTF8, "application/json"));
+                var resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "register", new StringContent(JsonConvert.SerializeObject(registeringUser), Encoding.UTF8, "application/json"));
                 
                 if (resp != null && resp.IsSuccessStatusCode)
                 {

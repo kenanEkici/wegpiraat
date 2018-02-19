@@ -3,7 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:converters="clr-namespace:Wegpiraat.Converters;assembly=Wegpiraat"
              Title="{Binding Title}"
              x:Class="Wegpiraat.Views.FeedPage"
-             BackgroundColor="White">    
+             BackgroundColor="White">
+    <ScrollView VerticalOptions="FillAndExpand" Orientation="Vertical">
+        <ListView
+                CachingStrategy="RecycleElement" 
+                IsPullToRefreshEnabled="true" 
+                RefreshCommand="{Binding RefreshWegpiratenCommand}" 
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                HasUnevenRows="True"
+                ItemsSource="{Binding Wegpiraten}"
+                SeparatorColor="Gray"
+                SelectedItem="{Binding SelectedWegpiraat, Mode=TwoWay}">
+            <ListView.Behaviors>
+                <b:EventToCommandBehavior EventName="ItemTapped" 
+                                          Command="{Binding SelectWegpiraatCommand}"
+                                          EventArgsConverter="{converters:ItemTappedEventArgsConverter}" />
+            </ListView.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" Margin="10" BackgroundColor="Gray">
+                            <Label Margin="5" FontSize="Large" Text="{Binding Title}" FontAttributes="Bold"  HorizontalTextAlignment="Center"/>
+                            <Label Margin="5" FontSize="Medium" Text="{Binding Description}" HorizontalTextAlignment="Center" />
+                            <Label Margin="5" Text="{Binding CreatedAt, Converter={StaticResource DateConverter}}" HorizontalTextAlignment="Center"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>    
 </ContentPage>

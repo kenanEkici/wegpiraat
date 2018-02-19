@@ -1,77 +1,87 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Wegpiraat.Datalayer.Domain;
+using Wegpiraat.Datalayer.Repositories;
 
 namespace Wegpiraat.Datalayer.Services
 {
     public class WegpiraatService : IWegpiraatService
     {
         private HttpClient _httpClient;
+        private IAuthRepository _authRepository;
 
         public WegpiraatService()
         {
             _httpClient = new HttpClient { BaseAddress = new Uri(ApiConstants.BASE_API_URI) };
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //_httpClient.DefaultRequestHeaders.Authorization = AuthService.ReturnAuthHeader(UserRepository.GetActiveUser());
+            _authRepository = new AuthRepository();
         }
 
-        //public async Task<bool> AddEvent(Event newEvent)
-        //{
-        //    var resp = await _httpClient.PostAsync("/events", new StringContent(JsonConvert.SerializeObject(newEvent), Encoding.UTF8, "application/json"));
-        //    return resp.IsSuccessStatusCode;
-        //}
+        public async Task<List<Wegpiraten>> GetAllWegpiraten()
+        {
+            var aToken = _authRepository.GetSingleTokensOfUser();
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", aToken.AccessToken);
+                var resp = await _httpClient.GetAsync(ApiConstants.BASE_API_URI + "wegpiraten");               
+                if (resp != null && resp.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<List<Wegpiraten>>(await resp.Content.ReadAsStringAsync());
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
 
-        //public async Task<Event> UpdateEvent(Event updatedEvent)
-        //{
-        //    var resp = await _httpClient.PutAsync("/events/" + updatedEvent.Id, new StringContent(JsonConvert.SerializeObject(updatedEvent), Encoding.UTF8, "application/json"));
-        //    return JsonConvert.DeserializeObject<Event>(await resp.Content.ReadAsStringAsync());
-        //}
+        public async Task<Wegpiraten> GetWegpiraatById(Wegpiraten wegpiraat)
+        {
+            var aToken = _authRepository.GetSingleTokensOfUser();
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", aToken.AccessToken);
+                var resp = await _httpClient.GetAsync(ApiConstants.BASE_API_URI + "wegpiraten/"+wegpiraat.Id);
+                if (resp != null && resp.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<Wegpiraten>(await resp.Content.ReadAsStringAsync());
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
 
-        //public async Task<bool> DeleteEvent(int eventId)
-        //{
-        //    var resp = await _httpClient.DeleteAsync("/events/" + eventId);
-        //    return resp.IsSuccessStatusCode;
-        //}
-
-        //public async Task<ICollection<Event>> GetAllMyEvents()
-        //{
-        //    var resp = await _httpClient.GetAsync("/events/mine/" + UserRepository.GetActiveUser().CardNumber);
-        //    string response = await resp.Content.ReadAsStringAsync();
-        //    return JsonConvert.DeserializeObject<List<Event>>(response);
-        //}
-
-        //public async Task<ICollection<Event>> GetAllEvents()
-        //{
-        //    var resp = await _httpClient.GetAsync("/events");
-        //    return JsonConvert.DeserializeObject<List<Event>>(await resp.Content.ReadAsStringAsync());
-        //}
-
-        //public async Task<ICollection<User>> ScanParticipant(int eventId, string cardNumber)
-        //{
-        //    var resp = await _httpClient.PostAsync("/events/" + eventId + "/" + cardNumber + "/scan", null);
-        //    return JsonConvert.DeserializeObject<List<User>>(await resp.Content.ReadAsStringAsync());
-        //}
-
-        //public async Task<ICollection<User>> GetParticipantsOfEvent(int eventId)
-        //{
-        //    var resp = await _httpClient.GetAsync("/events/" + eventId + "/participants");
-        //    return JsonConvert.DeserializeObject<List<User>>(await resp.Content.ReadAsStringAsync());
-        //}
-
-        //public async Task<ICollection<Event>> GetAllParticipationRequiredEvents()
-        //{
-        //    var resp = await _httpClient.GetAsync("/events/required/" + UserRepository.GetActiveUser().CardNumber);
-        //    return JsonConvert.DeserializeObject<List<Event>>(await resp.Content.ReadAsStringAsync());
-        //}
-
-        //public async Task<bool> RegisterParticipation(int eventId)
-        //{
-        //    var resp = await _httpClient.PostAsync("/events/" + eventId, null);
-        //    return resp.IsSuccessStatusCode;
-        //}
+        public async Task<Wegpiraten> UploadWegpiraat(Wegpiraten wegpiraat)
+        {
+            var aToken = _authRepository.GetSingleTokensOfUser();
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", aToken.AccessToken);
+                var resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "wegpiraten", new StringContent(JsonConvert.SerializeObject(wegpiraat), Encoding.UTF8, "application/json"));
+                if (resp != null && resp.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<Wegpiraten>(await resp.Content.ReadAsStringAsync());
+                }                
+                return null;
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
     }
 }

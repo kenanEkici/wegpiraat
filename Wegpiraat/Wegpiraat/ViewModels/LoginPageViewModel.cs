@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Wegpiraat.Data.Datalayer.Domain;
 using Wegpiraat.Datalayer.Services;
 
 namespace Wegpiraat.ViewModels

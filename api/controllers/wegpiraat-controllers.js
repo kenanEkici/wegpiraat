@@ -11,7 +11,10 @@ function checkStatus(req,res) {
 
 //Get all posts (TODO: with filter/sort and/or pagination)
 function getAllWegpiraten(req,res) {
-    wpRepo.getAllWegpiraten(data => res.send(data));
+    wpRepo.getAllWegpiraten((err,data) => {
+        if (err) res.status(400).send(err);
+        else res.send(data);
+    });
 }
 
 //Get a post by a given id ==> TODO if wegpiraat not found, delete from own list of reference 

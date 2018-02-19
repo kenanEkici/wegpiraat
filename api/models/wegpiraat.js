@@ -34,7 +34,7 @@ var Wegpiraat = mongoose.model('Wegpiraten', wegpiraatSchema);
 
 function getAllWegpiraten(cb) {
     Wegpiraat.find({}, (err, data) => {
-        if (err) return cb(err, null);      
+        if (err) return cb(err, null);    
         cb(null, data);
     });
 }

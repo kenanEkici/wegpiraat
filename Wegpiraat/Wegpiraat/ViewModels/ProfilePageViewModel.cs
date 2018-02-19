@@ -1,11 +1,11 @@
 ﻿using System;
 using Prism.Events;
 using Wegpiraat.Datalayer.Services;
-using Wegpiraat.Data.Datalayer.Domain;
 using System.Threading.Tasks;
 using Prism.Navigation;
 using Prism;
 using Prism.Commands;
+using Wegpiraat.Datalayer.Domain;
 
 namespace Wegpiraat.ViewModels
 {

@@ -44,6 +44,8 @@ namespace Wegpiraat
             Container.RegisterTypeForNavigation<ValidationSentPage>();
             Container.RegisterTypeForNavigation<ForgotPasswordPage>();
             Container.RegisterTypeForNavigation<ConfirmPasswordResetPage>();
+            Container.RegisterTypeForNavigation<UploadWegpiraatPage>();
+            Container.RegisterTypeForNavigation<WegpiraatDetailPage>();
         }
     }
 }

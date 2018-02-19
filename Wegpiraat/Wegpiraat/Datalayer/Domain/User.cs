@@ -3,7 +3,7 @@ using SQLite.Net.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Wegpiraat.Data.Datalayer.Domain 
+namespace Wegpiraat.Datalayer.Domain 
 {
     [Table("Users")]
     public class User : INotifyPropertyChanged

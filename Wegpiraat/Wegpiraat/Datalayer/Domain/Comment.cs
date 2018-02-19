@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +9,18 @@ namespace Wegpiraat.Datalayer.Domain
 {
     public class Comment
     {
-        private string _postId;
+        public string PostId { get; set; }
 
-        public string PostId
-        {
-            get { return _postId; }
-            set { _postId = value; }
-        }
+        [JsonProperty("_id")]
+        public string CommentId { get; set; }
 
-        private string _commentId;
+        [JsonProperty("commentData")]
+        public string CommentData { get; set; }
 
-        public string CommentId
-        {
-            get { return _commentId; }
-            set { _commentId = value; }
-        }
+        [JsonProperty("postedBy")]
+        public string PostedBy { get; set; }
 
+        [JsonProperty("postedAt")]
+        public DateTime PostedAt { get; set; }
     }
 }
