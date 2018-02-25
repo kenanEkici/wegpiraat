@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             Title="{Binding Title}"
+             x:Class="Wegpiraat.Views.ProfilePage"
+             BackgroundColor="White">
+    <ContentPage.Content>
+        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="5">
+                    <StackLayout Orientation="Vertical" HorizontalOptions="Start" WidthRequest="200" HeightRequest="200" BackgroundColor="Gray">
+                        <Label Text="Image"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand" HeightRequest="200" BackgroundColor="Silver"> 
+                        <Label Text="{Binding User.Email}" HorizontalTextAlignment="Center" FontSize="Large"  />
+                        <Label Text="{Binding User.Username}" HorizontalTextAlignment="Center" FontSize="Medium" />
+                        <Label Text="{Binding User.FirstName}" HorizontalTextAlignment="Center" FontSize="Small" TextColor="Silver" />
+                        <Label Text="{Binding User.LastName}" HorizontalTextAlignment="Center" FontSize="Small" TextColor="Silver" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" Margin="5" HorizontalOptions="FillAndExpand">
+                    <Button Text="Posts"></Button>
+                    <Button Text="Likes"></Button>
+                    <Button Text="Comments"></Button>
+                    <Button Text="Settings"></Button>
+                    <Button 
+                        Text="Logout"
+                        Command="{Binding LogoutCommand}"
+                        CommandParameter="/LoginPage/">
+                    </Button>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

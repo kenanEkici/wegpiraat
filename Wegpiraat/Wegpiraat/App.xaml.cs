@@ -46,6 +46,9 @@ namespace Wegpiraat
             Container.RegisterTypeForNavigation<ConfirmPasswordResetPage>();
             Container.RegisterTypeForNavigation<UploadWegpiraatPage>();
             Container.RegisterTypeForNavigation<WegpiraatDetailPage>();
+            Container.RegisterTypeForNavigation<MyPostsPage>();
+            Container.RegisterTypeForNavigation<MyLikesPage>();
+            Container.RegisterTypeForNavigation<MyCommentsPage>();
         }
     }
 }

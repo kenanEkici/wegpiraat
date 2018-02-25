@@ -58,6 +58,22 @@ namespace Wegpiraat.Datalayer.Domain
             }
         }
 
+        private bool _isLiked;
+        public bool IsLiked
+        {
+            get { return _isLiked; }
+            set
+            {
+                _isLiked = value;
+                OnPropertyChanged(nameof(LikeImage));
+            }
+        }
+
+        public string LikeImage
+        {
+            get { return IsLiked? "love" : "unlove"; }
+        }
+
         private string _owner;
         [JsonProperty("owner")]
         public string Owner
@@ -67,6 +83,17 @@ namespace Wegpiraat.Datalayer.Domain
             {
                 _owner = value;
                 OnPropertyChanged(nameof(Owner));
+            }
+        }
+
+        private Uri _imageSource = new Uri("https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?w=940&h=650&auto=compress&cs=tinysrgb");
+        public Uri ImageSource
+        {
+            get { return _imageSource; }
+            set
+            {
+                _imageSource = value;
+                OnPropertyChanged(nameof(ImageSource));
             }
         }
 
@@ -92,6 +119,25 @@ namespace Wegpiraat.Datalayer.Domain
                 _comments = value;
                 OnPropertyChanged(nameof(Comments));
             }
+        }
+
+        private int _likesCount;
+
+        public int LikesCount
+        {
+            get
+            {
+                return Likes.Count;
+            }
+            set
+            {
+                _likesCount = value;
+            }
+        }
+
+        public string CommentsCount
+        {
+            get { return Comments.Count.ToString(); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

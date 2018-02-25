@@ -49,51 +49,63 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ConfirmPasswordResetPageViewModel.cs" />
-    <Compile Include="ViewModels\ForgotPasswordPageViewModel.cs" />
-    <Compile Include="ViewModels\RegisterPageViewModel.cs" />
-    <Compile Include="ViewModels\UploadWegpiraatPageViewModel.cs" />
-    <Compile Include="ViewModels\ValidationSentPageViewModel.cs" />
-    <Compile Include="ViewModels\WegpiraatDetailPageViewModel.cs" />
-    <Compile Include="Views\ConfirmPasswordResetPage.xaml.cs">
+    <Compile Include="ViewModels\Authentication\ConfirmPasswordResetPageViewModel.cs" />
+    <Compile Include="ViewModels\Authentication\ForgotPasswordPageViewModel.cs" />
+    <Compile Include="ViewModels\Profile\MyCommentsPageViewModel.cs" />
+    <Compile Include="ViewModels\Profile\MyLikesPageViewModel.cs" />
+    <Compile Include="ViewModels\Profile\MyPostsPageViewModel.cs" />
+    <Compile Include="ViewModels\Authentication\RegisterPageViewModel.cs" />
+    <Compile Include="ViewModels\Wegpiraat\UploadWegpiraatPageViewModel.cs" />
+    <Compile Include="ViewModels\Authentication\ValidationSentPageViewModel.cs" />
+    <Compile Include="ViewModels\Wegpiraat\WegpiraatDetailPageViewModel.cs" />
+    <Compile Include="Views\Authentication\ConfirmPasswordResetPage.xaml.cs">
       <DependentUpon>ConfirmPasswordResetPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ForgotPasswordPage.xaml.cs">
+    <Compile Include="Views\Authentication\ForgotPasswordPage.xaml.cs">
       <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LoginPage.xaml.cs">
+    <Compile Include="Views\Authentication\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MenuPage.xaml.cs">
+    <Compile Include="Views\Menu\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FeedPage.xaml.cs">
+    <Compile Include="Views\Menu\FeedPage.xaml.cs">
       <DependentUpon>FeedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RegisterPage.xaml.cs">
+    <Compile Include="Views\Profile\MyCommentsPage.xaml.cs">
+      <DependentUpon>MyCommentsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Profile\MyLikesPage.xaml.cs">
+      <DependentUpon>MyLikesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Profile\MyPostsPage.xaml.cs">
+      <DependentUpon>MyPostsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Authentication\RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SearchPage.xaml.cs">
+    <Compile Include="Views\Menu\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProfilePage.xaml.cs">
+    <Compile Include="Views\Menu\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Helpers\ChildViewModelBase.cs" />
     <Compile Include="Events\InitializeTabbedChildrenEvent.cs" />
-    <Compile Include="ViewModels\FeedPageViewModel.cs" />
+    <Compile Include="ViewModels\Menu\FeedPageViewModel.cs" />
     <Compile Include="ViewModels\Helpers\BaseViewModel.cs" />
-    <Compile Include="ViewModels\SearchPageViewModel.cs" />
-    <Compile Include="ViewModels\ProfilePageViewModel.cs" />
-    <Compile Include="ViewModels\MenuPageViewModel.cs" />
-    <Compile Include="ViewModels\LoginPageViewModel.cs" />
-    <Compile Include="Views\UploadWegpiraatPage.xaml.cs">
+    <Compile Include="ViewModels\Menu\SearchPageViewModel.cs" />
+    <Compile Include="ViewModels\Menu\ProfilePageViewModel.cs" />
+    <Compile Include="ViewModels\Menu\MenuPageViewModel.cs" />
+    <Compile Include="ViewModels\Authentication\LoginPageViewModel.cs" />
+    <Compile Include="Views\Wegpiraat\UploadWegpiraatPage.xaml.cs">
       <DependentUpon>UploadWegpiraatPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ValidationSentPage.xaml.cs">
+    <Compile Include="Views\Authentication\ValidationSentPage.xaml.cs">
       <DependentUpon>ValidationSentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WegpiraatDetailPage.xaml.cs">
+    <Compile Include="Views\Wegpiraat\WegpiraatDetailPage.xaml.cs">
       <DependentUpon>WegpiraatDetailPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -101,19 +113,19 @@
     <EmbeddedResource Include="App.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\LoginPage.xaml">
+    <EmbeddedResource Include="Views\Authentication\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\MenuPage.xaml">
+    <EmbeddedResource Include="Views\Menu\MenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FeedPage.xaml">
+    <EmbeddedResource Include="Views\Menu\FeedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SearchPage.xaml">
+    <EmbeddedResource Include="Views\Menu\SearchPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProfilePage.xaml">
+    <EmbeddedResource Include="Views\Menu\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -159,37 +171,55 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\RegisterPage.xaml">
+    <EmbeddedResource Include="Views\Authentication\RegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\ValidationSentPage.xaml">
+    <EmbeddedResource Include="Views\Authentication\ValidationSentPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\ForgotPasswordPage.xaml">
+    <EmbeddedResource Include="Views\Authentication\ForgotPasswordPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\ConfirmPasswordResetPage.xaml">
+    <EmbeddedResource Include="Views\Authentication\ConfirmPasswordResetPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\UploadWegpiraatPage.xaml">
+    <EmbeddedResource Include="Views\Wegpiraat\UploadWegpiraatPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\WegpiraatDetailPage.xaml">
+    <EmbeddedResource Include="Views\Wegpiraat\WegpiraatDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Profile\MyPostsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Profile\MyLikesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Profile\MyCommentsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

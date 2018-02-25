@@ -64,6 +64,26 @@ namespace Wegpiraat.Datalayer.Services
             }
         }
 
+        public async Task<Like> LikeWegpiraat(string id)
+        {
+            var aToken = _authRepository.GetSingleTokensOfUser();
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", aToken.AccessToken);
+                var resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "wegpiraten/"+id+"/like", null);
+                if (resp != null && resp.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<Like>(await resp.Content.ReadAsStringAsync());
+                }
+                return null;
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
+
         public async Task<Wegpiraten> UploadWegpiraat(Wegpiraten wegpiraat)
         {
             var aToken = _authRepository.GetSingleTokensOfUser();

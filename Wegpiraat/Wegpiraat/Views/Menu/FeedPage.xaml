@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:converters="clr-namespace:Wegpiraat.Converters;assembly=Wegpiraat"
+             Title="{Binding Title}"             
+             x:Class="Wegpiraat.Views.FeedPage"
+             x:Name="Feed"             
+             BackgroundColor="White">
+    <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical">
+        <ListView
+                CachingStrategy="RecycleElement" 
+                IsPullToRefreshEnabled="true" 
+                RefreshCommand="{Binding RefreshCommand}" 
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                HasUnevenRows="True"
+                ItemsSource="{Binding Wegpiraten}"
+                SeparatorColor="Gray"
+                SelectedItem="{Binding SelectedWegpiraat, Mode=TwoWay}">
+            <ListView.Behaviors>
+                <b:EventToCommandBehavior EventName="ItemTapped" 
+                                          Command="{Binding SelectWegpiraatCommand}"
+                                          EventArgsConverter="{converters:ItemTappedEventArgsConverter}" />
+            </ListView.Behaviors>
+            <ListView.Header>
+                <Frame Margin="10" Padding="20" BackgroundColor="Gray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal">
+                        <Label TextColor="Black" HorizontalOptions="Start" Text="Sort by"></Label>
+                        <Label TextColor="Black" HorizontalOptions="End" Text="Popularity"></Label>
+                    </StackLayout>
+                </Frame>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame HorizontalOptions="Fill" VerticalOptions="FillAndExpand" Margin="10" BackgroundColor="Gray">
+                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                    <Label FontSize="Large" Text="{Binding Title}" FontAttributes="Bold"  HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                    <Image HeightRequest="300" WidthRequest="300" Source="{Binding ImageSource}"></Image>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                    <Button HorizontalOptions="Start" Text="{Binding LikesCount}" Image="{Binding LikeImage}" BackgroundColor="Silver" Command="{Binding Source={x:Reference Feed}, Path=BindingContext.LikeCommand}" CommandParameter="{Binding Id}"></Button>
+                                    <Label HorizontalOptions="Center" Margin="5" Text="{Binding CreatedAt, Converter={StaticResource DateConverter}}" HorizontalTextAlignment="Center"/>
+                                    <Button HorizontalOptions="End" Text="{Binding CommentsCount}" Image="message" BackgroundColor="Silver" Command="{Binding Source={x:Reference Feed}, Path=BindingContext.WegpiraatDetailCommand}"></Button>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>    
+</ContentPage>

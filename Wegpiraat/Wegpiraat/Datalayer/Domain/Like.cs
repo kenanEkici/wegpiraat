@@ -13,5 +13,8 @@ namespace Wegpiraat.Datalayer.Domain
         
         [JsonProperty("likedBy")]
         public string LikedBy { get; set; }
+
+        [JsonProperty("liked")]
+        public bool IsLiked { get; set; }
     }
 }

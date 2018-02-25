@@ -127,7 +127,7 @@ userSchema.statics.addLike = function(postId, user, cb) {
         user.likes.push(postId);
         user.save((err) => {
           if (err) return cb(err, null);
-          cb(null, "Liked " + postId);
+          cb(null, {liked:true});
         });      
       } else { cb(err, null); }
     });
@@ -142,7 +142,7 @@ userSchema.statics.deleteLike = function(postId, user, cb) {
           user.likes.splice(likes[i].toString().indexOf(), 1);   
       user.save((err) => {
         if (err) return cb(err, null);
-        cb(null, "Unliked " + postId);
+        cb(null,  {liked:false});
       });
     } else { cb(err, null); }
   });

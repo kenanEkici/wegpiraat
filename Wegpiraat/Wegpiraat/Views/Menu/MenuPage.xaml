@@ -3,13 +3,14 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:Wegpiraat.Views"
             Title="Wegpiraat"
+            Icon="icon"
             x:Class="Wegpiraat.Views.MenuPage">
-    <TabbedPage.ToolbarItems>
+    <!--<TabbedPage.ToolbarItems>
         <ToolbarItem Command="{Binding UploadCommand}"
                      CommandParameter="UploadWegpiraatPage"
                      Icon="add.png">
         </ToolbarItem>
-    </TabbedPage.ToolbarItems>
+    </TabbedPage.ToolbarItems>-->
     <TabbedPage.Children>
         <local:FeedPage />
         <local:SearchPage />
