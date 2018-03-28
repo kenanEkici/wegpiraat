@@ -69,9 +69,11 @@ namespace Wegpiraat.Datalayer.Domain
             }
         }
 
+        public string _likeImage;
+
         public string LikeImage
         {
-            get { return IsLiked? "love" : "unlove"; }
+            get { return _likeImage = _isLiked ? "love" : "unlove"; }
         }
 
         private string _owner;
@@ -105,6 +107,7 @@ namespace Wegpiraat.Datalayer.Domain
             set
             {
                 _likes = value;
+                LikesCount = _likes.Count;
                 OnPropertyChanged(nameof(Likes));
             }
         }
@@ -117,21 +120,22 @@ namespace Wegpiraat.Datalayer.Domain
             set
             {
                 _comments = value;
+                CommentsCount = _comments.Count;
                 OnPropertyChanged(nameof(Comments));
             }
         }
 
         private int _likesCount;
-
         public int LikesCount
         {
             get
             {
-                return Likes.Count;
+                return _likesCount;
             }
             set
             {
                 _likesCount = value;
+                OnPropertyChanged(nameof(LikesCount));
             }
         }
 

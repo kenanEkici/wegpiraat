@@ -52,10 +52,17 @@ function commentBelongsToUser(commentId, user) {
     return false;
 }
 
-function isPostLiked(postId, user) {
-    var likes = user.likes;
-    for (let i = 0; i < likes.length; ++i) 
-        if (likes[i].toString() === postId) return true;
+/* basically, checks if a post has been liked by a certain person
+if it has, return true, even one instance of a like will return true
+and even if double instances were to happen, it will automatically
+remove the like because this logic is bullet proof 
+also it checks the post first because, if the post fails, the rest fails hehe
+*/
+function isPostLiked(user, post) {
+    var likes = post.likes;
+    for (let i = 0; i < likes.length; ++i) {
+        if (likes[i].likedBy === user.username) return true;
+    }
     return false;
 }
 

@@ -87,14 +87,18 @@ namespace Wegpiraat.ViewModels
             }
 
             var like = await _wegpiraatService.LikeWegpiraat(id);
-
-            if (!like.IsLiked || like == null)
+            if (like != null)
             {
-                index.IsLiked = false;
-            }
-            else
-            {
-                index.IsLiked = true;
+                if (!like.IsLiked)
+                {
+                    index.IsLiked = false;
+                    index.LikesCount = --index.LikesCount;
+                }
+                else
+                {
+                    index.IsLiked = true;
+                    index.LikesCount = ++index.LikesCount;
+                }
             }
         }
     }

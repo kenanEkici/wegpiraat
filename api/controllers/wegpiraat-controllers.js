@@ -122,29 +122,32 @@ function getCommentOfPost(req,res) {
 function likeOrUnlikePost(req, res) {
     authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => {
         if (err) res.status(400).send(err);
-        if (business.isPostLiked(req.params.postId, user)) {
-            //post is already liked
-            wpRepo.deleteLikeFromPost(req.params.postId, user, (err, postId) => {
-                if (err) res.status(400).send(err);
-                else {
-                    authRepository.deleteLike(postId, user, (err, confirmed) => {
-                        if (err) res.status(400).send(err);
-                        else res.send(confirmed); //return confirmation
-                    });
-                }
-            });
-        } else {
-            //post is not liked yet
-            wpRepo.addLikeToPost(req.params.postId, user, (err, postId) => {
-                if (err) res.status(400).send(err);
-                else {
-                    authRepository.addLike(postId, user, (err, confirmed) => {
-                        if (err) res.status(400).send(err);
-                        else res.send(confirmed); //return confirmation
-                    });
-                }
-            });
-        }
+        wpRepo.getWegpiraatById(req.params.postId, (err, post) => {
+            console.log(business.isPostLiked(user, post));
+            if (business.isPostLiked(user, post)) {
+                //post is already liked
+                wpRepo.deleteLikeFromPost(req.params.postId, user, (err, postId) => {
+                    if (err) res.status(400).send(err);
+                    else {
+                        authRepository.deleteLike(postId, user, (err, confirmed) => {
+                            if (err) res.status(400).send(err);
+                            else res.send(confirmed); //return confirmation
+                        });
+                    }
+                });
+            } else {
+                //post is not liked yet
+                wpRepo.addLikeToPost(req.params.postId, user, (err, postId) => {
+                    if (err) res.status(400).send(err);
+                    else {
+                        authRepository.addLike(postId, user, (err, confirmed) => {
+                            if (err) res.status(400).send(err);
+                            else res.send(confirmed); //return confirmation
+                        });
+                    }
+                });
+            }
+        });        
     });
 }
 
