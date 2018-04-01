@@ -14,7 +14,13 @@ namespace Wegpiraat.ViewModels
         private IAuthService _authService;
         private INavigationService _navigationService;
         public event EventHandler IsActiveChanged;
+
         public DelegateCommand<string> LogoutCommand => new DelegateCommand<string>(async (path) => await OnLogoutCommandExecuted(path));
+        public DelegateCommand<string> MyPostsCommand => new DelegateCommand<string>(async (path) => await OnMyPostsCommandExecuted(path));
+        public DelegateCommand<string> MyLikesCommand => new DelegateCommand<string>(async (path) => await OnMyLikesCommandExecuted(path));
+        public DelegateCommand<string> MyCommentsCommand => new DelegateCommand<string>(async (path) => await OnMyCommentsCommandExecuted(path));
+
+        #region properties
 
         private User _user = new User();
         public User User
@@ -34,12 +40,18 @@ namespace Wegpiraat.ViewModels
             set { _isActive = value; if (value) RequestUser(); }
         }
 
+        #endregion
+
+        #region ctor
+
         public ProfilePageViewModel(IEventAggregator ea, INavigationService navService ) : base(ea)
         {
             Title = "Profile";
             _navigationService = navService;
             _authService = new AuthService();
         }
+
+        #endregion
 
         public async void RequestUser()
         {
@@ -52,5 +64,26 @@ namespace Wegpiraat.ViewModels
             await _navigationService.NavigateAsync(path);            
         }
 
+        private async Task OnMyPostsCommandExecuted(string path)
+        {
+            var param = new NavigationParameters();
+            param.Add("arrayId", new PostsArray() { IdArray = User.Posts });
+            await _navigationService.NavigateAsync(path, param);
+        }
+
+        private async Task OnMyLikesCommandExecuted(string path)
+        {
+            var param = new NavigationParameters();
+            param.Add("arrayId", new PostsArray() { IdArray = User.Likes });
+            await _navigationService.NavigateAsync(path, param);
+        }
+
+        private async Task OnMyCommentsCommandExecuted(string path)
+        {
+            //todo show post with comments below etc.. 
+            var param = new NavigationParameters();
+            param.Add("arrayId", new PostsArray() { });
+            await _navigationService.NavigateAsync(path);
+        }
     }
 }

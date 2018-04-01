@@ -1,4 +1,4 @@
-@token = Bearer 237ddd4a533cafa9ed8eb75453daf2c69d36b385
+@token = Bearer bf7ea5d966aca25283cce322ea52d4d2461d1433
 GET http://localhost:3000/api/wegpiraten HTTP/1.1
 Content-Type: application/json
 Authorization: {{token}}

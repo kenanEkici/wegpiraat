@@ -45,6 +45,9 @@ module.exports = function(app, nev) {
     //details
     app.get('/api/wegpiraten/:postId', app.oauth.authorise(), wpController.getWegpiraatById);
 
+    //from a given id arr
+    app.post('/api/wegpiraten/arr', app.oauth.authorise(), wpController.getWegpiratenByIdArray);
+
     //add wegpiraat
     app.post('/api/wegpiraten', app.oauth.authorise(), wpController.addWegpiraat);    
 

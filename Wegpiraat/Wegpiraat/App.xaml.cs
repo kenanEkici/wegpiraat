@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Wegpiraat.Datalayer.Services;
 using Wegpiraat.Views;
+using Wegpiraat.Views.Wegpiraat;
 using Xamarin.Forms;
 
 namespace Wegpiraat
@@ -49,6 +50,7 @@ namespace Wegpiraat
             Container.RegisterTypeForNavigation<MyPostsPage>();
             Container.RegisterTypeForNavigation<MyLikesPage>();
             Container.RegisterTypeForNavigation<MyCommentsPage>();
+            Container.RegisterTypeForNavigation<WegpiraatDetailCommentPage>();
         }
     }
 }

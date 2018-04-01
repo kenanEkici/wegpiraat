@@ -50,6 +50,13 @@ function getWegpiraatById(id, cb) {
     }    
 }
 
+function getWegpiratenByIdArray(arr, cb) {
+    Wegpiraat.find({ '_id': { $in: arr} }, (err, data) => {
+        if (err) return cb(err, null);    
+        cb(null, data);
+    });
+}
+
 function createWegpiraat(body, user, cb) {
     
     var newWegpiraat = new Wegpiraat({
@@ -166,6 +173,7 @@ function deleteLikeFromPost(postId, user, cb) {
 module.exports = {
     getAllWegpiraten: getAllWegpiraten,
     getWegpiraatById: getWegpiraatById,
+    getWegpiratenByIdArray: getWegpiratenByIdArray,
     createWegpiraat: createWegpiraat,
     updateWegpiraatById: updateWegpiraatById,
     deleteWegpiraatById: deleteWegpiraatById,

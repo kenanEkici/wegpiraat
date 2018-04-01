@@ -64,6 +64,26 @@ namespace Wegpiraat.Datalayer.Services
             }
         }
 
+        public async Task<List<Wegpiraten>> GetWegpiratenByArrayId(PostsArray ids)
+        {
+            var aToken = _authRepository.GetSingleTokensOfUser();
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", aToken.AccessToken);
+                var resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "wegpiraten/arr", new StringContent(JsonConvert.SerializeObject(ids), Encoding.UTF8, "application/json"));
+                if (resp != null && resp.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<List<Wegpiraten>>(await resp.Content.ReadAsStringAsync());
+                }
+                return null;
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
+
         public async Task<Like> LikeWegpiraat(string id)
         {
             var aToken = _authRepository.GetSingleTokensOfUser();
@@ -74,6 +94,26 @@ namespace Wegpiraat.Datalayer.Services
                 if (resp != null && resp.IsSuccessStatusCode)
                 {
                     return JsonConvert.DeserializeObject<Like>(await resp.Content.ReadAsStringAsync());
+                }
+                return null;
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
+
+        public async Task<Comment> CommentOnWegpiraat(Comment comment)
+        {
+            var aToken = _authRepository.GetSingleTokensOfUser();
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", aToken.AccessToken);
+                var resp = await _httpClient.PostAsync(ApiConstants.BASE_API_URI + "wegpiraten/" + comment.PostId + "/comment", new StringContent(JsonConvert.SerializeObject(comment), Encoding.UTF8, "application/json"));
+                if (resp != null && resp.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<Comment>(await resp.Content.ReadAsStringAsync());
                 }
                 return null;
             }
@@ -102,6 +142,6 @@ namespace Wegpiraat.Datalayer.Services
                 Debug.WriteLine(ex);
                 return null;
             }
-        }
+        }        
     }
 }

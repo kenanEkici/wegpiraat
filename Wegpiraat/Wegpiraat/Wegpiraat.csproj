@@ -35,8 +35,10 @@
     <Compile Include="Datalayer\Domain\Comment.cs" />
     <Compile Include="Datalayer\Domain\Like.cs" />
     <Compile Include="Datalayer\Domain\Post.cs" />
+    <Compile Include="Datalayer\Domain\PostsArray.cs" />
     <Compile Include="Datalayer\Domain\Tokens.cs" />
     <Compile Include="Datalayer\Domain\User.cs" />
+    <Compile Include="Datalayer\Domain\UserComment.cs" />
     <Compile Include="Datalayer\Domain\Wegpiraten.cs" />
     <Compile Include="Datalayer\Repositories\ISQLiteHelper.cs" />
     <Compile Include="Datalayer\Repositories\IAuthRepository.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="ViewModels\Authentication\RegisterPageViewModel.cs" />
     <Compile Include="ViewModels\Wegpiraat\UploadWegpiraatPageViewModel.cs" />
     <Compile Include="ViewModels\Authentication\ValidationSentPageViewModel.cs" />
+    <Compile Include="ViewModels\Wegpiraat\WegpiraatDetailCommentPageViewModel.cs" />
     <Compile Include="ViewModels\Wegpiraat\WegpiraatDetailPageViewModel.cs" />
     <Compile Include="Views\Authentication\ConfirmPasswordResetPage.xaml.cs">
       <DependentUpon>ConfirmPasswordResetPage.xaml</DependentUpon>
@@ -104,6 +107,9 @@
     </Compile>
     <Compile Include="Views\Authentication\ValidationSentPage.xaml.cs">
       <DependentUpon>ValidationSentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Wegpiraat\WegpiraatDetailCommentPage.xaml.cs">
+      <DependentUpon>WegpiraatDetailCommentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Wegpiraat\WegpiraatDetailPage.xaml.cs">
       <DependentUpon>WegpiraatDetailPage.xaml</DependentUpon>
@@ -220,6 +226,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Profile\MyCommentsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Wegpiraat\WegpiraatDetailCommentPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

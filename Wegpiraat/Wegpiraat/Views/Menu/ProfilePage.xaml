@@ -20,11 +20,13 @@
                         <Label Text="{Binding User.LastName}" HorizontalTextAlignment="Center" FontSize="Small" TextColor="Silver" />
                     </StackLayout>
                 </StackLayout>
-                <StackLayout Orientation="Vertical" VerticalOptions="Center" Margin="5" HorizontalOptions="FillAndExpand">
-                    <Button Text="Posts"></Button>
-                    <Button Text="Likes"></Button>
-                    <Button Text="Comments"></Button>
-                    <Button Text="Settings"></Button>
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center" Margin="5" HorizontalOptions="FillAndExpand">
+                    <Button Text="Posts" Command="{Binding MyPostsCommand}" CommandParameter="FeedPage"></Button>
+                    <Button Text="Likes" Command="{Binding MyLikesCommand}" CommandParameter="FeedPage"></Button>
+                    <Button Text="Comments" Command="{Binding MyCommentsCommand}" CommandParameter="FeedPage"></Button>
+                    <Button Text="Settings"></Button>                    
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="End">
                     <Button 
                         Text="Logout"
                         Command="{Binding LogoutCommand}"

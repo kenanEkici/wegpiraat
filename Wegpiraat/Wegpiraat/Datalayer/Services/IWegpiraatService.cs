@@ -11,7 +11,9 @@ namespace Wegpiraat.Datalayer.Services
     {
         Task<List<Wegpiraten>> GetAllWegpiraten();
         Task<Wegpiraten> GetWegpiraatById(Wegpiraten wegpiraat);
+        Task<List<Wegpiraten>> GetWegpiratenByArrayId(PostsArray ids);
         Task<Wegpiraten> UploadWegpiraat(Wegpiraten wegpiraat);
         Task<Like> LikeWegpiraat(string wegpiraat);
+        Task<Comment> CommentOnWegpiraat(Comment comment);
     }
 }

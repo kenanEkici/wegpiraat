@@ -57,8 +57,9 @@ namespace Wegpiraat.Datalayer.Domain
                 OnPropertyChanged(nameof(CreatedAt));
             }
         }
-
+        
         private bool _isLiked;
+        [JsonIgnore]
         public bool IsLiked
         {
             get { return _isLiked; }
@@ -70,7 +71,7 @@ namespace Wegpiraat.Datalayer.Domain
         }
 
         public string _likeImage;
-
+        [JsonIgnore]
         public string LikeImage
         {
             get { return _likeImage = _isLiked ? "love" : "unlove"; }
@@ -124,8 +125,9 @@ namespace Wegpiraat.Datalayer.Domain
                 OnPropertyChanged(nameof(Comments));
             }
         }
-
+                
         private int _likesCount;
+        [JsonIgnore]
         public int LikesCount
         {
             get
@@ -139,9 +141,16 @@ namespace Wegpiraat.Datalayer.Domain
             }
         }
 
-        public string CommentsCount
+        private int _commentsCount;
+        [JsonIgnore]
+        public int CommentsCount
         {
-            get { return Comments.Count.ToString(); }
+            get { return _commentsCount; }            
+            set
+            {
+                _commentsCount = value;
+                OnPropertyChanged(nameof(CommentsCount));
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

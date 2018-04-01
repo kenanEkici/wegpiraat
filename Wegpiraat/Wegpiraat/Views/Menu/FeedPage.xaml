@@ -9,15 +9,14 @@
              x:Class="Wegpiraat.Views.FeedPage"
              x:Name="Feed"             
              BackgroundColor="White">
-    <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical">
+    <StackLayout Spacing="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical">
         <ListView
-                CachingStrategy="RecycleElement" 
+                CachingStrategy="RetainElement" 
                 IsPullToRefreshEnabled="true" 
                 RefreshCommand="{Binding RefreshCommand}" 
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                 HasUnevenRows="True"
                 ItemsSource="{Binding Wegpiraten}"
-                SeparatorColor="Gray"
                 SelectedItem="{Binding SelectedWegpiraat, Mode=TwoWay}">
             <ListView.Behaviors>
                 <b:EventToCommandBehavior EventName="ItemTapped" 
@@ -35,18 +34,16 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Frame HorizontalOptions="Fill" VerticalOptions="FillAndExpand" Margin="10" BackgroundColor="Gray">
+                        <Frame HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10" BackgroundColor="Silver">
                             <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                 <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                    <Label FontSize="Large" Text="{Binding Title}" FontAttributes="Bold"  HorizontalTextAlignment="Center"/>
+                                    <Label FontSize="Large" TextColor="Black" Text="{Binding Title}" FontAttributes="Bold"  HorizontalTextAlignment="Center"/>
                                 </StackLayout>
-                                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                    <Image HeightRequest="300" WidthRequest="300" Source="{Binding ImageSource}"></Image>
-                                </StackLayout>
+                                <Image HorizontalOptions="CenterAndExpand" Source="{Binding ImageSource}"></Image>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                     <Button HorizontalOptions="Start" Text="{Binding LikesCount}" Image="{Binding LikeImage}" BackgroundColor="Silver" Command="{Binding Source={x:Reference Feed}, Path=BindingContext.LikeCommand}" CommandParameter="{Binding Id}"></Button>
                                     <Label HorizontalOptions="Center" Margin="5" Text="{Binding CreatedAt, Converter={StaticResource DateConverter}}" HorizontalTextAlignment="Center"/>
-                                    <Button HorizontalOptions="End" Text="{Binding CommentsCount}" Image="message" BackgroundColor="Silver" Command="{Binding Source={x:Reference Feed}, Path=BindingContext.WegpiraatDetailCommand}"></Button>
+                                    <Button HorizontalOptions="End" Text="{Binding CommentsCount}" Image="message" BackgroundColor="Silver" Command="{Binding Source={x:Reference Feed}, Path=BindingContext.WegpiraatDetailCommand}" CommandParameter="{Binding Id}"></Button>
                                 </StackLayout>
                             </StackLayout>
                         </Frame>
@@ -54,5 +51,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </ScrollView>    
+    </StackLayout>    
 </ContentPage>

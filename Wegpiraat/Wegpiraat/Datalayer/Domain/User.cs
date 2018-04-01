@@ -126,10 +126,10 @@ namespace Wegpiraat.Datalayer.Domain
             }
         }
 
-        private List<string> _comments;
+        private List<UserComment> _comments;
         [JsonProperty(PropertyName = "comments")]
         [Ignore]
-        public List<string> Comments
+        public List<UserComment> Comments
         {
             get { return _comments; }
             set

@@ -15,13 +15,16 @@ namespace Wegpiraat.ViewModels
     {
         private INavigationService _navigationService;
         private IWegpiraatService _wegpiraatService;
+
+        #region properties
+
         public DelegateCommand<string> UploadCommand => new DelegateCommand<string>(async (path) => await OnUploadCommandExecuted(path));
 
         private string _error;
         public string Error
         {
             get { return _error; }
-            set { _error = value; }
+            set { SetProperty(ref _error, value); }
         }
         
         private string _title;
@@ -45,11 +48,15 @@ namespace Wegpiraat.ViewModels
             set { SetProperty(ref _createdAt, value); }
         }
 
+        #endregion
+
+        #region ctor
         public UploadWegpiraatPageViewModel(INavigationService navService)
         {
             _navigationService = navService;
             _wegpiraatService = new WegpiraatService();
         }
+        #endregion ctor
 
         private async Task OnUploadCommandExecuted(string path)
         {
@@ -66,9 +73,10 @@ namespace Wegpiraat.ViewModels
             }            
             else
             {
-                await _navigationService.NavigateAsync(path);
-            }
-            
+                var param = new NavigationParameters();
+                param.Add("post", newWegpiraat);
+                await _navigationService.NavigateAsync(path, param);
+            }            
         }
     }
 }

@@ -17,11 +17,19 @@ function getAllWegpiraten(req,res) {
     });
 }
 
+//Get all posts by a given array of Post ID's
+function getWegpiratenByIdArray(req,res) {
+    wpRepo.getWegpiratenByIdArray(req.body.idArr, (err, data) => {
+        if (err) res.status(400).send(err);
+        else res.send(data);
+    });
+}
+
 //Get a post by a given id ==> TODO if wegpiraat not found, delete from own list of reference 
 function getWegpiraatById(req,res) {    
     wpRepo.getWegpiraatById(req.params.postId, (err, data) => {
         if (err) res.status(400).send(err);
-        res.send(data);      
+        else res.send(data);      
     });
 }
 
@@ -123,7 +131,6 @@ function likeOrUnlikePost(req, res) {
     authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => {
         if (err) res.status(400).send(err);
         wpRepo.getWegpiraatById(req.params.postId, (err, post) => {
-            console.log(business.isPostLiked(user, post));
             if (business.isPostLiked(user, post)) {
                 //post is already liked
                 wpRepo.deleteLikeFromPost(req.params.postId, user, (err, postId) => {
@@ -156,6 +163,7 @@ module.exports = {
     addWegpiraat: addWegpiraat,
     getAllWegpiraten: getAllWegpiraten,
     getWegpiraatById: getWegpiraatById,
+    getWegpiratenByIdArray: getWegpiratenByIdArray,
     updateWegpiraatById: updateWegpiraatById,
     deleteWegpiraatById: deleteWegpiraatById,
     addCommentToPost: addCommentToPost,

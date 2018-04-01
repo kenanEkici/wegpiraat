@@ -217,7 +217,11 @@ namespace Wegpiraat.Datalayer.Services
                 var resp = await _httpClient.GetAsync(ApiConstants.BASE_API_URI + "userinfo");
 
                 if (resp != null && resp.IsSuccessStatusCode)
-                    return JsonConvert.DeserializeObject<User>(await resp.Content.ReadAsStringAsync());
+                {
+                    var info = await resp.Content.ReadAsStringAsync();
+                    var user = JsonConvert.DeserializeObject<User>(info);
+                    return user;
+                }
                 return null;
             }
             catch (Exception ex)
