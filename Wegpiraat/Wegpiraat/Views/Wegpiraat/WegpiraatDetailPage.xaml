@@ -32,15 +32,13 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame HorizontalOptions="Fill" VerticalOptions="FillAndExpand" OutlineColor="Black" Margin="10" BackgroundColor="Silver">
-                                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Vertical">
-                                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal">
-                                        <Label FontSize="Small" Text="{Binding PostedBy}" FontAttributes="Bold" TextColor="Black" />
-                                        <Label FontSize="Small" Text="{Binding CommentData}" />
-                                    </StackLayout>
-                                    <Label FontSize="Micro" Text="{Binding PostedAt}" />
+                            <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="Silver" VerticalOptions="FillAndExpand" Orientation="Vertical">
+                                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal">
+                                    <Label FontSize="Small" Text="{Binding PostedBy}" FontAttributes="Bold" TextColor="Black" />
+                                    <Label FontSize="Small" Text="{Binding CommentData}" />
                                 </StackLayout>
-                            </Frame>
+                                <Label FontSize="Micro" Text="{Binding PostedAt}" />
+                            </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -121,11 +121,6 @@ function deleteCommentFromPost(req,res) {
     });
 }
 
-//Get a comment from a post
-function getCommentOfPost(req,res) {
-
-}
-
 //Add a like to a post or remove if already liked => if success => add/delete reference to user 
 function likeOrUnlikePost(req, res) {
     authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => {
@@ -168,6 +163,5 @@ module.exports = {
     deleteWegpiraatById: deleteWegpiraatById,
     addCommentToPost: addCommentToPost,
     deleteCommentFromPost: deleteCommentFromPost,
-    likeOrUnlikePost: likeOrUnlikePost,
-    getCommentOfPost: getCommentOfPost
+    likeOrUnlikePost: likeOrUnlikePost
 };

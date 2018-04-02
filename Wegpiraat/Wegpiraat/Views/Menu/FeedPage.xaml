@@ -34,16 +34,16 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Frame HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10" BackgroundColor="Silver">
+                        <Frame HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10">
                             <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                 <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                     <Label FontSize="Large" TextColor="Black" Text="{Binding Title}" FontAttributes="Bold"  HorizontalTextAlignment="Center"/>
                                 </StackLayout>
-                                <Image HorizontalOptions="CenterAndExpand" Source="{Binding ImageSource}"></Image>
+                                <Image HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="400" Source="{Binding ImageSource}"></Image>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                    <Button HorizontalOptions="Start" Text="{Binding LikesCount}" Image="{Binding LikeImage}" BackgroundColor="Silver" Command="{Binding Source={x:Reference Feed}, Path=BindingContext.LikeCommand}" CommandParameter="{Binding Id}"></Button>
+                                    <Button HorizontalOptions="Start" Text="{Binding LikesCount}" Image="{Binding LikeImage}" Command="{Binding Source={x:Reference Feed}, Path=BindingContext.LikeCommand}" CommandParameter="{Binding Id}"></Button>
                                     <Label HorizontalOptions="Center" Margin="5" Text="{Binding CreatedAt, Converter={StaticResource DateConverter}}" HorizontalTextAlignment="Center"/>
-                                    <Button HorizontalOptions="End" Text="{Binding CommentsCount}" Image="message" BackgroundColor="Silver" Command="{Binding Source={x:Reference Feed}, Path=BindingContext.WegpiraatDetailCommand}" CommandParameter="{Binding Id}"></Button>
+                                    <Button HorizontalOptions="End" Text="{Binding CommentsCount}" Image="message" Command="{Binding Source={x:Reference Feed}, Path=BindingContext.WegpiraatDetailCommand}" CommandParameter="{Binding Id}"></Button>
                                 </StackLayout>
                             </StackLayout>
                         </Frame>

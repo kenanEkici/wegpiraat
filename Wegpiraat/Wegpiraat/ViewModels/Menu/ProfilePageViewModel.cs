@@ -67,14 +67,14 @@ namespace Wegpiraat.ViewModels
         private async Task OnMyPostsCommandExecuted(string path)
         {
             var param = new NavigationParameters();
-            param.Add("arrayId", new PostsArray() { IdArray = User.Posts });
+            param.Add("sort", "posts");
             await _navigationService.NavigateAsync(path, param);
         }
 
         private async Task OnMyLikesCommandExecuted(string path)
         {
             var param = new NavigationParameters();
-            param.Add("arrayId", new PostsArray() { IdArray = User.Likes });
+            param.Add("sort", "likes");
             await _navigationService.NavigateAsync(path, param);
         }
 
@@ -82,7 +82,7 @@ namespace Wegpiraat.ViewModels
         {
             //todo show post with comments below etc.. 
             var param = new NavigationParameters();
-            param.Add("arrayId", new PostsArray() { });
+            param.Add("sort", "comments");
             await _navigationService.NavigateAsync(path);
         }
     }

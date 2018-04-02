@@ -54,8 +54,6 @@
     <Compile Include="ViewModels\Authentication\ConfirmPasswordResetPageViewModel.cs" />
     <Compile Include="ViewModels\Authentication\ForgotPasswordPageViewModel.cs" />
     <Compile Include="ViewModels\Profile\MyCommentsPageViewModel.cs" />
-    <Compile Include="ViewModels\Profile\MyLikesPageViewModel.cs" />
-    <Compile Include="ViewModels\Profile\MyPostsPageViewModel.cs" />
     <Compile Include="ViewModels\Authentication\RegisterPageViewModel.cs" />
     <Compile Include="ViewModels\Wegpiraat\UploadWegpiraatPageViewModel.cs" />
     <Compile Include="ViewModels\Authentication\ValidationSentPageViewModel.cs" />

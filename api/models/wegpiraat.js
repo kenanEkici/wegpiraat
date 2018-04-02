@@ -170,6 +170,13 @@ function deleteLikeFromPost(postId, user, cb) {
     });
 }
 
+function getLikedWegpiraten(username, cb) {
+    Wegpiraat.find({ 'likes.likedBy': username }, (err, data) => {
+        if (err) return cb(err, null);    
+        cb(null, data);
+    });
+}
+
 module.exports = {
     getAllWegpiraten: getAllWegpiraten,
     getWegpiraatById: getWegpiraatById,
@@ -180,5 +187,6 @@ module.exports = {
     addCommentToPost: addCommentToPost,
     deleteCommentFromPost: deleteCommentFromPost, 
     addLikeToPost: addLikeToPost,
-    deleteLikeFromPost: deleteLikeFromPost
+    deleteLikeFromPost: deleteLikeFromPost,
+    getLikedWegpiraten: getLikedWegpiraten
 };

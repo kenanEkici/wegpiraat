@@ -64,7 +64,7 @@ module.exports = function(app, nev) {
     app.delete('/api/wegpiraten/:postId/:commentId', app.oauth.authorise(), wpController.deleteCommentFromPost);
 
     //get single comment -- TODO
-    app.get('/api/wegpiraten/:postId/comments/:commentId', app.oauth.authorise(), wpController.getCommentOfPost);
+    //app.get('/api/wegpiraten/:postId/comments/:commentId', app.oauth.authorise(), wpController.getCommentOfPost);
 
     //like post
     app.post('/api/wegpiraten/:postId/like', app.oauth.authorise(), wpController.likeOrUnlikePost);

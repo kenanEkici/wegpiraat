@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SQLite.Net.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -136,6 +137,18 @@ namespace Wegpiraat.Datalayer.Domain
             {
                 _comments = value;
                 OnPropertyChanged(nameof(Comments));
+            }
+        }
+
+        private Uri _imageSource = new Uri("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png");
+        [Ignore]
+        public Uri ProfileImage
+        {
+            get { return _imageSource; }
+            set
+            {
+                _imageSource = value;
+                OnPropertyChanged(nameof(ProfileImage));
             }
         }
 

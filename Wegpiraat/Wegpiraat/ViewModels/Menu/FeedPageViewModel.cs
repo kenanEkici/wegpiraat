@@ -20,6 +20,12 @@ namespace Wegpiraat.ViewModels
         private IAuthService _authService;
         private INavigationService _navigationService;
 
+        public DelegateCommand<string> WegpiraatDetailCommand => new DelegateCommand<string>(async (id) => await WegpiraatDetailCommandExecuted(id));
+        public DelegateCommand<string> LikeCommand => new DelegateCommand<string>(async (id) => await LikeCommandExecuted(id));
+        public DelegateCommand RefreshCommand => new DelegateCommand(async () => await GetData());
+
+        #region properties
+
         private bool _isActive;
         public bool IsActive
         {
@@ -27,13 +33,7 @@ namespace Wegpiraat.ViewModels
             set { _isActive = value; if (value) GetData(); }
         }
 
-        private PostsArray specificWegpiraten;
-
-        public DelegateCommand<string> WegpiraatDetailCommand => new DelegateCommand<string>(async (id) => await WegpiraatDetailCommandExecuted(id));
-        public DelegateCommand<string> LikeCommand => new DelegateCommand<string>(async (id) => await LikeCommandExecuted(id));
-        public DelegateCommand RefreshCommand => new DelegateCommand(async () => await GetData());
-
-        #region properties
+        private string sorting = "";
 
         private ObservableCollection<Wegpiraten> _wegpiraten;
         public ObservableCollection<Wegpiraten> Wegpiraten
@@ -72,24 +72,30 @@ namespace Wegpiraat.ViewModels
             var user = await _authService.RequestUserInformation();
             List<Wegpiraten> wegpiraten = null;
 
-            if (specificWegpiraten != null && specificWegpiraten.IdArray != null)
-            {
-                wegpiraten = await _wegpiraatService.GetWegpiratenByArrayId(specificWegpiraten);
-            }               
-            else
-            {
-                wegpiraten = await _wegpiraatService.GetAllWegpiraten();
-            }
+            if (user != null)
+                if (sorting != "")
+                {
+                    switch (sorting)
+                    {
+                        case "likes": wegpiraten = await _wegpiraatService.GetWegpiratenByArrayId(new PostsArray { IdArray = user.Likes }); break;
+                        case "posts": wegpiraten = await _wegpiraatService.GetWegpiratenByArrayId(new PostsArray { IdArray = user.Posts }); break;
+                    }
+                }
+                else
+                {
+                    wegpiraten = await _wegpiraatService.GetAllWegpiraten();
+                }
 
-            foreach (var wegpiraat in wegpiraten)
-                foreach (var like in wegpiraat.Likes)
-                    if (like.LikedBy.Equals(user.Username))
-                        wegpiraat.IsLiked = true;
-                    else
-                        wegpiraat.IsLiked = false;
+                foreach (var wegpiraat in wegpiraten)
+                    foreach (var like in wegpiraat.Likes)
+                        if (like.LikedBy.Equals(user.Username))
+                            wegpiraat.IsLiked = true;
+                        else
+                            wegpiraat.IsLiked = false;
 
-            Wegpiraten = ExtensionHelper.ToObservableCollection(wegpiraten);
-            IsBusy = false;
+                Wegpiraten = ExtensionHelper.ToObservableCollection(wegpiraten);
+
+                IsBusy = false;
         }
 
         private async Task WegpiraatDetailCommandExecuted(string id)
@@ -128,12 +134,16 @@ namespace Wegpiraat.ViewModels
             }
         }
 
+        #region nav
+
         public void OnNavigatedFrom(NavigationParameters parameters) { }
 
         public async void OnNavigatedTo(NavigationParameters parameters)
         {
-            specificWegpiraten = parameters.GetValue<PostsArray>("arrayId");
+            sorting = parameters.GetValue<string>("sort");
             await GetData();
         }
+
+        #endregion
     }
 }
