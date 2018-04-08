@@ -3,6 +3,7 @@ import { StackNavigator } from 'react-navigation';
 import LoginScreen from './screens/login';
 import MenuScreen from './screens/menu';
 import UploadScreen from './screens/upload';
+import RegisterScreen from './screens/register';
 
 const MainStack = StackNavigator(
   {
@@ -14,6 +15,9 @@ const MainStack = StackNavigator(
     },
     Upload: {
       screen: UploadScreen
+    }, 
+    Register: {
+      screen: RegisterScreen
     }
   },
   {

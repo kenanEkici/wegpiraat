@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, Button, View, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import HeaderLogo from './../components/header';
 import Modal from 'react-native-modal';
-import modalstyles from '../modals/modalstyles';
+import s from '../styles/styles';
 
 export default class LoginScreen extends React.Component {
 
@@ -10,33 +10,39 @@ export default class LoginScreen extends React.Component {
       headerTitle: <HeaderLogo/>    
     };
 
-    state = { showPasswordReset:false }
+    showConfirmModal() {
+      this.setState({showPasswordReset:false})
+      this.setState({showPasswordResetConfirm:true})
+    }
+
+    state = 
+    { 
+      showPasswordReset:false,
+      showPasswordResetConfirm:false
+    }
   
     render() {
       return (
-        <ScrollView centerContent={true} contentContainerStyle={{ flexGrow:1, flexDirection:'column', alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{marginBottom:30, fontSize:30, fontWeight:"bold", marginTop:20}}>Login to Wegpiraat</Text>
-          <TextInput
-            style={{height: 40, width:200, fontWeight:"bold", textAlign:"center",  marginBottom:10}}  
-            placeholder="Email"            
-          />
-          <TextInput
-            style={{height: 40, width:200, textAlign:"center", marginBottom:30}}       
-            placeholder="Password"
-          />     
-          <View style={{marginBottom:40, width:200}} >
-            <Button title="Login" onPress={()=> this.props.navigation.navigate('Menu', { id: 100 }) } ></Button>
-          </View>        
-          <Text style={{marginBottom:20}}>New to Wegpiraat? Create an account.</Text>
-  
-          <View style={{marginBottom:20, width:150}}>
-            <Button title="Register" onPress={()=> this.props.navigation.navigate('Menu', { id: 100 }) } ></Button>
-          </View>
-          <View style={{marginBottom:20, width:150}} >
-            <Button title="Forgot password?" onPress={()=>this.setState({showPasswordReset:true})}></Button>
+        <ScrollView centerContent={true} contentContainerStyle={{ flexGrow:1, flexDirection:'column', alignItems:"center", justifyContent:"space-between"}}>
+          <View style={{alignItems:"center"}}>
+            <Text style={s.h1}>Login to Wegpiraat</Text>
+            <TextInput style={s.entry} placeholder="Email" />
+            <TextInput style={s.entry} placeholder="Password"/>     
+            <TouchableOpacity style={[s.button, s.margebomedium, s.exotic]} onPress={()=> this.props.navigation.navigate('Menu', { id: 100 })}>
+              <Text style={s.textBomb}>Login</Text>
+            </TouchableOpacity>
+            <Text style={{color:"steelblue", marginBottom:30, textDecorationLine:"underline"}} onPress={()=>this.setState({showPasswordReset:true})}>I forgot my password</Text>        
           </View>
 
+          <View style={{alignItems:"center"}}>
+            <Text style={{marginBottom:20}}>New to Wegpiraat? Create an account.</Text>  
+            <TouchableOpacity style={[s.button, s.margebomedium, s.exotic]} onPress={()=> this.props.navigation.navigate('Register', { id: 100 })}>
+              <Text style={[s.textBomb]}>Register</Text>
+            </TouchableOpacity>
+          </View>         
+
           <Modal
+            style={{flex:1}}
             isVisible={this.state.showPasswordReset}
             backdropOpacity={0.5}
             onBackdropPress={() => this.setState({showPasswordReset:false})}
@@ -46,16 +52,55 @@ export default class LoginScreen extends React.Component {
             animationOutTiming={300}
             backdropTransitionInTiming={300}
             backdropTransitionOutTiming={300} >
-                <View style={modalstyles.modalContent}>
-                    <Text>Send a reset token to my email</Text>
-                    <TextInput style={{width:200}} placeholder="email address" />
-                    <TouchableOpacity onPress={() => this.setState({showPasswordReset:false})}>
-                        <View style={modalstyles.button}>
-                            <Text>Go back</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>            
-            </Modal>
+              <View style={s.content}>
+
+                <View style={{flexDirection:"column", alignItems:"center"}}>
+                  <Text style={s.h2}>Send a reset token to my email</Text>
+                  <TextInput style={s.entry} placeholder="email address" />
+                  <TouchableOpacity style={[s.button, s.margebolarge]} onPress={()=>this.showConfirmModal()}>
+                    <Text style={s.smallTextBomb}>Send</Text>
+                  </TouchableOpacity>   
+                </View>
+
+                <View style={{ flexDirection:"row", alignItems:"center", justifyContent:"space-between" }}>
+                  <TouchableOpacity style={s.button} onPress={()=>this.setState({showPasswordReset:false})}>
+                    <Text style={s.miniTextBomb}>Go back</Text>
+                  </TouchableOpacity>   
+                  <TouchableOpacity style={s.button} onPress={()=>this.showConfirmModal()}>
+                    <Text style={s.miniTextBomb}>I already have a token</Text>
+                  </TouchableOpacity>
+                </View>
+
+              </View>            
+          </Modal>
+
+          <Modal
+            style={{flex:1}}
+            isVisible={this.state.showPasswordResetConfirm}
+            backdropOpacity={0.5}
+            onBackdropPress={() => this.setState({showPasswordResetConfirm:false})}
+            animationIn="zoomInUp"
+            animationOut="fadeOutUp"
+            animationInTiming={300}
+            animationOutTiming={300}
+            backdropTransitionInTiming={300}
+            backdropTransitionOutTiming={300}>
+
+              <View style={[s.content, s.centerItems]}>
+                <Text style={s.h2}>Check your email inbox for your token:</Text>
+                <Text>Token</Text>
+                <TextInput style={s.entry} placeholder="password reset token" />
+                <Text>New password</Text>
+                <TextInput style={s.entry} placeholder="password" />
+                <Text>Confirm new password</Text>
+                <TextInput style={s.entry} placeholder="password" />
+                <TouchableOpacity style={s.button} onPress={()=>this.setState({showPasswordResetConfirm:false})}>
+                  <Text style={s.miniTextBomb}>Go back</Text>
+                </TouchableOpacity>
+              </View>
+
+          </Modal>
+
         </ScrollView>
       )
     }
