@@ -1,5 +1,6 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, StatusBar, StyleSheet, View, Text } from 'react-native';
+import AuthService from '../service/authservice';
 
 export default class SplashScreen extends React.Component {
     constructor(props) {
@@ -8,9 +9,8 @@ export default class SplashScreen extends React.Component {
     }
         
       // Fetch the token from storage then navigate to our appropriate place
-    _bootstrapAsync = async () => {
-        const userToken = await AsyncStorage.getItem('userToken');
-        this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    _bootstrapAsync = async () => {                
+        this.props.navigation.navigate(await new AuthService().authorised() ? 'App' : 'Auth');
     };
     
       // Render any loading content that you like here

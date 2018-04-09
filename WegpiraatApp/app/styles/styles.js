@@ -81,6 +81,11 @@ export default styles = StyleSheet.create({
         fontSize:16,
         fontFamily: "Roboto"
       },
+      errorMessage: {
+        color: "red",
+        fontSize: 16,
+        fontFamily: "Roboto",        
+      },
       metop: {
         marginTop: 30
       },
@@ -98,5 +103,8 @@ export default styles = StyleSheet.create({
       },
       spaceplease: {
         margin:30
+      },
+      please: {
+        margin:10
       }
     });

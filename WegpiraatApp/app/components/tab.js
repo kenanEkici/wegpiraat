@@ -2,15 +2,18 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { } from 'react-native';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
+
 import FeedScreen from '../screens/feed';
-import MenuScreen from '../screens/menu';
+import UploadScreen from '../screens/upload';
+import SearchScreen from '../screens/search';
+import ProfileScreen from '../screens/profile';
 
 export default Menu = TabNavigator(
     {
-        Feed: MenuScreen,
-        Upload: FeedScreen,
-        Search: FeedScreen,
-        Profile: FeedScreen
+        Feed: FeedScreen,
+        Upload: UploadScreen,
+        Search: SearchScreen,
+        Profile: ProfileScreen
     },
     {
         navigationOptions: ({ navigation }) => ({

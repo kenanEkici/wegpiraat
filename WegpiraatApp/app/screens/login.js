@@ -1,13 +1,26 @@
 import React from 'react';
-import { Text, Button, View, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { Text, Button, View, ScrollView, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import HeaderLogo from './../components/header';
 import Modal from 'react-native-modal';
 import s from '../styles/styles';
+import AuthService from '../service/authservice';
 
 export default class LoginScreen extends React.Component {
 
+    constructor(props) {
+      super(props);
+      this.state = {
+        showPasswordReset:false,
+        showPasswordResetConfirm:false,
+        loginError: "",
+        loading: false,
+        username: "kenan.ekici@outlook.com",
+        password: "kenan123"
+      }
+    }
+
     static navigationOptions = {
-      headerTitle: <HeaderLogo/>    
+      headerTitle: <HeaderLogo/>
     };
 
     showConfirmModal() {
@@ -15,21 +28,31 @@ export default class LoginScreen extends React.Component {
       this.setState({showPasswordResetConfirm:true})
     }
 
-    state = 
-    { 
-      showPasswordReset:false,
-      showPasswordResetConfirm:false
+    tryLogin = async () => {  
+
+      await this.setState({loading: true});
+      let service = new AuthService();
+      let success = await service.login(this.state.username, this.state.password);
+      await this.setState({loading: false});
+      if (success) {
+          this.props.navigation.navigate('App');
+      } else {
+          this.setState({loginError: "Wrong email or password. Try again."});                
+      }
     }
   
     render() {
+
       return (
         <ScrollView contentContainerStyle={s.scroll}>
           <View style={{alignItems:"center"}}>
             <Text style={s.h1}>Login to Wegpiraat</Text>
-            <TextInput style={s.entry} placeholder="Email" />
-            <TextInput style={s.entry} placeholder="Password"/>     
-            <TouchableOpacity style={[s.button, s.exotic, s.smadown]} onPress={()=> this.props.navigation.navigate('App', { id: 100 })}>
-              <Text style={s.textBomb}>Login</Text>
+            <Text style={[s.errorMessage, s.please]}>{this.state.loginError}</Text>
+            <TextInput onChangeText={(text)=>this.setState({username:text})} value={this.state.username} style={s.entry} placeholder="Email" />
+            <TextInput onChangeText={(text)=>this.setState({password:text})} value={this.state.password} secureTextEntry={true} style={s.entry} placeholder="Password"/>     
+            <TouchableOpacity disabled={this.state.loading} style={[s.button, s.exotic, s.smadown]} onPress={() => { this.tryLogin()}}>
+                {this.state.loading && <ActivityIndicator animating={true} color="white" /> }             
+                <Text style={s.textBomb}>Login</Text>
             </TouchableOpacity>
             <Text style={{color:"steelblue", marginBottom:30, textDecorationLine:"underline"}} onPress={()=>this.setState({showPasswordReset:true})}>I forgot my password</Text>        
           </View>

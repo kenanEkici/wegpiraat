@@ -1,0 +1,8 @@
+export default con = {
+    api: "http://192.168.1.7:3000/api",
+    login: "login",
+    clientid: "wegpiraat",
+    secret: "123",
+    grant: "password",
+    grant2: "refresh_token"
+}
