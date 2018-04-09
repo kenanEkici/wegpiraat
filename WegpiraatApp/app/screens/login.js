@@ -23,20 +23,20 @@ export default class LoginScreen extends React.Component {
   
     render() {
       return (
-        <ScrollView centerContent={true} contentContainerStyle={{ flexGrow:1, flexDirection:'column', alignItems:"center", justifyContent:"space-between"}}>
+        <ScrollView contentContainerStyle={s.scroll}>
           <View style={{alignItems:"center"}}>
             <Text style={s.h1}>Login to Wegpiraat</Text>
             <TextInput style={s.entry} placeholder="Email" />
             <TextInput style={s.entry} placeholder="Password"/>     
-            <TouchableOpacity style={[s.button, s.margebomedium, s.exotic]} onPress={()=> this.props.navigation.navigate('Menu', { id: 100 })}>
+            <TouchableOpacity style={[s.button, s.exotic, s.smadown]} onPress={()=> this.props.navigation.navigate('App', { id: 100 })}>
               <Text style={s.textBomb}>Login</Text>
             </TouchableOpacity>
             <Text style={{color:"steelblue", marginBottom:30, textDecorationLine:"underline"}} onPress={()=>this.setState({showPasswordReset:true})}>I forgot my password</Text>        
           </View>
 
-          <View style={{alignItems:"center"}}>
-            <Text style={{marginBottom:20}}>New to Wegpiraat? Create an account.</Text>  
-            <TouchableOpacity style={[s.button, s.margebomedium, s.exotic]} onPress={()=> this.props.navigation.navigate('Register', { id: 100 })}>
+          <View style={{alignItems:"center", alignSelf:"stretch", backgroundColor:"white", shadowOffset:{  width: 10,  height: 20,  }, shadowColor: 'black', shadowOpacity: 0.2,}}>
+            <Text style={[s.spaceplease]}>New to Wegpiraat? Create an account.</Text>  
+            <TouchableOpacity style={[s.button, s.exotic, s.smadown]} onPress={()=> this.props.navigation.navigate('Register', { id: 100 })}>
               <Text style={[s.textBomb]}>Register</Text>
             </TouchableOpacity>
           </View>         
@@ -57,12 +57,12 @@ export default class LoginScreen extends React.Component {
                 <View style={{flexDirection:"column", alignItems:"center"}}>
                   <Text style={s.h2}>Send a reset token to my email</Text>
                   <TextInput style={s.entry} placeholder="email address" />
-                  <TouchableOpacity style={[s.button, s.margebolarge]} onPress={()=>this.showConfirmModal()}>
+                  <TouchableOpacity style={[s.button, s.exotic, s.medown]} onPress={()=>this.showConfirmModal()}>
                     <Text style={s.smallTextBomb}>Send</Text>
                   </TouchableOpacity>   
                 </View>
 
-                <View style={{ flexDirection:"row", alignItems:"center", justifyContent:"space-between" }}>
+                <View style={s.rowtastic}>
                   <TouchableOpacity style={s.button} onPress={()=>this.setState({showPasswordReset:false})}>
                     <Text style={s.miniTextBomb}>Go back</Text>
                   </TouchableOpacity>   

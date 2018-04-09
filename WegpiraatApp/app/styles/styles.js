@@ -1,6 +1,17 @@
 import { StyleSheet } from 'react-native';
 
 export default styles = StyleSheet.create({
+    scroll: {
+      flexGrow:1, 
+      flexDirection:'column', 
+      alignItems:"center", 
+      justifyContent:"space-between"
+    },
+    rowtastic: {
+      flexDirection:"row",
+      alignItems:"center", 
+      justifyContent:"space-between"
+    },
     container: {
         flex: 1,
         justifyContent: "center",
@@ -20,21 +31,14 @@ export default styles = StyleSheet.create({
         fontSize:20,
         fontWeight:"bold"
       },
-      margebolarge: {
-        marginBottom: 50,
-        width:200
-      },
-      margebomedium: {
-        marginBottom: 20,
-        width:200,        
-      },
       exotic:{
-        backgroundColor: "#81C784"
+        backgroundColor: "#81C784",
+        width:200
       },
       button: {
         alignItems: 'center',
         justifyContent:'center',
-        backgroundColor: '#BBDEFB',
+        backgroundColor: '#CFD8DC',
         padding: 10,
         width:120,
         height:50,
@@ -77,4 +81,22 @@ export default styles = StyleSheet.create({
         fontSize:16,
         fontFamily: "Roboto"
       },
+      metop: {
+        marginTop: 30
+      },
+      smatop:{
+        marginTop: 20
+      },
+      medown:{
+        marginBottom: 30
+      },
+      smadown: {
+        marginBottom: 20
+      },
+      roomplease: {
+        margin:50,        
+      },
+      spaceplease: {
+        margin:30
+      }
     });

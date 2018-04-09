@@ -1,47 +1,21 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, SwitchNavigator, TabNavigator } from 'react-navigation';
 import LoginScreen from './screens/login';
 import MenuScreen from './screens/menu';
 import UploadScreen from './screens/upload';
 import RegisterScreen from './screens/register';
+import SplashScreen from './screens/splash';
+import Menu from './components/tab';
 
-const MainStack = StackNavigator(
+const AuthStack = StackNavigator({ Login: LoginScreen, Register: RegisterScreen });
+
+export default SwitchNavigator(
   {
-    Home: {
-      screen: LoginScreen
-    },
-    Menu: {
-      screen: MenuScreen
-    },
-    Upload: {
-      screen: UploadScreen
-    }, 
-    Register: {
-      screen: RegisterScreen
-    }
+    AuthLoading: SplashScreen,
+    App: Menu,
+    Auth: AuthStack,
   },
   {
-    initialRouteName: 'Home', 
-    navigationOptions: 
-    {
-    }
+    initialRouteName: 'AuthLoading',
   }
 );
-
-const RootStack = StackNavigator(
-  {
-    Main: {
-      screen: MainStack
-    },
-  },
-  {
-    mode: 'card',
-    headerMode: 'none'
-  }
-);
-
-export default class App extends React.Component {
-  render() {
-    return <RootStack />;
-  }
-}
