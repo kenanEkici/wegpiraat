@@ -27,11 +27,8 @@ export default class AuthRepo {
                 bearer: bearer,
                 refresh: refresh
             }
-
-            if (value)
-                return value;
-            else
-                return false;
+            
+            return value;
         } catch (error) {
             return false;
         }

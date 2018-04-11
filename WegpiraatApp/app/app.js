@@ -6,11 +6,12 @@ import SplashScreen from './screens/splash';
 import Menu from './components/tab';
 
 const AuthStack = StackNavigator({ Login: LoginScreen, Register: RegisterScreen });
+const MenuStack = StackNavigator({ Menu: Menu});
 
 export default SwitchNavigator(
   {
     AuthLoading: SplashScreen,
-    App: Menu,
+    App: MenuStack,
     Auth: AuthStack,
   },
   {

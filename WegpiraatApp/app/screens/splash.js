@@ -19,7 +19,7 @@ export default class SplashScreen extends React.Component {
           <View style={styles.container}>
             <ActivityIndicator />
             <StatusBar barStyle="default" />
-            <Text>Loading</Text>
+            <Text>Wegpiraat is loading</Text>
           </View>
         );
     }

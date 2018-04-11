@@ -4,6 +4,10 @@ import AuthRepo from './authrepo';
 import moment from 'moment';
 
 export default class AuthService {
+    
+    constructor() {
+        this.repo = new AuthRepo();
+    }
 
     login = async(username, password) => {
         try {
@@ -26,7 +30,7 @@ export default class AuthService {
             if (resp.status > 400)
                 return false;
             else {
-                return await new AuthRepo().setKeys(await resp.json())
+                return await this.repo.setKeys(await resp.json())
             }
         } catch(e) {
             return false;
@@ -53,7 +57,7 @@ export default class AuthService {
             if (resp.status > 400)
                 return false;
             else {
-                return await new AuthRepo().setKeys(await resp.json())
+                return await this.repo.setKeys(await resp.json())
             }
         } catch(e) {
             return false;
@@ -61,15 +65,22 @@ export default class AuthService {
     }
     
     authorised = async() => {
-        let repo = new AuthRepo();
-        let tokens = await repo.getTokens();
+        let tokens = await this.repo.getTokens();
         
         if (tokens.refresh != null) {
             let timeLeft = moment(tokens.expire).isAfter(moment(new Date()))
             if (timeLeft) return true;
             else return await this.refresh(tokens.refresh);
-        } else {
-            return false;
         }
+        return false;
+    }
+
+    spawnBearer = async() => {
+        let tokens = await this.repo.getTokens();
+        return tokens.bearer;
+    }
+
+    logout = async() => {
+        this.repo.clearAll();
     }
 }

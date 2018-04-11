@@ -20,6 +20,10 @@ export default styles = StyleSheet.create({
       centerItems:{
         alignItems:"center"
       },
+      p: {
+        width:200,
+        fontSize: 11
+      },
       h1:{
         marginBottom:40,
         fontSize:30, 
@@ -30,6 +34,11 @@ export default styles = StyleSheet.create({
         marginBottom:25,
         fontSize:20,
         fontWeight:"bold"
+      },
+      entryTitle: {
+        fontWeight:"bold",
+        fontSize:16,
+        marginBottom:15
       },
       exotic:{
         backgroundColor: "#81C784",
@@ -59,6 +68,14 @@ export default styles = StyleSheet.create({
         marginBottom:20,
         fontWeight:"bold",
         textAlign:"center"
+      },
+      multiline: {
+        textAlignVertical: "top",
+        textAlign:"left",
+        backgroundColor:"white",
+        padding:5,
+        height:60,
+        borderColor: "rgba(0, 0, 0, 0.1)"        
       },
       bottomModal: {
         justifyContent: "flex-end",

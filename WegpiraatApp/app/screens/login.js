@@ -2,8 +2,8 @@ import React from 'react';
 import { Text, Button, View, ScrollView, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import HeaderLogo from './../components/header';
 import Modal from 'react-native-modal';
-import s from '../styles/styles';
 import AuthService from '../service/authservice';
+import s from '../styles/styles';
 
 export default class LoginScreen extends React.Component {
 

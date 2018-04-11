@@ -4,5 +4,7 @@ export default con = {
     clientid: "wegpiraat",
     secret: "123",
     grant: "password",
-    grant2: "refresh_token"
+    grant2: "refresh_token",
+
+    wegpiraten: "wegpiraten"    
 }

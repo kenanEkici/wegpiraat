@@ -1,8 +1,8 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { } from 'react-native';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 
+import HeaderLogo from '../components/header';
 import FeedScreen from '../screens/feed';
 import UploadScreen from '../screens/upload';
 import SearchScreen from '../screens/search';
@@ -17,11 +17,12 @@ export default Menu = TabNavigator(
     },
     {
         navigationOptions: ({ navigation }) => ({
+            headerTitle: <HeaderLogo/>,
             tabBarIcon: ({ focused, tintColor }) => {
                 const { routeName } = navigation.state;
                 let iconName;
                 if (routeName === 'Feed') {
-                    iconName = `ios-car${focused ? '' : '-outline'}`;
+                    iconName = `ios-car${focused ? '' : '-outline'}`;               
                 } else if (routeName === 'Upload') {
                     iconName = `ios-add${focused ? '' : '-outline'}`;
                 } else if (routeName === 'Search') {
@@ -40,5 +41,5 @@ export default Menu = TabNavigator(
     tabBarPosition: 'bottom',
     animationEnabled: true,
     swipeEnabled: true,
-  }
+  },
 );
