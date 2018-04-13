@@ -45,20 +45,6 @@ exports.resetPasswordMail = function(recipient, token) {
     }
 }
 
-exports.swagger = {
-    swaggerDefinition: {
-      info: {
-        title: 'Kenan\'s wonderful API of surprises',
-        version: '1.0.0',
-        description: 'Hi, you have found my REST API! You must feel so damn good about yourself huh.',
-      },
-      host: 'kenan-api.herokuapp.com',
-      basePath: '/',
-    },
-    // path to the API docs
-    apis: ['./api/routes/*.js'],
-}
-
 exports.clientSeed = {
     clientId: 'wegpiraat',
     clientSecret: '123',

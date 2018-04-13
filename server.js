@@ -3,11 +3,14 @@ var express = require('express');
 var app = express();
 var port = process.env.PORT || 3000;
 var bodyParser = require('body-parser');
-var swaggerJSDoc = require('swagger-jsdoc');
 var oauthserver = require('node-oauth2-server');
 var mongoose = require('mongoose');
 var nev = require('email-verification')(mongoose);
 var exp = require('./api/constants');
+var multer = require('multer');
+var business = require('./api/business/business');
+var storage = multer.diskStorage(business.multer());
+var upload = multer({ storage: storage })
 
 mongoose.connect('mongodb://localhost/wegpiraat', function(err) {
   console.log("Connected with wegpiraat database");
@@ -38,14 +41,7 @@ nev.generateTempUserModel(User, function(err, tempUserModel) {
 });
 
 //public files
-app.use(express.static('public'))
-
-// swaggerdoc route
-var swaggerSpec = swaggerJSDoc(exp.swagger);
-app.get('/swagger.json', function(req,res){
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
-});
+app.use(express.static('api/public/'))
 
 //set html renderer
 app.set('views', __dirname + '/views');
@@ -57,7 +53,7 @@ app.use(bodyParser.json());
 
 //routes
 var routes = require('./api/routes/routes');
-routes(app, nev);
+routes(app, nev, upload);
 
 //start server
 app.listen(port);
@@ -65,6 +61,3 @@ console.log("API started on port " + port );
 
 //uncomment to seed
 //var seed = require('./api/seed');
-
-//error handler for oauth2 
-app.use(app.oauth.errorHandler());

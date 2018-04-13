@@ -13,7 +13,9 @@ export default class WegpiraatService {
             let token = await this.check();
             let resp = await fetch(`${c.api}/${c.wegpiraten}`, { 
                 method: 'GET', 
-                headers: token
+                headers: {
+                    "Authorization": token
+                }
             });   
 
             if (resp.status > 400)
@@ -29,11 +31,40 @@ export default class WegpiraatService {
     check = async() => {
         if (await this.service.authorised()) {
             let bear = await this.service.spawnBearer();
-            return {
-                'Authorization': 'Bearer ' + bear
-            }
+            return  'Bearer ' + bear;
         } else {
             throw Error("Bear token not present or failed to refresh!")
         }        
+    }
+
+    upload = async(data) => {
+        
+        var form = new FormData();
+        form.append('title', data.title);
+        form.append('description', data.desc);
+        form.append('created', new Date().toString());
+        form.append('picture', {uri: data.pic, name: 'wegpiraat.jpg', type: 'multipart/form-data'});
+
+        try {
+            let token = await this.check();
+
+            let resp = await fetch(`${c.api}/${c.wegpiraten}`, { 
+                method: 'POST', 
+                headers: {
+                    "Authorization": token,
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data'
+                },
+                body: form
+            });
+
+            if (resp.status > 400)
+                return false;
+            else {
+                return await resp.json();
+            }
+        } catch(e) {
+            return false;
+        }
     }
 }

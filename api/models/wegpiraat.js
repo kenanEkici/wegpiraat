@@ -62,8 +62,8 @@ function createWegpiraat(body, user, cb) {
     var newWegpiraat = new Wegpiraat({
         title: body.title,
         description: body.description,
-        picture: body.picture,
-        createdAt: body.createdAt,
+        picture: body.uri,
+        createdAt: body.created,
         owner: user.username
     });
 

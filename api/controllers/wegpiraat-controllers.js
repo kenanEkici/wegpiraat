@@ -38,6 +38,7 @@ function addWegpiraat(req,res) {
     authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => { 
         if (err) res.status(400).send(err); 
         else {
+            req.body.uri = req.file.filename;
             wpRepo.createWegpiraat(req.body, user, (err, post) => { //add post
                 if (err) res.status(400).send(err); 
                 else { 

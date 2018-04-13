@@ -1,9 +1,9 @@
 'use strict';
 
 var wpController = require('../controllers/wegpiraat-controllers');
-var authController = require('../controllers/auth-controller')
+var authController = require('../controllers/auth-controller') 
 
-module.exports = function(app, nev) {    
+module.exports = function(app, nev, mul) {    
     
     //CORS
     app.options('*', function(req,res,next) {
@@ -49,7 +49,7 @@ module.exports = function(app, nev) {
     app.post('/api/wegpiraten/arr', app.oauth.authorise(), wpController.getWegpiratenByIdArray);
 
     //add wegpiraat
-    app.post('/api/wegpiraten', app.oauth.authorise(), wpController.addWegpiraat);    
+    app.post('/api/wegpiraten', [mul.single('picture'), app.oauth.authorise()], wpController.addWegpiraat);    
 
     //update wegpiraat
     app.put('/api/wegpiraten/:postId', app.oauth.authorise(), wpController.updateWegpiraatById);

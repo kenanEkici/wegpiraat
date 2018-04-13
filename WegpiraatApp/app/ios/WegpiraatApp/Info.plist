@@ -52,5 +52,9 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Wegpiraat will need your permission for using the camera.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Wegpiraat will need your permission for using the photo library.</string>
 </dict>
 </plist>

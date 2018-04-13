@@ -1,7 +1,7 @@
-@token = Bearer e1dbef6a83a904a200212592de23821088c0d019
+@token = Bearer 0c1dd9c57340b38e825ab0720b4b8737640f6515
 
 POST http://localhost:3000/api/wegpiraten HTTP/1.1
-Content-Type: application/json
+Content-Type: multipart/form-data
 Authorization: {{token}}
 
 {

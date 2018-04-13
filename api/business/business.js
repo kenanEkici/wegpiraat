@@ -5,6 +5,7 @@ var crypto = require('crypto');
 var ObjectId = require('mongoose');
 const nodemailer = require('nodemailer');
 var exp = require('../constants');
+var path = require('path');
 
 function hash(password) {
     var salt = bcrypt.genSaltSync(10);
@@ -50,6 +51,18 @@ function commentBelongsToUser(commentId, user) {
     for (var i = 0; i < comments.length; ++i) 
         if (comments[i].commentId.toString() === commentId) return true;  
     return false;
+}
+
+function returnMulter() {
+    return {
+        destination: __dirname + '../../public/uploads/',
+        filename: function (req, file, cb) {
+        crypto.pseudoRandomBytes(16, function (err, raw) {
+                if (err) return cb(err)  
+                cb(null, raw.toString('hex') + path.extname(file.originalname))
+            });
+        }
+    }
 }
 
 /* basically, checks if a post has been liked by a certain person
@@ -119,7 +132,8 @@ module.exports = {
     tokenHasExpired: tokenHasExpired,
     getTokenExpireDate: getTokenExpireDate,
     userDao: userDao,
-    hashEmail: hashEmail
+    hashEmail: hashEmail,
+    multer: returnMulter
 };
   
   
