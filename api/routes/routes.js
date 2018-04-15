@@ -40,7 +40,7 @@ module.exports = function(app, nev, mul) {
     app.get('/api/userinfo', app.oauth.authorise(), authController.getUserInformation);
 
     //masters
-    app.get('/api/wegpiraten', app.oauth.authorise(), wpController.getAllWegpiraten);
+    app.get('/api/wegpiraten/page/:page', app.oauth.authorise(), wpController.getAllWegpiraten);
 
     //details
     app.get('/api/wegpiraten/:postId', app.oauth.authorise(), wpController.getWegpiraatById);

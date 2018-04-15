@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var business = require('../business/business');
+var mp = require('mongoose-paginate');
 
 var commentSchema = mongoose.Schema(
     {
@@ -29,12 +30,13 @@ var wegpiraatSchema = mongoose.Schema(
         comments: [{ type: commentSchema }]
     }
 );
+wegpiraatSchema.plugin(mp);
 
 var Wegpiraat = mongoose.model('Wegpiraten', wegpiraatSchema);
 
-function getAllWegpiraten(cb) {
-    Wegpiraat.find({}, (err, data) => {
-        if (err) return cb(err, null);    
+function getAllWegpiraten(page, cb) {
+    Wegpiraat.paginate({}, { page: page, limit: 10, sort: {createdAt:-1} }, function(err, data) {
+        if (err) return cb(err, null);
         cb(null, data);
     });
 }

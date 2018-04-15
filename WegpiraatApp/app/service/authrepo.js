@@ -6,7 +6,7 @@ export default class AuthRepo {
     
     async setKeys(data) {
         try {         
-            this.clearAll();   
+            await this.clearTokens();              
             await AsyncStorage.setItem('wp_bearer', data.access_token);
             await AsyncStorage.setItem('wp_refresh', data.refresh_token);
             await AsyncStorage.setItem('wp_expire', moment(new Date()).add(data.expires_in, 'seconds').toString());
@@ -15,6 +15,15 @@ export default class AuthRepo {
             return false;
         }
     }
+
+    async setUser(data) {
+        try {
+            await AsyncStorage.setItem('wegpiraat', data.username); 
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }    
 
     async getTokens() {
         try {
@@ -34,9 +43,32 @@ export default class AuthRepo {
         }
     }
 
-    async clearAll() {
+    async getUser() {
+        try {
+            let username = await AsyncStorage.getItem('wegpiraat');
+
+            const value = {
+                username: username
+            }
+            
+            return value;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async clearTokens() {
         try {
             await AsyncStorage.multiRemove(['wp_bearer', 'wp_refresh', 'wp_expire']);
+            return true
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async clearUser() {
+        try {
+            await AsyncStorage.multiRemove(['wegpiraat']);
             return true
         } catch (e) {
             throw e;

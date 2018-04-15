@@ -1,4 +1,4 @@
-@token = Bearer 05c68c43f32b14ff696763ff55099f3f0028e867
+@token = Bearer b1d49c5debbc6df41902e90567efd3c5eed27790
 GET http://localhost:3000/api/userinfo HTTP/1.1
 Content-Type: application/json
 Authorization: {{token}}

@@ -11,7 +11,7 @@ function checkStatus(req,res) {
 
 //Get all posts (TODO: with filter/sort and/or pagination)
 function getAllWegpiraten(req,res) {
-    wpRepo.getAllWegpiraten((err,data) => {
+    wpRepo.getAllWegpiraten(req.params.page, (err,data) => {
         if (err) res.status(400).send(err);
         else res.send(data);
     });
@@ -39,6 +39,7 @@ function addWegpiraat(req,res) {
         if (err) res.status(400).send(err); 
         else {
             req.body.uri = req.file.filename;
+            req.body.created = new Date(); //GMT TIME
             wpRepo.createWegpiraat(req.body, user, (err, post) => { //add post
                 if (err) res.status(400).send(err); 
                 else { 

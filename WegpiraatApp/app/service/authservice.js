@@ -17,7 +17,7 @@ export default class AuthService {
                     method:'POST',
                     headers: {          
                     'Content-Type': 'application/x-www-form-urlencoded'
-                },          
+                },
                 body: qs.stringify({
                     username:username,
                     password:password,
@@ -25,14 +25,18 @@ export default class AuthService {
                     client_secret:c.secret,
                     grant_type:c.grant
                 })
-            });
+            });           
 
             if (resp.status > 400)
-                return false;
-            else {
-                return await this.repo.setKeys(await resp.json())
+                return false;        
+                
+            if (await this.repo.setKeys(await resp.json())) {
+                return await this.repo.setUser(await this.getUser());
             }
+            return false;
+            
         } catch(e) {
+            console.log(e);
             return false;
         }
     }
@@ -81,6 +85,25 @@ export default class AuthService {
     }
 
     logout = async() => {
-        this.repo.clearAll();
+        this.repo.clearTokens();
+        this.repo.clearUser();
+    }
+
+    getUser = async() => {
+        let token = await this.spawnBearer();
+        let resp = await fetch(`${c.api}/${c.user}`, { 
+            method: 'GET', 
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        if (resp.status > 400)
+            return false;
+        return await resp.json();        
+    }
+
+    getUserLocal = async() => {
+        return await this.repo.getUser();
     }
 }

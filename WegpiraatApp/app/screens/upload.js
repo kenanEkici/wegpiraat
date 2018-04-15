@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, Image, ScrollView, TextInput, TouchableOpacity, CheckBox } from 'react-native';
+import { View, Text, Button, Image, ScrollView, TextInput, TouchableOpacity, CheckBox, ActivityIndicator } from 'react-native';
 import { ImagePicker } from 'expo';
 import s from '../styles/styles';
 import WegpiraatService from '../service/wegpiraatservice';
@@ -11,7 +11,9 @@ export default class UploadScreen extends React.Component {
       this.state = {
           title: "",
           desc: "", 
-          uri: ""         
+          uri: "",
+          upload:false,
+          uploading: false       
       };
     }
 
@@ -20,10 +22,11 @@ export default class UploadScreen extends React.Component {
         allowsEditing: true,
         aspect: [4, 3],
       });
-      await this.setState({uri: result.uri});     
+      await this.setState({uri: result.uri, upload:true});     
     };
 
     upload = async() => {
+      await this.setState({uploading:true});
       let data = {
         pic: this.state.uri,
         title: this.state.title,
@@ -31,9 +34,11 @@ export default class UploadScreen extends React.Component {
       };
       let service = new WegpiraatService();
       let resp = await service.upload(data);
+      if (resp) {
+          await this.setState({uploading:false, upload:false});
+      }
     }
     
-
     render() {
     
       return (
@@ -45,8 +50,11 @@ export default class UploadScreen extends React.Component {
             <Text style={s.entryTitle}>Description</Text>
             <TextInput underlineColorAndroid='rgba(0,0,0,0)' onChangeText={(text)=>this.setState({desc:text})} value={this.state.desc} style={[s.entry, s.multiline]} maxLength={110} multiline={true}/>
             <View style={[s.rowtastic, s.smatop, s.medown]}>
-              <CheckBox/>
-              <Button onPress={()=> this.choosePic()} style={[s.button]} title="Upload image" />
+              <CheckBox value={this.state.upload}/>
+              <TouchableOpacity style={[s.button, s.exotic]} onPress={()=> this.choosePic() }>
+                {this.state.uploading && <ActivityIndicator animating={true} color="white" /> }  
+                <Text style={s.textBomb}>Upload</Text>
+              </TouchableOpacity>
             </View> 
             <Text style={[s.smadown, s.p, s.smatop]}>By uploading this image I confirm that it applies to the Wegpiraat Terms</Text>                                           
             <TouchableOpacity style={[s.button, s.margebomedium, s.exotic]} onPress={()=> this.upload() }>
