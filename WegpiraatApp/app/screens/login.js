@@ -58,7 +58,7 @@ export default class LoginScreen extends React.Component {
           </View>
 
           <View style={[s.stretchContainer, s.smallShadow]}>
-            <Text style={[]}>New to Wegpiraat? Create an account.</Text>  
+            <Text style={[s.standardText]}>New to Wegpiraat? Create an account.</Text>  
             <TouchableOpacity style={[s.standardButton]} onPress={()=> this.props.navigation.navigate('Register', { id: 100 })}>
               <Text style={[s.standardButtonText]}>Register</Text>
             </TouchableOpacity>
@@ -71,16 +71,16 @@ export default class LoginScreen extends React.Component {
             onBackdropPress={() => this.setState({showPasswordReset:false})}
             animationIn="zoomInUp"
             animationOut="fadeOutUp">
-               <View style={s.modalContainer}>
-               <Text style={s.h2}>Send a reset token to your email</Text>
-               <TextInput placeholder="Email" style={s.entry} />
-               <TouchableOpacity style={[s.standardButton]} onPress={()=>{}}>
-                 <Text style={[s.standardButtonText]}>Send</Text>
-               </TouchableOpacity>
-               <TouchableOpacity style={[s.standardButton]} onPress={()=>this.setState({showPasswordReset:false, showPasswordResetConfirm:true})}>
-                 <Text style={[s.standardButtonText]}>I already have a token</Text>
-               </TouchableOpacity>
-             </View>
+              <View style={s.modalContainer}>
+                <Text style={s.h3}>Send a reset token to your email</Text>
+                <TextInput placeholder="Email" style={s.entry} />
+                <TouchableOpacity style={[s.standardButton]} onPress={()=>{}}>
+                  <Text style={[s.standardButtonText]}>Send</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[s.standardButton]} onPress={()=>this.setState({showPasswordReset:false, showPasswordResetConfirm:true})}>
+                  <Text style={[s.standardButtonText]}>I already have a token</Text>
+                </TouchableOpacity>
+              </View>
           </Modal>
 
           <Modal
@@ -91,15 +91,14 @@ export default class LoginScreen extends React.Component {
             animationIn="zoomInUp"
             animationOut="fadeOutUp">
               <View style={s.modalContainer}>
-                <Text style={s.h2}>Check your email inbox for your token:</Text>
-                <Text style={s.entryHeader}>Token</Text>
+                <Text style={s.h3}>Check your email inbox for your token:</Text>
                 <TextInput style={s.entry} placeholder="password reset token" />
                 <Text style={s.entryHeader}>New password</Text>
                 <TextInput style={s.entry} placeholder="password" />
                 <Text style={s.entryHeader}>Confirm new password</Text>
                 <TextInput style={s.entry} placeholder="password" />
                 <TouchableOpacity style={s.standardButton} onPress={()=>this.setState({showPasswordResetConfirm:false})}>
-                  <Text style={s.standardButtonText}>Go back</Text>
+                  <Text style={s.standardButtonText}>Change password</Text>
                 </TouchableOpacity>
               </View>
           </Modal>

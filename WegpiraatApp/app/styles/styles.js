@@ -7,36 +7,59 @@ export default styles = StyleSheet.create({
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
+      padding:40
     },
     centerContainer: {
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
+      padding:40    
     },
     modalContainer: {
-      height:300, 
+      padding:35,
+      height:440, 
       backgroundColor:"white", 
-      alignItems:"center"
+      alignItems:"center",
+      justifyContent:"center",
+      borderRadius:5,
     },
     scrollContainer: {
       flexGrow: 1, 
       flexDirection: "column",
-      justifyContent:"space-between"
-    },   
+      justifyContent:"space-between",
+    }, 
+    scrollContainerCenter: {
+      flexGrow: 1, 
+      flexDirection: "column",
+      justifyContent:"space-between",
+    }, 
+    scrollContainerPadding: {
+      padding:40,
+      flexGrow: 1, 
+      flexDirection: "column",
+      justifyContent:"space-between",
+    },     
     rowContainer: {
       flexDirection:"row",
       alignItems:"center", 
-      justifyContent:"space-between"
+      justifyContent:"space-between",
+    },    
+    iconRowContainer: {
+      flexDirection:"row",
+      alignItems:"center", 
+      justifyContent:"space-between",
+      width: 250
     },
     stretchContainer: {
       alignItems:"center", 
       alignSelf:"stretch",
-      backgroundColor:"white"
+      backgroundColor:"white",
+      padding: 20
     },
     centerRowContainer: {
       flex:1,
       flexDirection:"row",
-      alignItems:"center", 
+      alignItems:"center",
       justifyContent:"center"
     },
     flatContainer: {
@@ -50,7 +73,7 @@ export default styles = StyleSheet.create({
       backgroundColor: "#F5F5F5",
       margin: 5,
       padding: 10,
-      borderRadius: 5
+      borderRadius: 5,
     },
     card: {
       justifyContent:"space-between",
@@ -64,7 +87,9 @@ export default styles = StyleSheet.create({
     //pictures
     image: {
       height:200,
-      width:300, 
+      width:300,
+      marginBottom: 20,
+      marginTop: 20
     },
     icon: {
       width:30,
@@ -73,10 +98,11 @@ export default styles = StyleSheet.create({
 
     //entries
     entry: {
-      width:200,
+      width:250,
       height:40,      
       fontWeight:"bold",
-      textAlign:"center",      
+      textAlign:"center",
+      marginBottom: 20 
     },
     multiline: {
       textAlignVertical: "top",
@@ -85,7 +111,9 @@ export default styles = StyleSheet.create({
       padding:5,        
       height:60,
       borderColor: "rgba(0,0,0,0.4)",
-      borderWidth: 1        
+      borderWidth: 1,
+      marginBottom: 20,
+      width:250,    
     },
     
     //headers
@@ -96,21 +124,34 @@ export default styles = StyleSheet.create({
     h1:{
       fontSize:30, 
       fontWeight:"bold",
+      marginBottom: 10,   
     },
     h2: {
       fontSize:20,
       fontWeight:"bold",
-      color: "#212121"
+      color: "#212121",
+      marginBottom: 20,   
+    },
+    h3: {
+      fontSize:16,
+      fontWeight:"bold",
+      color: "#212121",
+      marginBottom: 20,   
     },
     entryHeader: {
       fontWeight:"bold",
       fontSize:16,
+      marginBottom: 20,
     },
 
     //texts
     commentBody: {
       fontSize: 10, 
       marginLeft: 30   
+    },
+    standardText: {
+      fontSize: 12,
+      marginBottom:20
     },
     p: {
       width:200,
@@ -123,7 +164,9 @@ export default styles = StyleSheet.create({
     errorMessage: {
       color: "red",
       fontSize: 16,
-      fontFamily: "Roboto",        
+      fontFamily: "Roboto",
+      marginBottom: 20,
+      marginTop: 20  
     },
     standardButtonText: {
       fontSize: 16,
@@ -136,18 +179,35 @@ export default styles = StyleSheet.create({
       justifyContent:'center',
       backgroundColor: '#CFD8DC',
       padding: 10,
-      height:40,   
+      height:40,
+      width:250,
       borderColor: "rgba(0, 0, 0, 0.1)",
+      marginBottom: 20, 
     },
     standardButton: {
       alignItems: 'center',
       justifyContent:'center',
       backgroundColor: '#CFD8DC',
       padding: 10,
-      width:200,
+      width:250,
       height:50,
       borderRadius: 4,
-      borderColor: "rgba(0, 0, 0, 0.1)"
+      borderColor: "rgba(0, 0, 0, 0.1)",
+      marginBottom: 20,   
+    },
+    uploadButton: {
+      alignItems: 'center',
+      justifyContent:'center',
+      backgroundColor: '#CFD8DC',
+      padding: 10,
+      width:250,
+      height:40,
+      borderRadius: 4,
+      borderColor: "rgba(0, 0, 0, 0.1)",
+      marginBottom: 20,
+    },
+    iconButton: {
+      alignItems:"center"
     },
 
     //modals

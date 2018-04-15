@@ -35,30 +35,31 @@ export default class UploadScreen extends React.Component {
       let service = new WegpiraatService();
       let resp = await service.upload(data);
       if (resp) {
-          await this.setState({uploading:false, upload:false});
+          await this.setState({uploading:false, upload:false, title:"", uri:"", desc:""});
       }
     }
     
     render() {
     
       return (
-        <ScrollView contentContainerStyle={s.scroll} centerContent={true}>
-          <View style={{alignItems:"center"}}>
-            <Text style={[s.h2, s.medown, s.smatop]}>* All fields are required</Text> 
-            <Text style={s.entryTitle}>Title</Text>
-            <TextInput underlineColorAndroid='black'  onChangeText={(text)=>this.setState({title:text})} value={this.state.title} style={s.entry} maxLength={40}/>
-            <Text style={s.entryTitle}>Description</Text>
-            <TextInput underlineColorAndroid='rgba(0,0,0,0)' onChangeText={(text)=>this.setState({desc:text})} value={this.state.desc} style={[s.entry, s.multiline]} maxLength={110} multiline={true}/>
-            <View style={[s.rowtastic, s.smatop, s.medown]}>
-              <CheckBox value={this.state.upload}/>
-              <TouchableOpacity style={[s.button, s.exotic]} onPress={()=> this.choosePic() }>
-                {this.state.uploading && <ActivityIndicator animating={true} color="white" /> }  
-                <Text style={s.textBomb}>Upload</Text>
-              </TouchableOpacity>
-            </View> 
-            <Text style={[s.smadown, s.p, s.smatop]}>By uploading this image I confirm that it applies to the Wegpiraat Terms</Text>                                           
-            <TouchableOpacity style={[s.button, s.margebomedium, s.exotic]} onPress={()=> this.upload() }>
-              <Text style={s.textBomb}>Upload</Text>
+        <ScrollView contentContainerStyle={s.scrollContainer}>
+          <View style={s.container}>
+            <Text style={s.h2}>* All fields are required</Text> 
+            <Text style={s.standardText} />
+            <TextInput style={s.entry} onChangeText={(text)=>this.setState({title:text})} value={this.state.title} maxLength={40} placeholder="Title"/>
+            <Text style={s.entryHeader}>Description</Text>
+            <TextInput style={s.multiline} onChangeText={(text)=>this.setState({desc:text})} value={this.state.desc} maxLength={110} multiline={true}/>
+            <TouchableOpacity style={s.uploadButton} onPress={()=> this.choosePic() }>
+              <View style={s.rowContainer}>
+                <CheckBox disabled={true} value={this.state.upload}/>            
+                <Text style={s.standardButtonText}>Choose picture</Text>
+              </View>
+            </TouchableOpacity>
+            <Text style={s.standardText}/>
+            <View style={{width:250}}><Text style={s.standardText}>By uploading this image I confirm that it applies to the Wegpiraat Terms</Text></View>                                      
+            <TouchableOpacity style={s.standardButton} onPress={()=> this.upload() }>
+              {this.state.uploading && <ActivityIndicator animating={true} color="white" /> }  
+              <Text style={s.standardButtonText}>Upload</Text>
             </TouchableOpacity>  
           </View>
         </ScrollView>   

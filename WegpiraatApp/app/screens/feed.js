@@ -91,7 +91,7 @@ export default class FeedScreen extends React.Component {
 
     if(this.state.loading){
       return(
-        <View style={{flex: 1, alignItems:"center", backgroundColor:"rgb(254,241,207)"}}>   
+        <View style={{flex: 1, padding:40, alignItems:"center", backgroundColor:"rgb(254,241,207)"}}>   
           <Text style={s.h2}>Loading the pirates...</Text>       
           <Image style={{height:400}} source={require('../public/loading.gif')}/>          
         </View>
@@ -108,16 +108,16 @@ export default class FeedScreen extends React.Component {
           data={this.state.data}
           renderItem={({item}) => {            
             return (
-            <View style={[s.container, s.spaceplease]}>
-              <View style={[s.flat]}>
+            <View style={s.container}>
+              <View style={s.flatContainer}>
                 <Text style={s.h2}>{item.title}</Text>
-                <Image style={[s.image, s.smadown]} source={{uri:`${con.files}/${item.picture}`}}></Image>
-                <View style={[s.rowtastic, s.medwide]}>
-                  <TouchableOpacity style={{alignItems:"center"}} onPress={() => this.like(item._id)}>
-                    <Image source={item.likeImg} style={s.icon}/><Text>{item.likeCount}</Text>
+                <Image style={s.image} source={{uri:`${con.files}/${item.picture}`}}></Image>
+                <View style={s.iconRowContainer}>
+                  <TouchableOpacity style={s.iconButton} onPress={() => this.like(item._id)}>
+                    <Image style={s.icon} source={item.likeImg}/><Text>{item.likeCount}</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={{alignItems:"center"}} onPress={() => this.setState({showModal:true,comments:item.comments,selected:item._id})}>
-                    <Image source={require('../public/comment.png')} style={s.icon}/><Text>{item.comments.length}</Text>
+                  <TouchableOpacity style={s.iconButton} onPress={() => this.setState({showModal:true,comments:item.comments,selected:item._id})}>
+                    <Image style={s.icon} source={require('../public/comment.png')}/><Text>{item.comments.length}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -129,21 +129,22 @@ export default class FeedScreen extends React.Component {
           ListFooterComponent={this.footer}>
         </FlatList>  
         <Modal
-          style={{flex: 1, flexDirection: 'column', borderRadius:3, alignItems: 'center', justifyContent:"space-between"}}
+          style={s.scrollContainerCenter}
           isVisible={this.state.showModal} animationOut="fadeOutUp"
           backdropOpacity={0.5} onBackdropPress={() => this.setState({showModal:false})} >
-          <View style={{ backgroundColor:"white", width: 300, height: 450 }}>
-            <TextInput placeholder="Comment here (max. 80 characters)" underlineColorAndroid='rgba(0,0,0,0)' onChangeText={(text)=>this.setState({comment:text})} value={this.state.comment} style={[s.multiline, s.paddingmuch]} maxLength={80} multiline={true}/>
-            <TouchableOpacity style={[s.commentButton, s.smadown]} onPress={()=> { this.comment() }}>
+          <View style={s.modalContainer}>
+            <TextInput style={s.multiline} placeholder="Comment here (max. 80 characters)" 
+              onChangeText={(text)=>this.setState({comment:text})} value={this.state.comment} maxLength={80} multiline={true}/>
+            <TouchableOpacity style={s.commentButton} onPress={()=> { this.comment() }}>
               {this.state.commenting && <ActivityIndicator animating={true} color="white" /> }   
-              <Text style={s.textBomb}>Comment</Text>
+              <Text style={s.standardButtonText}>Comment</Text>
             </TouchableOpacity>
-            <ScrollView>
-              <FlatList                      
+            <ScrollView style={{width:250}}>
+              <FlatList 
                 data={this.state.comments}
                 renderItem={({item}) => {
                   return (
-                    <View style={s.comment}>
+                    <View style={s.commentContainer}>
                       <Text style={s.commentHeader}>{item.postedBy}</Text>
                       <Text style={s.commentBody}>{item.commentData}</Text>
                     </View>
