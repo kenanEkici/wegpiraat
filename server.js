@@ -1,6 +1,7 @@
 //deps
 var express = require('express');
 var app = express();
+var https = require("https");
 var port = process.env.PORT || 3000;
 var bodyParser = require('body-parser');
 var oauthserver = require('node-oauth2-server');
@@ -9,11 +10,12 @@ var nev = require('email-verification')(mongoose);
 var exp = require('./api/constants');
 var multer = require('multer');
 var business = require('./api/business/business');
+
 var storage = multer.diskStorage(business.multer());
 var upload = multer({ storage: storage })
 
-mongoose.connect('mongodb://localhost/wegpiraat', function(err) {
-  console.log("Connected with wegpiraat database");
+mongoose.connect(process.env.MONGOURL, function(err) {
+  console.log("Connected with wegpiraat remote");
 });
 
 var User = require('./api/models/user');

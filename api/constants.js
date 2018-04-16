@@ -1,10 +1,10 @@
 exports.mailer = {
     host: 'smtp.gmail.com',
     port: 465,
-    secure: true, // use SSL
+    secure: true,
     auth: {
-        user: 'noreply.wegpiraat@gmail.com',
-        pass: 'wegpiraat123'
+        user: process.env.GMAIL,
+        pass: process.env.GMAILSECRET
     }
 }
 
@@ -12,7 +12,7 @@ exports.verExpirationTime = 86400; //24H
 
 exports.tempuserCollection = 'tempusers';
 
-exports.verUrl = 'http://localhost:3000/api/verify/${URL}';
+exports.verUrl = process.env.DOMAIN+'/api/verify/${URL}';
 
 exports.oauth = {
     model: require('./models/auth/oauth'),
@@ -46,7 +46,7 @@ exports.resetPasswordMail = function(recipient, token) {
 }
 
 exports.clientSeed = {
-    clientId: 'wegpiraat',
-    clientSecret: '123',
+    clientId: process.env.CLIENTID,
+    clientSecret: process.env.CLIENTSECRET,
     redirectUri: '/oauth/redirect'
 }
