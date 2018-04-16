@@ -111,7 +111,7 @@ export default class FeedScreen extends React.Component {
             <View style={s.container}>
               <View style={s.flatContainer}>
                 <Text style={s.h2}>{item.title}</Text>
-                <Image style={s.image} source={{uri:`${con.files}/${item.picture}`}}></Image>
+                <Image style={s.image} source={{uri:item.picture}}></Image>
                 <View style={s.iconRowContainer}>
                   <TouchableOpacity style={s.iconButton} onPress={() => this.like(item._id)}>
                     <Image style={s.icon} source={item.likeImg}/><Text>{item.likeCount}</Text>

@@ -10,9 +10,7 @@ var nev = require('email-verification')(mongoose);
 var exp = require('./api/constants');
 var multer = require('multer');
 var business = require('./api/business/business');
-
-var storage = multer.diskStorage(business.multer());
-var upload = multer({ storage: storage })
+var upload = multer({storage:multer.memoryStorage()})
 
 mongoose.connect(process.env.MONGOURL, function(err) {
   console.log("Connected with wegpiraat remote");

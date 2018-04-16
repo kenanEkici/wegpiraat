@@ -3,6 +3,15 @@
 var business = require('../business/business');
 var wpRepo = require('../models/wegpiraat');
 var authRepository = require('../models/user');
+var cloudinary = require('cloudinary');
+var dataUri = require('datauri');
+var path = require('path');
+
+cloudinary.config({ 
+    cloud_name: process.env.CLNAME, 
+    api_key: process.env.CLID, 
+    api_secret: process.env.CLSECRET 
+});
 
 //Check if API is up
 function checkStatus(req,res) {
@@ -38,14 +47,21 @@ function addWegpiraat(req,res) {
     authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => { 
         if (err) res.status(400).send(err); 
         else {
-            req.body.uri = req.file.filename;
-            req.body.created = new Date(); //GMT TIME
-            wpRepo.createWegpiraat(req.body, user, (err, post) => { //add post
-                if (err) res.status(400).send(err); 
-                else { 
-                    authRepository.addWegpiraat(post._id, user, (err, user) => { //adds reference
-                        if (err) res.status(400).send(err);
-                        else res.send(post); //returns the post
+            var file = new dataUri();
+            file.format(path.extname('TEST').toString(), req.file.buffer);
+            cloudinary.uploader.upload(file.content, (result, err) => {
+                if (err) res.status(400).send(err);
+                else {
+                    req.body.uri = result.url
+                    req.body.created = new Date(); //GMT TIME
+                    wpRepo.createWegpiraat(req.body, user, (err, post) => { //add post
+                        if (err) res.status(400).send(err); 
+                        else { 
+                            authRepository.addWegpiraat(post._id, user, (err, user) => { //adds reference
+                                if (err) res.status(400).send(err);
+                                else res.send(post); //returns the post
+                            });
+                        }
                     });
                 }
             });

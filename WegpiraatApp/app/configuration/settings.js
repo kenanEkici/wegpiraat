@@ -1,6 +1,6 @@
 export default con = {
-    api: "http://192.168.56.1:3000/api",
-    files: "http://192.168.56.1:3000/uploads",
+    api: "https://kenan-api.herokuapp.com/api",
+    files: "uploads",
     login: "login",
     clientid: "wegpiraat",
     secret: "123",
