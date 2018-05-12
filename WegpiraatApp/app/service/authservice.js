@@ -69,12 +69,14 @@ export default class AuthService {
     }
     
     authorised = async() => {
-        let tokens = await this.repo.getTokens();
-        
+        let tokens = await this.repo.getTokens();        
         if (tokens.refresh != null) {
-            let timeLeft = moment(tokens.expire).isAfter(moment(new Date()))
-            if (timeLeft) return true;
-            else return await this.refresh(tokens.refresh);
+            let timeLeft = moment(tokens.expire).isAfter(moment(new Date()));
+            if (timeLeft) {
+                return true;
+            } else {
+                return await this.refresh(tokens.refresh);
+            }
         }
         return false;
     }

@@ -9,8 +9,9 @@ export default class SplashScreen extends React.Component {
     }
         
       // Fetch the token from storage then navigate to our appropriate place
-    _bootstrapAsync = async () => {                
-        this.props.navigation.navigate(await new AuthService().authorised() ? 'App' : 'Auth');
+    _bootstrapAsync = async () => {
+        var result = await new AuthService().authorised();
+        this.props.navigation.navigate(result ? 'App' : 'Auth');
     };
     
       // Render any loading content that you like here

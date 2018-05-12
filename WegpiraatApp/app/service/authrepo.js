@@ -12,6 +12,7 @@ export default class AuthRepo {
             await AsyncStorage.setItem('wp_expire', moment(new Date()).add(data.expires_in, 'seconds').toString());
             return true;
         } catch (error) {
+            console.log(error)
             return false;
         }
     }
@@ -21,6 +22,7 @@ export default class AuthRepo {
             await AsyncStorage.setItem('wegpiraat', data.username); 
             return true;
         } catch (error) {
+            console.log(error);
             return false;
         }
     }    
@@ -39,6 +41,7 @@ export default class AuthRepo {
             
             return value;
         } catch (error) {
+            console.log(error);
             return false;
         }
     }
@@ -53,6 +56,7 @@ export default class AuthRepo {
             
             return value;
         } catch (error) {
+            console.log(error);
             return false;
         }
     }
@@ -60,8 +64,9 @@ export default class AuthRepo {
     async clearTokens() {
         try {
             await AsyncStorage.multiRemove(['wp_bearer', 'wp_refresh', 'wp_expire']);
-            return true
+            return true;
         } catch (e) {
+            console.log(e);
             throw e;
         }
     }
@@ -69,8 +74,9 @@ export default class AuthRepo {
     async clearUser() {
         try {
             await AsyncStorage.multiRemove(['wegpiraat']);
-            return true
+            return true;
         } catch (e) {
+            console.log(e);
             throw e;
         }
     }
