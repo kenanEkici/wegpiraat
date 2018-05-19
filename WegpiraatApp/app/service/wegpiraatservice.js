@@ -59,7 +59,7 @@ export default class WegpiraatService {
         
         var form = new FormData();
         form.append('title', data.title);
-        form.append('description', data.desc);
+        form.append('plate', data.plate);
         form.append('picture', {uri: data.pic, name: 'wegpiraat.jpg', type: 'multipart/form-data'});
 
         try {

@@ -7,6 +7,7 @@ import Menu from './components/tab';
 
 const AuthStack = StackNavigator({ Login: LoginScreen, Register: RegisterScreen });
 const MenuStack = StackNavigator({ Menu: Menu});
+console.disableYellowBox = true;
 
 export default SwitchNavigator(
   {

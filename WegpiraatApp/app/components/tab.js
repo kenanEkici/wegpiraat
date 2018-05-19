@@ -1,8 +1,8 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
-
 import HeaderLogo from '../components/header';
+
 import FeedScreen from '../screens/feed';
 import UploadScreen from '../screens/upload';
 import SearchScreen from '../screens/search';
@@ -16,8 +16,7 @@ export default Menu = TabNavigator(
         Profile: ProfileScreen
     },
     {
-        navigationOptions: ({ navigation }) => ({
-            headerTitle: <HeaderLogo/>,
+        navigationOptions: ({ navigation }) => ({            
             tabBarIcon: ({ focused, tintColor }) => {
                 const { routeName } = navigation.state;
                 let iconName;
@@ -30,16 +29,30 @@ export default Menu = TabNavigator(
                 } else if (routeName === 'Profile') {
                     iconName = `ios-person${focused ? '' : '-outline'}`;
                 }
-        return <Ionicons name={iconName} size={25} color={tintColor} />;
-      },
-    }),
-    tabBarOptions: {
-      activeTintColor: 'black',
-      inactiveTintColor: 'gray',
+                return <Ionicons name={iconName} size={25} color={tintColor} />;
+            },
+            headerTitle: ({}) => {
+                const { routeName } = navigation.state;
+                let title;
+                if (routeName === 'Feed') {
+                    title = "Wegpiraten Feed"
+                } else if (routeName === 'Upload') {
+                    title = "Upload a Wegpiraat"
+                } else if (routeName === 'Search') {
+                    title = "Search a Wegpiraat"
+                } else if (routeName === 'Profile') {
+                    title = "My Wegpiraat"
+                }
+                return <HeaderLogo name={title}/>;
+            }
+        }),
+        tabBarOptions: {
+        activeTintColor: 'black',
+        inactiveTintColor: 'gray',
+        },
+        tabBarComponent: TabBarBottom,
+        tabBarPosition: 'bottom',
+        animationEnabled: true,
+        swipeEnabled: true,
     },
-    tabBarComponent: TabBarBottom,
-    tabBarPosition: 'bottom',
-    animationEnabled: true,
-    swipeEnabled: true,
-  },
 );

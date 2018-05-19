@@ -21,7 +21,7 @@ var likeSchema = mongoose.Schema(
 var wegpiraatSchema = mongoose.Schema(
     {
         title : String,
-        description : String,
+        plate : String,
         picture : String,
         createdAt : Date,
 
@@ -52,6 +52,10 @@ function getWegpiraatById(id, cb) {
     }    
 }
 
+function getWegpiraatByPlate(plate, cb) {
+    Wegpiraat.findOne({plate:plate}, cb)
+}
+
 function getWegpiratenByIdArray(arr, cb) {
     Wegpiraat.find({ '_id': { $in: arr} }, (err, data) => {
         if (err) return cb(err, null);    
@@ -63,7 +67,7 @@ function createWegpiraat(body, user, cb) {
     
     var newWegpiraat = new Wegpiraat({
         title: body.title,
-        description: body.description,
+        plate: body.plate,
         picture: body.uri,
         createdAt: body.created,
         owner: user.username
@@ -86,7 +90,7 @@ function updateWegpiraatById(id, body, cb) {
     getWegpiraatById(id, (err, todo) => {
         if (todo) {
             todo.title = body.title;
-            todo.description = body.description;
+            todo.plate = body.plate;
             todo.picture = body.picture;
 
             todo.save((err,data) => {
@@ -190,5 +194,6 @@ module.exports = {
     deleteCommentFromPost: deleteCommentFromPost, 
     addLikeToPost: addLikeToPost,
     deleteLikeFromPost: deleteLikeFromPost,
-    getLikedWegpiraten: getLikedWegpiraten
+    getLikedWegpiraten: getLikedWegpiraten,
+    getWegpiraatByPlate: getWegpiraatByPlate
 };

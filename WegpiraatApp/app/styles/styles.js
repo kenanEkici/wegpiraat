@@ -115,6 +115,13 @@ export default styles = StyleSheet.create({
       marginBottom: 20,
       width:250,    
     },
+    searchEntry: {
+      width:300,
+      height: 60,
+      fontWeight: "bold",
+      fontSize: 30, 
+      textAlign:"center"
+    },
     
     //headers
     commentHeader: {
@@ -170,6 +177,7 @@ export default styles = StyleSheet.create({
     },
     standardButtonText: {
       fontSize: 16,
+      color: "#1f1f1f"
     },
 
     //buttons
@@ -177,7 +185,7 @@ export default styles = StyleSheet.create({
       flexDirection:"row",
       alignItems: 'center',
       justifyContent:'center',
-      backgroundColor: '#CFD8DC',
+      backgroundColor: '#235604',
       padding: 10,
       height:40,
       width:250,
@@ -198,7 +206,7 @@ export default styles = StyleSheet.create({
     uploadButton: {
       alignItems: 'center',
       justifyContent:'center',
-      backgroundColor: '#CFD8DC',
+      backgroundColor: '#89bf71',
       padding: 10,
       width:250,
       height:40,
@@ -221,6 +229,12 @@ export default styles = StyleSheet.create({
       shadowOffset:{  width: 10,  height: 20,  },
       shadowColor: 'black',
       shadowOpacity: 0.2,
+    },
+
+    //header
+
+    header: {
+      backgroundColor: "#dedede"
     }
   
 });

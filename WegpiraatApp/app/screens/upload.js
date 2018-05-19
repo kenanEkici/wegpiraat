@@ -3,6 +3,7 @@ import { View, Text, Button, Image, ScrollView, TextInput, TouchableOpacity, Che
 import { ImagePicker } from 'expo';
 import s from '../styles/styles';
 import WegpiraatService from '../service/wegpiraatservice';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class UploadScreen extends React.Component {
 
@@ -10,7 +11,7 @@ export default class UploadScreen extends React.Component {
       super(props);
       this.state = {
           title: "",
-          desc: "", 
+          plate: "", 
           uri: "",
           upload:false,
           uploading: false       
@@ -30,7 +31,7 @@ export default class UploadScreen extends React.Component {
       let data = {
         pic: this.state.uri,
         title: this.state.title,
-        desc: this.state.desc
+        plate: this.state.plate
       };
       let service = new WegpiraatService();
       let resp = await service.upload(data);
@@ -47,8 +48,8 @@ export default class UploadScreen extends React.Component {
             <Text style={s.h2}>* All fields are required</Text> 
             <Text style={s.standardText} />
             <TextInput style={s.entry} onChangeText={(text)=>this.setState({title:text})} value={this.state.title} maxLength={40} placeholder="Title"/>
-            <Text style={s.entryHeader}>Description</Text>
-            <TextInput style={s.multiline} onChangeText={(text)=>this.setState({desc:text})} value={this.state.desc} maxLength={110} multiline={true}/>
+            <Text style={s.entryHeader}>Plate number</Text>
+            <TextInput style={s.entry} onChangeText={(text)=>this.setState({plate:text})} value={this.state.plate} maxLength={40} />
             <TouchableOpacity style={s.uploadButton} onPress={()=> this.choosePic() }>
               <View style={s.rowContainer}>
                 <CheckBox disabled={true} value={this.state.upload}/>            
@@ -57,9 +58,10 @@ export default class UploadScreen extends React.Component {
             </TouchableOpacity>
             <Text style={s.standardText}/>
             <View style={{width:250}}><Text style={s.standardText}>By uploading this image I confirm that it applies to the Wegpiraat Terms</Text></View>                                      
-            <TouchableOpacity style={s.standardButton} onPress={()=> this.upload() }>
+            <TouchableOpacity style={[s.standardButton, s.rowContainer]} onPress={()=> this.upload() }>
               {this.state.uploading && <ActivityIndicator animating={true} color="white" /> }  
               <Text style={s.standardButtonText}>Upload</Text>
+              <Ionicons name="ios-add" size={25} color="black" />
             </TouchableOpacity>  
           </View>
         </ScrollView>   

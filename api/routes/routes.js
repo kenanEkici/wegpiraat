@@ -69,6 +69,8 @@ module.exports = function(app, nev, mul) {
     //like post
     app.post('/api/wegpiraten/:postId/like', app.oauth.authorise(), wpController.likeOrUnlikePost);
 
+    app.get('/api/wegpiraten/find/:plate', app.oauth.authorise(), wpController.findWegpiraat)
+
     // Not found
     app.use(function(req, res) {
         res.status(404).send({url: req.originalUrl + ' not found'})

@@ -143,7 +143,8 @@ function deleteCommentFromPost(req,res) {
 function likeOrUnlikePost(req, res) {
     authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => {
         if (err) res.status(400).send(err);
-        wpRepo.getWegpiraatById(req.params.postId, (err, post) => {
+        else {
+            wpRepo.getWegpiraatById(req.params.postId, (err, post) => {
             if (business.isPostLiked(user, post)) {
                 //post is already liked
                 wpRepo.deleteLikeFromPost(req.params.postId, user, (err, postId) => {
@@ -164,10 +165,25 @@ function likeOrUnlikePost(req, res) {
                             if (err) res.status(400).send(err);
                             else res.send(confirmed); //return confirmation
                         });
-                    }
-                });
-            }
-        });        
+                        }
+                    });
+                }
+            });   
+        }
+    });
+}
+
+function findWegpiraat(req,res) {
+    authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => {
+        if (err) res.status(400).send(err);
+        else {
+            wpRepo.getWegpiraatByPlate(req.params.plate, (err, wegpiraat) => {
+                if (err) res.status(400).send(err);
+                else {
+                    res.send(wegpiraat);
+                }
+            });
+        }
     });
 }
 
@@ -181,5 +197,6 @@ module.exports = {
     deleteWegpiraatById: deleteWegpiraatById,
     addCommentToPost: addCommentToPost,
     deleteCommentFromPost: deleteCommentFromPost,
-    likeOrUnlikePost: likeOrUnlikePost
+    likeOrUnlikePost: likeOrUnlikePost,
+    findWegpiraat: findWegpiraat
 };
