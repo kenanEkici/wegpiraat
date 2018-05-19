@@ -11,8 +11,6 @@ var exp = require('./api/constants');
 var multer = require('multer');
 var business = require('./api/business/business');
 var upload = multer({storage:multer.memoryStorage()})
-var env = require('node-env-file');
-env('./.env');
 
 mongoose.connect(process.env.MONGOURL, function(err) {
   console.log("Connected with wegpiraat remote");
