@@ -44,19 +44,19 @@ export default class Feed extends React.Component {
     }
   }
 
-  footer = () => {
-    if (!this.state.scrolling) return null; 
-    return this.indicator();   
-  };
+  header = () => {
+    return null;
+  }
 
-  indicator = () => {
+  footer = () => {
+    if (!this.state.scrolling) return null;
     return (
       <View style={{ paddingVertical: 20, borderTopWidth: 1, borderColor: "#CED0CE", alignItems:"center" }} >
         <Text>Loading more pirates</Text>
         <ActivityIndicator animating size="large" />
       </View>
-    );
-  }
+    );  
+  };
 
   like = async(id) => {
       let res = await this.service.like(id);
@@ -99,7 +99,7 @@ export default class Feed extends React.Component {
     }
 
     return (
-      <View>
+      <View>        
         <FlatList
           onRefresh={() => this.getData()}
           refreshing={this.state.loading}
@@ -126,6 +126,7 @@ export default class Feed extends React.Component {
             )
           }
           }
+          ListHeaderComponent={this.header}
           ListFooterComponent={this.footer}>
         </FlatList>  
         <Modal
@@ -135,7 +136,7 @@ export default class Feed extends React.Component {
           <View style={s.modalContainer}>
             <TextInput style={s.multiline} placeholder="Comment here (max. 80 characters)" 
               onChangeText={(text)=>this.setState({comment:text})} value={this.state.comment} maxLength={80} multiline={true}/>
-            <TouchableOpacity style={s.commentButton} onPress={()=> { this.comment() }}>
+            <TouchableOpacity style={s.uploadButton} onPress={()=> { this.comment() }}>
               {this.state.commenting && <ActivityIndicator animating={true} color="white" /> }   
               <Text style={s.standardButtonText}>Comment</Text>
             </TouchableOpacity>
@@ -149,8 +150,8 @@ export default class Feed extends React.Component {
                       <Text style={s.commentBody}>{item.commentData}</Text>
                     </View>
                   )
-                }} />            
-            </ScrollView>            
+                }} />
+            </ScrollView>
           </View>
         </Modal>
       </View>  

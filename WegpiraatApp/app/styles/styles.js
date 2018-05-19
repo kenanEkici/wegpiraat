@@ -29,8 +29,10 @@ export default styles = StyleSheet.create({
       justifyContent:"space-between",
     }, 
     scrollContainerCenter: {
+      paddingTop:40,
       flexGrow: 1, 
       flexDirection: "column",
+      alignItems:"center",
       justifyContent:"space-between",
     }, 
     scrollContainerPadding: {

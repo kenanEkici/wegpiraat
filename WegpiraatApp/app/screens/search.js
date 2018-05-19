@@ -17,7 +17,12 @@ export default class SearchScreen extends React.Component {
     render() {
         if (this.state.feed) {
             return (
-                <Feed filterType="search" filter={this.state.filter}/>
+                <ScrollView contentContainerStyle={s.scrollContainerCenter}>
+                    <TouchableOpacity style={[s.standardButton, s.rowContainer]} onPress={() => this.setState({feed:false})}>
+                        <Text style={s.standardButtonText}>Close results for {this.state.filter}</Text>
+                    </TouchableOpacity>
+                    <Feed filterType="search" filter={this.state.filter}/>
+                </ScrollView>
             )
         }        
         return ( 
