@@ -173,11 +173,11 @@ function likeOrUnlikePost(req, res) {
     });
 }
 
-function findWegpiraat(req,res) {
+function getWegpiraatByPlate(req,res) {
     authRepository.getUserById(req.oauth.bearerToken.userId, (err, user) => {
         if (err) res.status(400).send(err);
         else {
-            wpRepo.getWegpiraatByPlate(req.params.plate, (err, wegpiraat) => {
+            wpRepo.getWegpiraatByPlate(req.params.page, req.params.plate, (err, wegpiraat) => {
                 if (err) res.status(400).send(err);
                 else {
                     res.send(wegpiraat);
@@ -198,5 +198,5 @@ module.exports = {
     addCommentToPost: addCommentToPost,
     deleteCommentFromPost: deleteCommentFromPost,
     likeOrUnlikePost: likeOrUnlikePost,
-    findWegpiraat: findWegpiraat
+    getWegpiraatByPlate: getWegpiraatByPlate
 };

@@ -9,6 +9,15 @@ export default class WegpiraatService {
         this.service = new AuthService();
     }
 
+    getWegpiraten = async(page, filterType, filter) => {
+       if (filterType == "none") {
+           return this.getAllWegpiraten(page);
+       }
+       else if (filterType == "search") {
+           return this.getWegpiratenByPlate(page, filter);
+       }
+    }
+
     getAllWegpiraten = async(page) => {
         try {
             let token = await this.check();
@@ -20,21 +29,7 @@ export default class WegpiraatService {
             });   
 
             var data = await resp.json();
-            var user = await this.service.getUserLocal();
-
-            for(let i = 0; i < data.docs.length; i++) {
-                data.docs[i].liked = false;
-                data.docs[i].likeImg = require("../public/unlike.png");
-                data.docs[i].likeCount = data.docs[i].likes.length;
-                data.docs[i].createdAt = moment(data.docs[i].createdAt).format('D MMMM YYYY, h:mm:ss a').toString();
-
-                for(let j = 0; j < data.docs[i].likes.length; j++) {
-                    if (data.docs[i].likes[j].likedBy == user.username) {
-                        data.docs[i].liked = true;
-                        data.docs[i].likeImg = require("../public/like.png");
-                    }
-                }
-            }
+            data = this.processFeed(data);
 
             if (resp.status > 400)
                 return false;
@@ -124,5 +119,47 @@ export default class WegpiraatService {
             console.log(e);
             return false;
         }
+    }
+
+    getWegpiratenByPlate = async(page, plate) => {
+        try {
+            let token = await this.check();
+            let resp = await fetch(`${c.api}/${c.search}/${plate}/${page}`, { 
+                method: 'GET', 
+                headers: {
+                    "Authorization": token
+                }
+            });
+
+            let data = await resp.json();
+            data = this.processFeed(data);
+
+            if (resp.status > 400)
+                return false;
+            else {
+                return await data;
+            }
+        } catch(e) {
+            return false;
+        }
+    }
+
+    processFeed = async(data) => {
+        var user = await this.service.getUserLocal();
+
+        for(let i = 0; i < data.docs.length; i++) {
+            data.docs[i].liked = false;
+            data.docs[i].likeImg = require("../public/unlike.png");
+            data.docs[i].likeCount = data.docs[i].likes.length;
+            data.docs[i].createdAt = moment(data.docs[i].createdAt).format('D MMMM YYYY, h:mm:ss a').toString();
+
+            for(let j = 0; j < data.docs[i].likes.length; j++) {
+                if (data.docs[i].likes[j].likedBy == user.username) {
+                    data.docs[i].liked = true;
+                    data.docs[i].likeImg = require("../public/like.png");
+                }
+            }
+        }
+        return data;
     }
 }
