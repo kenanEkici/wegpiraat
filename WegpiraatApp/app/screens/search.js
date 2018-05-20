@@ -35,9 +35,9 @@ export default class SearchScreen extends React.Component {
                     <TextInput style={s.searchEntry} onChangeText={(text)=>this.setState({filter:text})} value={this.state.filter} maxLength={10} placeholder="Platenumber"/>
                     <Text style={s.standardText}/>
                     <Text style={s.standardText}/>
-                    <TouchableOpacity style={[s.standardButton, s.rowContainer]} onPress={() => this.setState({feed:true})}>
-                        <Text style={s.standardButtonText}>Search </Text>
+                    <TouchableOpacity style={[s.standardButton, s.buttonContainer]} onPress={() => this.setState({feed:true})}>
                         <Ionicons name="ios-search" size={25} color="black" />
+                        <Text style={s.standardButtonText}>Search </Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>            

@@ -35,11 +35,11 @@ export default Menu = TabNavigator(
                 const { routeName } = navigation.state;
                 let title;
                 if (routeName === 'Feed') {
-                    title = "Wegpiraten Feed"
+                    title = "Wegpiraten"
                 } else if (routeName === 'Upload') {
                     title = "Upload a Wegpiraat"
                 } else if (routeName === 'Search') {
-                    title = "Search a Wegpiraat"
+                    title = "Search"
                 } else if (routeName === 'Profile') {
                     title = "My Wegpiraat"
                 }

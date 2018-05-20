@@ -33,7 +33,6 @@ export default styles = StyleSheet.create({
       flexGrow: 1, 
       flexDirection: "column",
       alignItems:"center",
-      justifyContent:"space-between",
     }, 
     scrollContainerPadding: {
       padding:40,
@@ -85,6 +84,22 @@ export default styles = StyleSheet.create({
       borderRadius: 4,
       borderColor: "rgba(0, 0, 0, 0.1)"
     },
+    profileCard: {
+      backgroundColor: "white",
+      flexDirection:"row",
+      justifyContent: "space-between",
+      padding: 10,
+      marginBottom: 20,
+      borderRadius: 4,
+      borderColor: "rgba(0, 0, 0, 0.1)",
+      width: 300
+    },
+    buttonContainer: {
+      flexDirection:"row",
+      alignItems:"center",
+      justifyContent:"center",
+      padding: 10
+    },
 
     //pictures
     image: {
@@ -96,6 +111,16 @@ export default styles = StyleSheet.create({
     icon: {
       width:30,
       height:30
+    },
+    profile: {
+      borderWidth:1,
+      borderColor:'rgba(0,0,0,0.2)',
+      alignItems:'center',
+      justifyContent:'center',
+      width:100,
+      height:100,
+      borderRadius:100,      
+      marginBottom: 20,
     },
 
     //entries
@@ -179,6 +204,12 @@ export default styles = StyleSheet.create({
     },
     standardButtonText: {
       fontSize: 16,
+      color: "#1f1f1f",
+      marginLeft: 20
+    },
+    profileButtonText: {
+      fontSize: 10,
+      marginBottom: 10,
       color: "#1f1f1f"
     },
 
@@ -218,6 +249,16 @@ export default styles = StyleSheet.create({
     },
     iconButton: {
       alignItems:"center"
+    },
+    profileButton: {
+      alignItems: 'center',
+      justifyContent:'center',
+      backgroundColor: '#89bf71',
+      width: 70,
+      padding: 10,
+      borderRadius: 4,
+      borderColor: "rgba(0, 0, 0, 0.1)",
+      margin: 10
     },
 
     //modals
