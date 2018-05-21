@@ -42,7 +42,7 @@ export default class ProfileScreen extends React.Component {
         if (this.state.feed) {
            return (
             <ScrollView contentContainerStyle={s.scrollContainerCenter}>
-                <TouchableOpacity style={[s.standardButton, s.rowContainer]} onPress={() => this.setState({feed:false})}>
+                <TouchableOpacity style={[s.standardButton]} onPress={() => this.setState({feed:false})}>
                     <Text style={s.standardButtonText}>Close results</Text>
                 </TouchableOpacity>
                 <Feed filterType="profile" filter={this.state.filter}/>
@@ -81,7 +81,5 @@ export default class ProfileScreen extends React.Component {
                 </View>
             </ScrollView>
         )
-        
-        
     }
 }

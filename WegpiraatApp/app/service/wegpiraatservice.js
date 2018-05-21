@@ -15,9 +15,10 @@ export default class WegpiraatService {
        } else if (filterType == "search") {
            return this.getWegpiratenByPlate(page, filter);
        } else if (filterType == "profile") {
-           if (filter == "posts") return await this.getMyWegpiraten(page);
-           else if (filter == "likes") return null;
-           else if (filter == "comments") return null;
+            let user = await this.service.getUser();
+            if (filter == "posts") return await this.getWegpiratenByArr(page, user.posts);
+            else if (filter == "likes") return await this.getWegpiratenByArr(page, user.likes);
+            else if (filter == "comments") return null;
        }
     }
 
@@ -147,9 +148,8 @@ export default class WegpiraatService {
         }
     }
 
-    getMyWegpiraten = async(page) => {
-        try {
-            let user = await this.service.getUser();            
+    getWegpiratenByArr = async(page, arr) => {
+        try {                        
             let token = await this.check();
             let resp = await fetch(`${c.api}/${c.array}/${page}`, { 
                 method: 'POST', 
@@ -157,7 +157,7 @@ export default class WegpiraatService {
                     "Authorization": token,
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ idArr: user.posts})
+                body: JSON.stringify({ idArr: arr})
             });
             let data = await resp.json();
             data = this.processFeed(data);
@@ -172,52 +172,6 @@ export default class WegpiraatService {
         }
     }
     
-    getLikedWegpiraten = async(page) => {
-        try {
-            let token = await this.check();
-            let resp = await fetch(`${c.api}/${c.search}/${plate}/${page}`, { 
-                method: 'GET', 
-                headers: {
-                    "Authorization": token
-                }
-            });
-
-            let data = await resp.json();
-            data = this.processFeed(data);
-
-            if (resp.status > 400)
-                return false;
-            else {
-                return await data;
-            }
-        } catch(e) {
-            return false;
-        }
-    }
-
-    getCommentedWegpiraten = async(page) => {
-        try {
-            let token = await this.check();
-            let resp = await fetch(`${c.api}/${c.search}/${plate}/${page}`, { 
-                method: 'GET', 
-                headers: {
-                    "Authorization": token
-                }
-            });
-
-            let data = await resp.json();
-            data = this.processFeed(data);
-
-            if (resp.status > 400)
-                return false;
-            else {
-                return await data;
-            }
-        } catch(e) {
-            return false;
-        }
-    }
-
     processFeed = async(data) => {
         var user = await this.service.getUserLocal();
 
