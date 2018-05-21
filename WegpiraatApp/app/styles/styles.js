@@ -23,6 +23,14 @@ export default styles = StyleSheet.create({
       justifyContent:"center",
       borderRadius:5,
     },
+    optionsContainer: {
+      padding:35,
+      height:270, 
+      backgroundColor:"white", 
+      alignItems:"center",
+      justifyContent:"center",
+      borderRadius:5,
+    },
     scrollContainer: {
       flexGrow: 1, 
       flexDirection: "column",
@@ -139,7 +147,7 @@ export default styles = StyleSheet.create({
       height:60,
       borderColor: "rgba(0,0,0,0.4)",
       borderWidth: 1,
-      marginBottom: 20,
+      marginBottom: 5,
       width:250,    
     },
     searchEntry: {
@@ -164,7 +172,8 @@ export default styles = StyleSheet.create({
       fontSize:20,
       fontWeight:"bold",
       color: "#212121",
-      marginBottom: 20,   
+      marginBottom: 20,  
+      textAlign: "center" 
     },
     h3: {
       fontSize:16,
@@ -212,6 +221,12 @@ export default styles = StyleSheet.create({
       marginBottom: 10,
       color: "#1f1f1f"
     },
+    deleteButtonText: {
+      color: "#ff2410"
+    },
+    plateText: {
+      color: "#766b6b"
+    },
 
     //buttons
     commentButton: {
@@ -250,6 +265,15 @@ export default styles = StyleSheet.create({
     iconButton: {
       alignItems:"center"
     },
+    optionsButton: {
+      alignItems:"center",
+      width:250,
+      borderRadius: 4,
+      borderWidth: 1,
+      borderColor: "black",
+      margin: 10,
+      padding: 10
+    },
     profileButton: {
       alignItems: 'center',
       justifyContent:'center',
@@ -259,6 +283,9 @@ export default styles = StyleSheet.create({
       borderRadius: 4,
       borderColor: "rgba(0, 0, 0, 0.1)",
       margin: 10
+    },
+    deleteButton: {
+      borderColor: "#ff2c14"
     },
 
     //modals

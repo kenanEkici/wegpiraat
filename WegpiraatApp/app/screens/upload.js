@@ -58,9 +58,9 @@ export default class UploadScreen extends React.Component {
             <Text style={s.standardText}/>
             <View style={{width:250}}><Text style={s.standardText}>By uploading this image I confirm that it applies to the Wegpiraat Terms</Text></View>                                      
             <TouchableOpacity style={[s.standardButton, s.buttonContainer]} onPress={()=> this.upload() }>                          
-              <Ionicons name="ios-add" size={25} color="black" />
-              <Text style={s.standardButtonText}>Upload</Text>
+              {!this.state.uploading && <Ionicons name="ios-add" size={25} color="black" /> }
               {this.state.uploading && <ActivityIndicator animating={true} color="white" /> }
+              <Text style={s.standardButtonText}>Upload</Text>              
             </TouchableOpacity>  
           </View>
         </ScrollView>   
