@@ -3,7 +3,7 @@
 @clientid= wegpiraat
 @secret= 123
 
-POST http://localhost:3000/api/login HTTP/1.1
+POST https://kenan-api.herokuapp.com/api/login HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 
 username={{username}}&password={{password}}&grant_type=password&client_id={{clientid}}&client_secret={{secret}}

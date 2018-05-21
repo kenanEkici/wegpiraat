@@ -1,6 +1,6 @@
-@token = Bearer bf7ea5d966aca25283cce322ea52d4d2461d1433
+@token = Bearer cc76d0cc2fcc242bfec7d3c849d810edc686acba
 
-POST http://localhost:3000/api/wegpiraten/arr HTTP/1.1
+POST https://kenan-api.herokuapp.com/api/wegpiraten/arr HTTP/1.1
 Content-Type: application/json
 Authorization: {{token}}
 

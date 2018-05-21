@@ -3,6 +3,7 @@ import { Button, View, ScrollView, Image, TouchableOpacity, Text } from 'react-n
 import AuthService from '../service/authservice';
 import s from '../styles/styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feed from '../components/feed';
 
 export default class ProfileScreen extends React.Component {
     
@@ -11,7 +12,9 @@ export default class ProfileScreen extends React.Component {
         this.state = {
           service: new AuthService(),
           username: null,
-          email: null
+          email: null,
+          feed: false,
+          filter: ""
         }        
     }
 
@@ -30,23 +33,38 @@ export default class ProfileScreen extends React.Component {
         await this.setState({email:user.email});
     }
 
+    async showFeed(filter) {
+        await this.setState({filter:filter});
+        await this.setState({feed:true});
+    }
+
     render() {
-        
+        if (this.state.feed) {
+           return (
+            <ScrollView contentContainerStyle={s.scrollContainerCenter}>
+                <TouchableOpacity style={[s.standardButton, s.rowContainer]} onPress={() => this.setState({feed:false})}>
+                    <Text style={s.standardButtonText}>Close results</Text>
+                </TouchableOpacity>
+                <Feed filterType="profile" filter={this.state.filter}/>
+            </ScrollView>
+           )
+        }
+
         return (
             <ScrollView contentContainerStyle={s.scrollContainerCenter}>
                 <Image style={s.profile} source={require('../public/profile.png')}/>
                 <Text style={s.h2}>{this.state.username}</Text>
                 <Text style={s.h3}>{this.state.email}</Text>
                 <View style={s.profileCard}>
-                    <TouchableOpacity style={[s.profileButton]} onPress={() => this.setState({feed:true})}>
+                    <TouchableOpacity style={[s.profileButton]} onPress={() => this.showFeed("posts")}>
                         <Text style={s.profileButtonText}>Posts</Text>
                         <Ionicons name="ios-search" size={25} color="black" />
                     </TouchableOpacity>
-                    <TouchableOpacity style={[s.profileButton]} onPress={() => this.setState({feed:true})}>
+                    <TouchableOpacity style={[s.profileButton]} onPress={() => this.showFeed("likes")}>
                         <Text style={s.profileButtonText}>Likes</Text>
                         <Ionicons name="ios-search" size={25} color="black" />
                     </TouchableOpacity>
-                    <TouchableOpacity style={[s.profileButton]} onPress={() => this.setState({feed:true})}>
+                    <TouchableOpacity style={[s.profileButton]} onPress={() => this.showFeed("comments")}>
                         <Text style={s.profileButtonText}>Comments</Text>
                         <Ionicons name="ios-search" size={25} color="black" />
                     </TouchableOpacity>
@@ -63,5 +81,7 @@ export default class ProfileScreen extends React.Component {
                 </View>
             </ScrollView>
         )
+        
+        
     }
 }

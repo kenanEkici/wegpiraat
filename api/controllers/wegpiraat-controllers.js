@@ -28,7 +28,7 @@ function getAllWegpiraten(req,res) {
 
 //Get all posts by a given array of Post ID's
 function getWegpiratenByIdArray(req,res) {
-    wpRepo.getWegpiratenByIdArray(req.body.idArr, (err, data) => {
+    wpRepo.getWegpiratenByIdArray(req.params.page, req.body.idArr, (err, data) => {
         if (err) res.status(400).send(err);
         else res.send(data);
     });

@@ -9,6 +9,7 @@ export default con = {
 
     wegpiraten: "wegpiraten",
     pagination: "wegpiraten/page",
+    array: "wegpiraten/arr",
     search: "wegpiraten/find",
     user: "userinfo"
 }

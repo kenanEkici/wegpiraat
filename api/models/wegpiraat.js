@@ -56,9 +56,9 @@ function getWegpiraatByPlate(page, plate, cb) {
     Wegpiraat.paginate({plate:plate}, { page: page, limit: 10, sort: {createdAt:-1} }, cb);
 }
 
-function getWegpiratenByIdArray(arr, cb) {
-    Wegpiraat.find({ '_id': { $in: arr} }, (err, data) => {
-        if (err) return cb(err, null);    
+function getWegpiratenByIdArray(page, arr, cb) {
+    Wegpiraat.paginate({'_id': { $in: arr}}, { page: page, limit: 10, sort: {createdAt:-1} }, function(err, data) {
+        if (err) return cb(err, null);
         cb(null, data);
     });
 }
